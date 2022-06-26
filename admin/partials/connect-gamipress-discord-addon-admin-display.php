@@ -12,5 +12,57 @@
  * @subpackage Connect_Gamipress_Discord_Addon/admin/partials
  */
 ?>
-
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<?php
+if ( isset( $_GET['save_settings_msg'] ) ) {
+	?>
+	<div class="notice notice-success is-dismissible support-success-msg">
+		<p><?php echo esc_html( $_GET['save_settings_msg'] ); ?></p>
+	</div>
+	<?php
+}
+?>
+<h1><?php echo __( 'GamiPress Discord Add On Settings', 'connect-gamipress-discord-addon' ); ?></h1>
+		<div id="gamipress-discord-outer" class="skltbs-theme-light" data-skeletabs='{ "startIndex": 0 }'>
+			<ul class="skltbs-tab-group">
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="settings" ><?php echo __( 'Application Details', 'connect-gamipress-discord-addon' ); ?><span class="initialtab spinner"></span></button>
+				</li>
+				<li class="skltbs-tab-item">
+				<?php if ( gamipress_discord_check_saved_settings_status() ): ?>
+				<button class="skltbs-tab" data-identity="level-mapping" ><?php echo __( 'Role Mappings', 'connect-gamipress-discord-addon' ); ?></button>
+				<?php endif; ?>
+				</li>
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="advanced" ><?php echo __( 'Advanced', 'connect-gamipress-discord-addon' ); ?>	
+				</button>
+				</li>
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="appearance" ><?php echo __( 'Appearance', 'connect-gamipress-discord-addon' ); ?>	
+				</button>
+				</li>                                
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="logs" ><?php echo __( 'Logs', 'connect-gamipress-discord-addon' ); ?>	
+				</button>
+				</li>                                
+			
+                        </ul>
+			<div class="skltbs-panel-group">
+				<div id="ets_gamipress_application_details" class="gamipress-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-application-details.php'; ?>
+				</div>
+				<?php if ( gamipress_discord_check_saved_settings_status() ): ?>      
+				<div id="ets_gamipress_discord_role_mapping" class="gamipress-discord-tab-conetent skltbs-panel">
+					<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-role-mapping.php'; ?>
+				</div>
+				<?php endif; ?>
+				<div id='ets_gamipress_discord_advanced' class="gamipress-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-advanced.php'; ?>
+				</div>
+				<div id='ets_gamipress_discord_appearance' class="gamipress-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-appearance.php'; ?>
+				</div>                            
+				<div id='ets_gamipress_discord_logs' class="gamipress-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-error-log.php'; ?>
+				</div>                            
+			</div>  
+		</div>

@@ -72,8 +72,9 @@ class Connect_Gamipress_Discord_Addon_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/connect-gamipress-discord-addon-admin.css', array(), $this->version, 'all' );
+		wp_register_style( $this->plugin_name .'-select2', plugin_dir_url( __FILE__ ) . 'css/select2.css', array(), $this->version, 'all' );
+		wp_register_style( $this->plugin_name . 'discord_tabs_css', plugin_dir_url( __FILE__ ) . 'css/skeletabs.css', array(), $this->version, 'all' );
+		wp_register_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/connect-gamipress-discord-addon-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,8 +97,54 @@ class Connect_Gamipress_Discord_Addon_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-gamipress-discord-addon-admin.js', array( 'jquery' ), $this->version, false );
+            
+		wp_register_script( $this->plugin_name . '-select2',  plugin_dir_url( __FILE__ ) . 'js/select2.js', array( 'jquery' ), $this->version, false );
+            
+		wp_register_script( $this->plugin_name . '-tabs-js', plugin_dir_url( __FILE__ ) . 'js/skeletabs.js', array( 'jquery' ), $this->version, false );
+		$min_js = ( defined( 'WP_DEBUG' ) && true === WP_DEBUG  ) ? '' : '.min';                
+		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-gamipress-discord-addon-admin' . $min_js . '.js', array( 'jquery' ), $this->version, false );                
+		$script_params = array(
+			'admin_ajax'                       => admin_url( 'admin-ajax.php' ),
+			'permissions_const'                => LEARNDASH_DISCORD_BOT_PERMISSIONS,
+			'is_admin'                         => is_admin(),
+			'ets_gamipress_discord_nonce' => wp_create_nonce( 'ets-gamipress-discord-ajax-nonce' ),
+		);
+		wp_localize_script( $this->plugin_name, 'etsGamiPressParams', $script_params );                                
+
+	
+		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-gamipress-discord-addon-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+        
+	/**
+	 * Method to add discord setting sub-menu under top level menu of Gamipress
+	 *
+	 * @since    1.0.0
+	 */
+	public function ets_gamipress_Discord_add_settings_menu() {
+		add_submenu_page( 'gamipress', __( 'Discord Settings', 'connect-gamipress-discord-addon' ), __( 'Discord Settings', 'connect-gamipress-discord-addon' ), 'manage_options', 'connect-gamipress-discord-addon', array( $this, 'ets_gamipress_discord_setting_page' ) );
+	}
+        
+	/**
+	 * Callback to Display settings page
+	 *
+	 * @since    1.0.0
+	 */
+	public function ets_gamipress_discord_setting_page() {
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+		wp_enqueue_style( $this->plugin_name .'-select2' );                
+		wp_enqueue_style( $this->plugin_name . 'discord_tabs_css' );
+		wp_enqueue_style( 'wp-color-picker' );                
+		wp_enqueue_style( $this->plugin_name );                
+		wp_enqueue_script( $this->plugin_name . '-select2' );
+		wp_enqueue_script( $this->plugin_name . '-tabs-js' );                
+		wp_enqueue_script($this->plugin_name);
+		wp_enqueue_script( 'jquery-ui-draggable' );
+		wp_enqueue_script( 'jquery-ui-droppable' );                
+		require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/connect-gamipress-discord-addon-admin-display.php';
+        }
 
 }
