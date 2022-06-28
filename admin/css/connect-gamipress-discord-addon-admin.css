@@ -1,3 +1,8 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -43,6 +48,16 @@
   height:40px;
   border-radius: 0px !important;
 }
+.select2-selection__rendered {
+    line-height: 34px !important;
+    font-size: 14px;
+}
+.select2-container .select2-selection--single {
+    height: 40px !important;
+}
+.select2-selection__arrow {
+    height: 40px !important;
+}
 .ets-input:hover{
   border-bottom: 2px solid #77a02e;
 }
@@ -52,7 +67,7 @@
 #ets_setting h3{
   font-size: 20px;
 }
-.ets-btn-submit{
+.ets-submit{
   padding: 10px 20px;
   background: #444;
   color: #fff;
@@ -81,7 +96,7 @@
   opacity: 1;
   text-transform: uppercase;
 }
-.ets-btn.btn-connect-to-bot{
+.ets-btn.gamipress-btn-connect-to-bot{
   font-weight:normal;
   display: none;
   text-transform: none;
@@ -103,21 +118,23 @@
   height: 400px;
   overflow: scroll;
 }
-.btn-connect{
+.gamipress-btn-connect{
   background-color: #77A02E;
 }
-.btn-connect-to-bot{
+.gamipress-btn-connect-to-bot{
   background-color: #FF0000;
 }
-.clrbtndiv{
+.gamipress-btn-disconnect{
+  background-color:#FF0000;
+}
+.gamipress-clrbtndiv{
+    max-width: 230px;
     display: flex;
 }
-.clrbtndiv .form-group{
+.gamipress-clrbtndiv .form-group{
   display: flex;
-  align-items: center;
-  margin: 1px;
 }
-.clrbtndiv .form-group .spinner{
+.gamipress-clrbtndiv .form-group .spinner{
   margin: 10px 10px 0;
 }
 .ets-bg-red{
@@ -128,9 +145,18 @@
   background-color: #77A02E !important;
   color: #ffffff;
 }
-.ets-bg-download{
+.ets-gamipress-bg-download{
   background-color: #2CA450 !important;
   color: #ffffff;
+}
+.ets-submit.ets-gamipress-bg-scheduled-actions{
+  margin: 0 2px;
+  text-align: center; 
+  margin: 0 2px;
+  min-width: 170px;  
+}
+.ets-submit.ets-gamipress-bg-download{
+  margin: 0 2px;
 }
 .wp-core-ui .notice.is-dismissible.support-success-msg{
   position: fixed;
@@ -313,6 +339,9 @@ a{
   color: #0078d7;
   border-color:  #0078d7; 
  }
+ .ets_assigned_role{
+  font-size: 10px;
+ }
  .ets-danger-text{
   color: #FF0000 !important;
  }
@@ -354,7 +383,7 @@ a{
   }
  }
  /*discord mapping css*/
-#mepr_role_mapping * {
+ * {
   box-sizing: border-box;
 }
 
@@ -367,7 +396,7 @@ a{
   text-align: center;
   min-height: 300px;
 }
-.discord-roles-col{
+.gamipress-discord-roles-col{
   border:2px dashed transparent;
   transition:ease 0.3s;
 }
@@ -387,8 +416,9 @@ a{
 }
 .ets-is-active{
   visibility: visible;
+  display: inline-block!important;
 }
-.discord-roles .spinner, .initialtab.spinner{
+.gamipress-discord-roles .spinner, .initialtab.spinner{
   float: none;
 }
 .hoverActive{
@@ -407,9 +437,6 @@ border:2px dashed #275EE8;
   margin-bottom: 10px;
   width:100%;
   cursor: all-scroll;
-}
-.discord-roles-col .makeMeDraggable{
-  margin-bottom: 10px !important;
 }
 .makeMeDroppable{
   background-color: #77A02E;
@@ -430,8 +457,8 @@ div.mapping-json{
   text-align: center;
   margin-top: 10px;
 }
-#maaping_json_val{
-  width: 50%;
+#ets_gamipress_mapping_json_val{
+  width: 100%;
   display: none;
 }
 .notice.ets-notice{
@@ -451,7 +478,7 @@ div.mapping-json{
     font-size:2em;
     vertical-align:middle;
 }
-.discord-roles .spinner,.initialtab.spinner{
+.gamipress-discord-roles .spinner,.initialtab.spinner{
   display: inline-block;
 }
 .spinner{
@@ -468,31 +495,13 @@ select#defaultRole{
   display: none;
   color: #2ca450;
 }
-.ets_memberpress_discord_dm_textarea{height:130px;}
-#col_memberpress_discord{
-  width: 8%;
+div#ets_gamipress_discord_advanced textarea{height:130px;}
+p.redirect-url{
+    /* border: 1px solid; */
+    padding: 10px 10px;
+    background-color: #fafafa;    
 }
-#col_memberpress_joined_date{
-  width: 12%;
-}
-.msg-green{color:#008008!important}
-a.ets-btn.btn-connect-to-bot img{
-    width: 20px;
-    display: inline-block;
-    margin-left: 5px;
-        
-}
-.select2-selection__rendered {
-    line-height: 34px !important;
-    font-size: 14px;
-}
-.select2-container .select2-selection--single {
-    height: 40px !important;
-}
-.select2-selection__arrow {
-    height: 40px !important;
-}
-span.discord-bot {
+span.discord-bot{
     background-color: #5865F2;
     color: #fff;
     /* padding: 4px 4px 4px 4px; */
@@ -506,11 +515,29 @@ span.discord-bot {
     position: relative;
     width: 30px;
     /* max-width: 40px; */
-    height: 18px;
+    height: 18px;   
 }
-span.discord-bot b {
+span.discord-bot b{
     display: inline-block;
     position: absolute;
     top: 2px;
     left: 5px;
+}
+p.ets-discord-update-message{
+    display: none;
+}
+p.redirect-url{
+    border: 1px solid;
+    padding: 10px 10px;
+    background-color: #f0f0f1;
+    height: 50px;
+    min-height: 50px;   
+}
+
+.ets-input-group p.description span.spinner{
+    float: none;
+}
+p.redirect-url > span.spinner{
+    float: left;
+    display: none;
 }

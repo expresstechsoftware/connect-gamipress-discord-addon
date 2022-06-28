@@ -67,11 +67,11 @@ $ets_gamipress_discord_redirect_page_id  = sanitize_text_field( trim( get_option
 	  </p>
 	<?php } ?>
 	<p>
-	  <button type="submit" name="submit" value="ets_discord_submit" class="ets-btn-submit ets-bg-green">
+	  <button type="submit" name="submit" value="ets_discord_submit" class="ets-submit ets-btn-submit ets-bg-green">
 		<?php esc_html_e( 'Save Settings', 'connect-gamipress-discord-addon' ); ?>
 	  </button>
 	  <?php if ( sanitize_text_field( get_option( 'ets_gamipress_discord_client_id' ) ) ): ?>
-            <a href="?action=discord-connect-to-bot" class="ets-btn-submit gamipress-btn-connect-to-bot" id="gamipress-connect-discord-bot"><?php esc_html_e( 'Connect your Bot', 'connect-gamipress-discord-addon' ) . Connect_Gamipress_Discord_Addon::get_discord_logo_white(); ?> </a>
+            <a href="?action=gamipress-discord-connect-to-bot" class="ets-btn gamipress-btn-connect-to-bot" id="gamipress-connect-discord-bot"><?php esc_html_e( 'Connect your Bot', 'connect-gamipress-discord-addon' ) . Connect_Gamipress_Discord_Addon::get_discord_logo_white(); ?> </a>
 	  <?php endif; ?>
 	</p>
 </form>

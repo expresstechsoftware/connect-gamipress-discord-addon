@@ -53,6 +53,11 @@ define( 'CONNECT_GAMIPRESS_DISCORD_OAUTH_SCOPES', 'identify email guilds guilds.
 define( 'CONNECT_GAMIPRESS_API_URL', 'https://discord.com/api/v10/' );
 
 /**
+ * Discord BOT Permissions
+ */
+define( 'CONNECT_GAMIPRESS_DISCORD_BOT_PERMISSIONS', 8 );
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-connect-gamipress-discord-addon-activator.php
  */

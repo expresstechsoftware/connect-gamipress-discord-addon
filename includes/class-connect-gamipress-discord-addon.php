@@ -164,6 +164,9 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'ets_gamipress_Discord_add_settings_menu', 99 );
 		$this->loader->add_action( 'admin_post_gamipress_discord_application_settings', $plugin_admin, 'ets_gamipress_discord_application_settings' );                
+		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_load_discord_roles', $plugin_admin, 'ets_gamipress_discord_load_discord_roles' );                
+		$this->loader->add_action( 'admin_post_gamipress_discord_save_role_mapping', $plugin_admin, 'ets_gamipress_discord_save_role_mapping' );                
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'ets_gamipress_discord_connect_bot' );                
 
 	}
 

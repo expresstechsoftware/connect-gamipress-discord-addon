@@ -125,3 +125,23 @@ function ets_get_gamipress_discord_formated_discord_redirect_url( $page_id ) {
 		}
 	}
 }
+
+  /**
+   * Log API call response
+   *
+   * @param INT          $user_id
+   * @param STRING       $api_url
+   * @param ARRAY        $api_args
+   * @param ARRAY|OBJECT $api_response
+   */
+function ets_gamipress_discord_log_api_response( $user_id, $api_url = '', $api_args = array(), $api_response = '' ) {
+	$log_api_response = get_option( 'ets_learndash_discord_log_api_response' );
+	if ( $log_api_response == true ) {
+		$log_string  = '==>' . $api_url;
+		$log_string .= '-::-' . serialize( $api_args );
+		$log_string .= '-::-' . serialize( $api_response );
+
+		$logs = new Connect_Gamipress_Discord_Add_On_Logs;
+		$logs->write_api_response_logs( $log_string, $user_id );
+	}
+}
