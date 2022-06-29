@@ -1,8 +1,34 @@
 (function( $ ) {
 	'use strict';
 	if (etsGamiPressParams.is_admin) {
-			$('#ets_gamipress_discord_redirect_url').select2({ width: 'resolve' });            
-	}
+		if(jQuery().select2) {
+			$('#ets_gamipress_discord_redirect_url').select2({ width: 'resolve' });
+                        $('#ets_gamipress_discord_redirect_url').on('change', function(){
+				$.ajax({
+					url: etsGamiPressParams.admin_ajax,
+					type: "POST",
+					context: this,
+					data: { 'action': 'ets_gamipress_discord_update_redirect_url', 'ets_gamipress_page_id': $(this).val() , 'ets_gamipress_discord_nonce': etsGamiPressParams.ets_gamipress_discord_nonce },
+					beforeSend: function () {
+						$('p.redirect-url').find('b').html("");
+                                                $('p.ets-discord-update-message').css('display','none');                                               
+						$(this).siblings('p.description').find('span.spinner').addClass("ets-is-active").show();
+					},
+					success: function (data) {
+						$('p.redirect-url').find('b').html(data.formated_discord_redirect_url);
+						$('p.ets-discord-update-message').css('display','block');                                               
+					},
+					error: function (response, textStatus, errorThrown ) {
+						console.log( textStatus + " :  " + response.status + " : " + errorThrown );
+					},
+					complete: function () {
+						$(this).siblings('p.description').find('span.spinner').removeClass("ets-is-active").hide();
+					}
+				});
+
+			});                        
+		}
+	
 		/*Load all roles from discord server*/
 		$.ajax({
 			type: "POST",
@@ -225,7 +251,8 @@
 			}
 			makeDrag($('.makeMeDraggable'));
 			newClone.css({ 'width': '100%', 'left': '0', 'top': '0', 'margin-bottom': '0px', 'position':'unset', 'order': '1' });
-		}          
+		} 
+		}
 		$.skeletabs.setDefaults({
 			keyboard: false,
 		});
