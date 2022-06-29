@@ -12,21 +12,21 @@ $ets_gamipress_discord_redirect_page_id  = sanitize_text_field( trim( get_option
   <input type="hidden" name="action" value="gamipress_discord_application_settings">
   <input type="hidden" name="current_url" value="<?php echo esc_url( ets_gamipress_discord_get_current_screen_url() )?>">   
 	<?php wp_nonce_field( 'save_gamipress_discord_general_settings', 'ets_gamipress_discord_save_settings' ); ?>
-  <div class="ets-discord-input-group">
+  <div class="ets-input-group">
 	<label><?php esc_html_e( 'Client ID', 'connect-gamipress-discord-addon' ); ?> :</label>
 	<input type="text" class="ets-input" name="ets_gamipress_discord_client_id" value="<?php
 	if ( isset( $ets_gamipress_discord_client_id ) ) {
 		echo esc_attr( $ets_gamipress_discord_client_id ); }
 	?>" required placeholder="Discord Client ID">
   </div>
-	<div class="ets-discord-input-group">
+	<div class="ets-input-group">
 	  <label><?php esc_html_e( 'Client Secret', 'connect-gamipress-discord-addon' ); ?> :</label>
 		<input type="text" class="ets-input" name="ets_gamipress_discord_client_secret" value="<?php
 		if ( isset( $ets_gamipress_discord_client_secret ) ) {
 			echo esc_attr( $ets_gamipress_discord_client_secret ); }
     ?>" required placeholder="Discord Client Secret">
 	</div>
-	<div class="ets-discord-input-group">
+	<div class="ets-input-group">
     <label><?php esc_html_e( 'Redirect URL', 'connect-gamipress-discord-addon' ); ?> :</label>
 
     <p class="redirect-url"><b><?php echo esc_url( $ets_gamipress_discord_redirect_url ) ?></b></p>
@@ -37,11 +37,11 @@ $ets_gamipress_discord_redirect_page_id  = sanitize_text_field( trim( get_option
 		<p class="description"><?php esc_html_e( 'Registered discord app url', 'connect-gamipress-discord-addon' ); ?><span class="spinner"></span></p>
                 <p class="description ets-discord-update-message"><?php _e( sprintf( wp_kses( __( 'Redirect URL updated, kindly add/update the same in your discord.com application link <a href="https://discord.com/developers/applications/%s/oauth2/general">https://discord.com/developers</a>', 'connect-gamipress-discord-addon' ) , array( 'a' => array( 'href' => array() ) ) ) ,  $ets_gamipress_discord_client_id ) ); ?></p>                
 	</div>
-	<div class="ets-discord-input-group">
+	<div class="ets-input-group">
             <label><?php esc_html_e( 'Admin Redirect URL Connect to bot', 'connect-gamipress-discord-addon' ); ?> :</label>
             <input type="text" class="ets-input" name="ets_gamipress_discord_admin_redirect_url" value="<?php echo esc_url( get_admin_url('', 'admin.php') ).'?page=connect-gamipress-discord-addon&via=gamipress-discord-bot'; ?>" readonly required />
         </div>   
-	<div class="ets-discord-input-group">
+	<div class="ets-input-group">
             <?php
             if ( isset( $ets_gamipress_discord_connected_bot_name ) && !empty( $ets_gamipress_discord_connected_bot_name ) ){
                 _e( sprintf( wp_kses ( __( '<p class="description">Make sure the Bot %1$s <span class="discord-bot"><b>BOT</b></span>have the high priority than the roles it has to manage. Open <a href="https://discord.com/channels/%2$s">Discord Server</a></p>', 'connect-gamipress-discord-addon'), array( 'p' => array( 'class' => array() ) , 'a' => array( 'href' => array() ), 'span' => array( 'class' => array() ), 'b' => array() ) ), $ets_gamipress_discord_connected_bot_name, $ets_gamipress_discord_server_id ) );
@@ -53,7 +53,7 @@ $ets_gamipress_discord_redirect_page_id  = sanitize_text_field( trim( get_option
 			echo esc_attr( $ets_gamipress_discord_bot_token ); }
 		?>" required placeholder="Discord Bot Token">
 	</div>
-	<div class="ets-discord-input-group">
+	<div class="ets-input-group">
 	  <label><?php esc_html_e( 'Server ID', 'connect-gamipress-discord-addon' ); ?> :</label>
 		<input type="text" class="ets-input" name="ets_gamipress_discord_server_id"
 		placeholder="Discord Server Id" value="<?php

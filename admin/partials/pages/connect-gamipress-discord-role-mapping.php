@@ -12,7 +12,10 @@ $rank_types = get_posts( $args_rank_types );
 $connect_gamipress_default_role        = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_default_role_id' ) ) );
 ?>
 <div class="notice notice-warning ets-notice">
-    <p><i class='fas fa-info'></i> <?php esc_html_e ( 'Drag and Drop the Discord Roles over to the GamiPress ranks', 'connect-gamipress-discord-addon' ); ?></p>
+    <p><i class='fas fa-info'></i> <?php esc_html_e ( 'Drag and Drop the Discord Roles over to the GamiPress Ranks', 'connect-gamipress-discord-addon' ); ?></p>
+</div>
+<div class="notice notice-warning ets-notice">
+  <p><i class='fas fa-info'></i> <?php echo __( 'Note: only published Ranks are displayed', 'connect-gamipress-discord-addon' ); ?></p>
 </div>
 
 <div class="row-container">
@@ -52,7 +55,7 @@ $connect_gamipress_default_role        = sanitize_text_field( trim( get_option( 
 		  <select id="gamipress-defaultRole" name="gamipress_defaultRole">
 			<option value="none"><?php esc_html_e( '-None-', 'connect-gamipress-discord-addon' ); ?></option>
 		  </select>
-		  <p class="description"><?php esc_html_e( 'This Role will be assigned to all', 'connect-gamipress-discord-addon' ); ?></p>
+		  <p class="description"><?php esc_html_e( 'This Role will be assigned to all Ranks', 'connect-gamipress-discord-addon' ); ?></p>
 		</td>
 	  </tr>        
 
