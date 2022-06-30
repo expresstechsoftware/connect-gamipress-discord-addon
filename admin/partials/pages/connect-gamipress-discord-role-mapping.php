@@ -1,13 +1,6 @@
 <?php
 
-$args_rank_types = array(
-    'orderby'          => 'title',
-    'order'            => 'ASC',
-    'post_status'    => 'publish',
-    'numberposts' => -1,
-    'post_type'   => 'rank-type'
-);
-$rank_types = get_posts( $args_rank_types );
+$ets_gamipress_ranks = ets_gamipress_discord_get_ranks();
 
 $connect_gamipress_default_role        = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_default_role_id' ) ) );
 ?>
@@ -31,12 +24,14 @@ $connect_gamipress_default_role        = sanitize_text_field( trim( get_option( 
 	<hr>
 	<div class="gamipress-discord-rank-type">
 	<?php
-	foreach ( $rank_types as $rank_type ) {
+	if( $ets_gamipress_ranks ){ 
+		foreach ( $ets_gamipress_ranks as $ets_gamipress_rank_id => $ets_gamipress_rank_title ) {
 		
 			?>
-		  <div class="makeMeDroppable" data-gamipress_rank_type_id="<?php echo esc_attr( $rank_type->ID ); ?>" ><span><?php echo esc_html( $rank_type->post_title ); ?></span></div>
+		  <div class="makeMeDroppable" data-gamipress_rank_type_id="<?php echo esc_attr( $ets_gamipress_rank_id ); ?>" ><span><?php echo esc_html( $ets_gamipress_rank_title ); ?></span></div>
 			<?php
 		
+		}
 	}
 	?>
 	</div>

@@ -145,3 +145,38 @@ function ets_gamipress_discord_log_api_response( $user_id, $api_url = '', $api_a
 		$logs->write_api_response_logs( $log_string, $user_id );
 	}
 }
+
+  /**
+   * Get GamiPress published ranks
+   *
+   * @return ARRAY|NULL 
+   */
+function ets_gamipress_discord_get_ranks(  ) {
+	$ets_gamipress_ranks = array();
+	$rank_types = gamipress_get_rank_types();
+	foreach( $rank_types as $rank_type => $data ) :
+		global $wpdb;
+		$ranks = $wpdb->prepare(
+			"SELECT p.ID, p.post_title
+			FROM wp_posts AS p
+			WHERE p.post_type = %s
+			 AND p.post_status = %s
+			ORDER BY menu_order ASC
+			",
+			$rank_type,
+			'publish'
+		);
+		$ranks_result = $wpdb->get_results( $ranks, ARRAY_A );
+		if( is_array( $ranks_result ) && count( $ranks_result ) ) {
+			foreach( $ranks_result as $rank_result ) {
+				$ets_gamipress_ranks[ $rank_result['ID'] ] = $rank_result['post_title'];
+                
+			}
+		}              
+	endforeach;
+	if( is_array( $ets_gamipress_ranks )  ){
+		return $ets_gamipress_ranks;
+	} else {
+		return null;    
+	}
+}
