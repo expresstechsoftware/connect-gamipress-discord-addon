@@ -41,6 +41,15 @@ class Connect_Gamipress_Discord_Addon_Public {
 	private $version;
 
 	/**
+	 * The single object Connect_Gamipress_Discord_Addon_Public
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var Connect_Gamipress_Discord_Addon_Public
+	 */
+	private static $instance;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -52,6 +61,23 @@ class Connect_Gamipress_Discord_Addon_Public {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+	}
+
+	/**
+	 * Singleton pattern
+	 *
+	 * @since    1.0.0
+	 * @param       string    $plugin_name       The name of the plugin.
+	 * @param       string    $version    The version of this plugin.
+	 * @return      object    $instance   The instance of the Connect_Gamipress_Discord_Addon_Public class
+	 */
+	public static function get_gamipress_discord_public_instance( $plugin_name, $version ) {
+
+		if ( ! self::$instance ) {
+			self::$instance = new Connect_Gamipress_Discord_Addon_Public( $plugin_name, $version );
+
+		}
+		return self::$instance;
 	}
 
 	/**
@@ -154,7 +180,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$restrictcontent_discord .= '<a href="#" class="ets-btn gamipress-discord-btn-disconnect" ' . $disconnect_btn_bg_color . ' id="gamipress-discord-disconnect-discord" data-user-id="' . esc_attr( $user_id ) . '">' . esc_html( $ets_gamipress_discord_disconnect_button_text ) . '</a>';
 				$restrictcontent_discord .= '<span class="ets-spinner"></span>';
 				$restrictcontent_discord .= '<p>' . esc_html__( sprintf( 'Connected account: %s', $_ets_gamipress_discord_username ), 'connect-gamipress-and-discord' ) . '</p>';
-				$restrictcontent_discord  = ets_learndash_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
+				$restrictcontent_discord  = ets_gamipress_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
 				$restrictcontent_discord .= '</div>';
 				$restrictcontent_discord .= '</div>';
 
@@ -168,7 +194,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<a href="?action=gamipress-discord-login" class="gamipress-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_gamipress_discord_loggedin_button_text ) .  '</a>';
 				$restrictcontent_discord .= '</div>';
-				$restrictcontent_discord  = ets_learndash_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
+				$restrictcontent_discord  = ets_gamipress_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
 
 				$restrictcontent_discord .= '</div>';
 

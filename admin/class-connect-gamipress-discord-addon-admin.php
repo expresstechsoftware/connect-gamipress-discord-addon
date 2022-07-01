@@ -41,16 +41,26 @@ class Connect_Gamipress_Discord_Addon_Admin {
 	private $version;
 
 	/**
+	 * Instance of Connect_Gamipress_Discord_Addon_Public class
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      Connect_Gamipress_Discord_Addon_Public
+	 */
+	private $gamipress_discord_public_instance;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $gamipress_discord_public_instance ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->gamipress_discord_public_instance = $gamipress_discord_public_instance;
 
 	}
 
