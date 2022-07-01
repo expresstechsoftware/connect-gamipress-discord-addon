@@ -168,6 +168,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'admin_post_gamipress_discord_save_role_mapping', $plugin_admin, 'ets_gamipress_discord_save_role_mapping' );                
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'ets_gamipress_discord_connect_bot' );                
 		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_update_redirect_url', $plugin_admin, 'ets_gamipress_discord_update_redirect_url' );                                                                                                
+		$this->loader->add_action( 'admin_post_gamipress_discord_save_advance_settings', $plugin_admin, 'ets_gamipress_discord_save_advance_settings' );                
 	}
 
 	/**
@@ -183,6 +184,9 @@ class Connect_Gamipress_Discord_Addon {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_shortcode( 'gamipress_discord', $plugin_public, 'ets_gamipress_discord_add_connect_discord_button' );                
+		$this->loader->add_action( 'show_user_profile', $plugin_public, 'ets_gamipress_discord_display_connect_discord_button' );                
+		$this->loader->add_action( 'edit_user_profile', $plugin_public, 'ets_gamipress_discord_display_connect_discord_button' );                                
 
 	}
 

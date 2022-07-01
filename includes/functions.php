@@ -180,3 +180,101 @@ function ets_gamipress_discord_get_ranks(  ) {
 		return null;    
 	}
 }
+
+  /**
+   * Get User's ranks
+   *
+   * @return ARRAY|NULL 
+   */
+function ets_gamipress_discord_get_user_ranks_ids( $user_id ) {
+	$ets_gamipress_user_ranks_ids = array();
+	$rank_types = gamipress_get_rank_types();
+	foreach( $rank_types as $rank_type => $data ) :
+            
+		$user_rank = gamipress_get_user_rank( $user_id, $rank_type ); 
+		if( $user_rank ){
+			array_push( $ets_gamipress_user_ranks_ids, $user_rank->ID );
+            
+		}
+	endforeach;
+	if( is_array( $ets_gamipress_user_ranks_ids ) && count( $ets_gamipress_user_ranks_ids ) > 0 ){
+		return $ets_gamipress_user_ranks_ids;
+	} else {
+		return null;    
+	}    
+}
+
+/*
+  Get message for what role is assigned to the member.
+  @param STRING $mapped_role_name
+  @param STRING $default_role_name
+  @param STRING $restrictcontent_discord
+*/
+
+function ets_learndash_discord_roles_assigned_message ( $mapped_role_name, $default_role_name, $restrictcontent_discord ) {
+    
+	if ( $mapped_role_name ) {
+		$restrictcontent_discord .= '<p class="ets_assigned_role">';
+					
+		$restrictcontent_discord .= esc_html__( 'Following Roles will be assigned to you in Discord: ', 'connect-gamipress-discord-addon' );
+		$restrictcontent_discord .=  $mapped_role_name  ;
+		if ( $default_role_name ) {
+			$restrictcontent_discord .=   $default_role_name  ; 
+                                                
+		}
+					
+		$restrictcontent_discord .= '</p>';
+	} elseif( $default_role_name ) {
+		$restrictcontent_discord .= '<p class="ets_assigned_role">';
+					
+		$restrictcontent_discord .= esc_html__( 'Following Role will be assigned to you in Discord: ', 'connect-gamipress-discord-addon' );
+		$restrictcontent_discord .= $default_role_name  ; 
+					
+		$restrictcontent_discord .= '</p>';
+                                         
+	}
+	return $restrictcontent_discord;
+}
+
+/**
+ * Get allowed html using Wordpress API function wp_kses
+ *
+ * @param STRING $html_message
+ * @return STRING $html_message
+ */
+
+function ets_gamipress_discord_allowed_html( ) {
+	$allowed_html = array(
+		'div' => array(
+			'class' => array()
+		),
+		'p' => array(               
+			'class' => array()
+		),
+		'a' => array(                                
+			'id' => array(),
+			'data-user-id' => array(),                    
+			'href' => array(), 
+			'class' => array(),
+			'style' => array(),                    
+		),
+		'label' => array(
+			'class'=>array() 
+		),
+		'h3' => array(),            
+		'span' => array(
+			'class' => array()
+		),
+		'i' => array(
+			'style' => array(),
+			'class' => array()                    
+		),
+		'button' => array(
+			'class' => array(),
+			'data-user-id' => array(),
+			'id' => array(),                    
+		)            
+	);
+
+	return $allowed_html;
+}
