@@ -135,7 +135,7 @@ function ets_get_gamipress_discord_formated_discord_redirect_url( $page_id ) {
    * @param ARRAY|OBJECT $api_response
    */
 function ets_gamipress_discord_log_api_response( $user_id, $api_url = '', $api_args = array(), $api_response = '' ) {
-	$log_api_response = get_option( 'ets_learndash_discord_log_api_response' );
+	$log_api_response = get_option( 'ets_gamipress_discord_log_api_response' );
 	if ( $log_api_response == true ) {
 		$log_string  = '==>' . $api_url;
 		$log_string .= '-::-' . serialize( $api_args );
@@ -158,7 +158,7 @@ function ets_gamipress_discord_get_ranks(  ) {
 		global $wpdb;
 		$ranks = $wpdb->prepare(
 			"SELECT p.ID, p.post_title
-			FROM wp_posts AS p
+                        FROM {$wpdb->prefix}posts AS p
 			WHERE p.post_type = %s
 			 AND p.post_status = %s
 			ORDER BY menu_order ASC
@@ -211,7 +211,7 @@ function ets_gamipress_discord_get_user_ranks_ids( $user_id ) {
   @param STRING $restrictcontent_discord
 */
 
-function ets_learndash_discord_roles_assigned_message ( $mapped_role_name, $default_role_name, $restrictcontent_discord ) {
+function ets_gamipress_discord_roles_assigned_message ( $mapped_role_name, $default_role_name, $restrictcontent_discord ) {
     
 	if ( $mapped_role_name ) {
 		$restrictcontent_discord .= '<p class="ets_assigned_role">';
@@ -277,4 +277,78 @@ function ets_gamipress_discord_allowed_html( ) {
 	);
 
 	return $allowed_html;
+}
+
+/**
+ * Get Action data from table `actionscheduler_actions`
+ *
+ * @param INT $action_id
+ */
+function ets_gamipress_discord_as_get_action_data( $action_id ) {
+	global $wpdb;
+	$result = $wpdb->get_results( $wpdb->prepare( 'SELECT aa.hook, aa.status, aa.args, ag.slug AS as_group FROM ' . $wpdb->prefix . 'actionscheduler_actions as aa INNER JOIN ' . $wpdb->prefix . 'actionscheduler_groups as ag ON aa.group_id=ag.group_id WHERE `action_id`=%d AND ag.slug=%s', $action_id, GAMIPRESS_DISCORD_AS_GROUP_NAME ), ARRAY_A );
+        
+	if ( ! empty( $result ) ) {
+		return $result[0];
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Get how many times a hook is failed in a particular day.
+ *
+ * @param STRING $hook
+ */
+function ets_gamipress_discord_count_of_hooks_failures( $hook ) {
+	global $wpdb;
+	$result = $wpdb->get_results( $wpdb->prepare( 'SELECT count(last_attempt_gmt) as hook_failed_count FROM ' . $wpdb->prefix . 'actionscheduler_actions WHERE `hook`=%s AND status="failed" AND DATE(last_attempt_gmt) = %s', $hook, date( 'Y-m-d' ) ), ARRAY_A );
+	
+        if ( ! empty( $result ) ) {
+		return $result['0']['hook_failed_count'];
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Get randon integer between a predefined range.
+ *
+ * @param INT $add_upon
+ */
+function ets_gamipress_discord_get_random_timestamp( $add_upon = '' ) {
+	if ( $add_upon != '' && $add_upon !== false ) {
+		return $add_upon + random_int( 5, 15 );
+	} else {
+		return strtotime( 'now' ) + random_int( 5, 15 );
+	}
+}
+
+/**
+ * Get the highest available last attempt schedule time
+ */
+
+function ets_gamipress_discord_get_highest_last_attempt_timestamp() {
+	global $wpdb;
+	$result = $wpdb->get_results( $wpdb->prepare( 'SELECT aa.last_attempt_gmt FROM ' . $wpdb->prefix . 'actionscheduler_actions as aa INNER JOIN ' . $wpdb->prefix . 'actionscheduler_groups as ag ON aa.group_id = ag.group_id WHERE ag.slug = %s ORDER BY aa.last_attempt_gmt DESC limit 1', GAMIPRESS_DISCORD_AS_GROUP_NAME ), ARRAY_A );
+
+	if ( ! empty( $result ) ) {
+		return strtotime( $result['0']['last_attempt_gmt'] );
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Get pending jobs 
+ */
+function ets_gamipress_discord_get_all_pending_actions() {
+	global $wpdb;
+	$result = $wpdb->get_results( $wpdb->prepare( 'SELECT aa.* FROM ' . $wpdb->prefix . 'actionscheduler_actions as aa INNER JOIN ' . $wpdb->prefix . 'actionscheduler_groups as ag ON aa.group_id = ag.group_id WHERE ag.slug = %s AND aa.status="pending" ', GAMIPRESS_DISCORD_AS_GROUP_NAME ), ARRAY_A );
+
+	if ( ! empty( $result ) ) {
+		return $result['0'];
+	} else {
+		return false;
+	}
 }

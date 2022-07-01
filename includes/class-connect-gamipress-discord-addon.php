@@ -78,6 +78,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_common_hooks();
 
 	}
 
@@ -98,6 +99,11 @@ class Connect_Gamipress_Discord_Addon {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+
+		/**
+		 * The class responsible for defining all methods that help to schedule actions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/libraries/action-scheduler/action-scheduler.php';
             
 		/**
 		 * Common functions file.
@@ -188,6 +194,70 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'show_user_profile', $plugin_public, 'ets_gamipress_discord_display_connect_discord_button' );                
 		$this->loader->add_action( 'edit_user_profile', $plugin_public, 'ets_gamipress_discord_display_connect_discord_button' );                                
 
+	}
+
+	/**
+	 * Define actions which are not in admin or not public
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_common_hooks() {
+		$this->loader->add_action( 'action_scheduler_failed_execution',  $this, 'ets_gamipress_discord_reschedule_failed_action' );		     		
+		$this->loader->add_filter( 'action_scheduler_queue_runner_batch_size', $this, 'ets_gamipress_discord_queue_batch_size' );                
+		$this->loader->add_filter( 'action_scheduler_queue_runner_concurrent_batches', $this, 'ets_gamipress_discord_concurrent_batches' );            
+		
+	}
+
+	/**
+	 * Re-schedule  failed action 
+	 *
+	 * @param INT            $action_id
+	 * @param OBJECT         $e
+	 * @param OBJECT context
+	 * @return NONE
+	 */
+	public function ets_gamipress_discord_reschedule_failed_action( $action_id  ) {
+		// First check if the action is for gamipress discord.
+		$action_data = ets_gamipress_discord_as_get_action_data( $action_id );
+		if ( $action_data !== false ) {
+			$hook              = $action_data['hook'];
+			$args              = json_decode( $action_data['args'] );
+			$retry_failed_api  = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_retry_failed_api' ) ) );
+			$hook_failed_count = ets_gamipress_discord_count_of_hooks_failures( $hook );
+			$retry_api_count   = absint( sanitize_text_field( trim( get_option( 'ets_gamipress_discord_retry_api_count' ) ) ) );
+			if ( $hook_failed_count < $retry_api_count && $retry_failed_api == true && $action_data['as_group'] == GAMIPRESS_DISCORD_AS_GROUP_NAME && $action_data['status'] === 'failed' ) {
+				as_schedule_single_action( ets_gamipress_discord_get_random_timestamp( ets_gamipress_discord_get_highest_last_attempt_timestamp() ), $hook, array_values( $args ), GAMIPRESS_DISCORD_AS_GROUP_NAME );
+			}
+		}
+	}
+        
+	/**
+	 * Set action scheuduler batch size.
+	 *
+	 * @param INT $batch_size
+	 * @return INT $concurrent_batches
+	 */
+	public function ets_gamipress_discord_queue_batch_size( $batch_size ) {
+		if ( ets_gamipress_discord_get_all_pending_actions() !== false ) {
+			return absint( get_option( 'ets_gamipress_discord_job_queue_batch_size' ) );
+		} else {
+			return $batch_size;
+		}
+	}
+        
+	/**
+	 * Set action scheuduler concurrent batches.
+	 *
+	 * @param INT $concurrent_batches
+	 * @return INT $concurrent_batches
+	 */
+	public function ets_gamipress_discord_concurrent_batches( $concurrent_batches ) {
+		if ( ets_gamipress_discord_get_all_pending_actions() !== false ) {
+			return absint( get_option( 'ets_gamipress_discord_job_queue_concurrency' ) );
+		} else {
+			return $concurrent_batches;
+		}
 	}
 
 	/**

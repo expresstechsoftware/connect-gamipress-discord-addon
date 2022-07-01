@@ -58,6 +58,21 @@ define( 'CONNECT_GAMIPRESS_API_URL', 'https://discord.com/api/v10/' );
 define( 'CONNECT_GAMIPRESS_DISCORD_BOT_PERMISSIONS', 8 );
 
 /**
+ * Define group name for action scheduler actions
+ */
+define( 'GAMIPRESS_DISCORD_AS_GROUP_NAME', 'ets-gamipress-discord' );
+
+/**
+ * Follwing response codes not cosider for re-try API calls.
+ */
+define( 'GAMIPRESS_DISCORD_DONOT_RETRY_THESE_API_CODES', array( 0, 10003, 50033, 10004, 50025, 10013, 10011 ) );
+
+/**
+ * Define plugin directory url
+ */
+define( 'GAMIPRESS_DISCORD_DONOT_RETRY_HTTP_CODES', array( 400, 401, 403, 404, 405, 502 ) );
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-connect-gamipress-discord-addon-activator.php
  */
