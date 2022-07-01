@@ -193,6 +193,10 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_shortcode( 'gamipress_discord', $plugin_public, 'ets_gamipress_discord_add_connect_discord_button' );                
 		$this->loader->add_action( 'show_user_profile', $plugin_public, 'ets_gamipress_discord_display_connect_discord_button' );                
 		$this->loader->add_action( 'edit_user_profile', $plugin_public, 'ets_gamipress_discord_display_connect_discord_button' );                                
+		$this->loader->add_action( 'init', $plugin_public, 'ets_gamipress_discord_api_callback' );
+		$this->loader->add_action( 'ets_gamipress_discord_as_handle_add_member_to_guild', $plugin_public, 'ets_gamipress_discord_as_handler_add_member_to_guild', 10, 3 );                
+		$this->loader->add_action( 'ets_gamipress_discord_as_schedule_member_put_role', $plugin_public, 'ets_gamipress_discord_as_handler_put_member_role', 10, 3 );                                
+		$this->loader->add_action( 'ets_gamipress_discord_as_send_dm', $plugin_public, 'ets_gamipress_discord_handler_send_dm', 10, 3 );                                
 
 	}
 
