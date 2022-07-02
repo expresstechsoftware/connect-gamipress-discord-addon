@@ -107,7 +107,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 		 * class.
 		 */
 		global $pagenow;
-		if ( $pagenow === 'profile.php' ){
+		if ( $pagenow === 'profile.php' || $pagenow === 'user-edit.php'){
 			$this->gamipress_discord_public_instance->enqueue_scripts();                        
 			return;
 		}
