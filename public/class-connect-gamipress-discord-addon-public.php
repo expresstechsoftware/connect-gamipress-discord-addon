@@ -109,20 +109,14 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Connect_Gamipress_Discord_Addon_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Connect_Gamipress_Discord_Addon_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-gamipress-discord-addon-public.js', array( 'jquery' ), $this->version, false );
+		$script_params = array(
+			'admin_ajax'                  => admin_url( 'admin-ajax.php' ),
+			'permissions_const'           => CONNECT_GAMIPRESS_DISCORD_BOT_PERMISSIONS,
+			'ets_gamipress_discord_nonce' => wp_create_nonce( 'ets-gamipress-ajax-nonce' ),
+		);
+		wp_localize_script( $this->plugin_name, 'etsGamiPressParams', $script_params );
+
 
 	}
 
@@ -611,6 +605,102 @@ class Connect_Gamipress_Discord_Addon_Public {
 			// this should be catch by Action schedule failed action.
 			throw new Exception( 'Failed in function ets_gamipress_discord_handler_send_dm' );
 		}
+	}
+
+	/**
+	 * Schedule delete discord role for a student
+	 *
+	 * @param INT  $user_id
+	 * @param INT  $ets_gamipress_discord_role_id
+	 * @param BOOL $is_schedule
+	 * @return OBJECT API response
+	 */
+	public function delete_discord_role( $user_id, $ets_gamipress_discord_role_id, $is_schedule = true ) {
+		if ( $is_schedule ) {
+			as_schedule_single_action( ets_gamipress_discord_get_random_timestamp( ets_gamipress_discord_get_highest_last_attempt_timestamp() ), 'ets_gamipress_discord_as_schedule_delete_role', array( $user_id, $ets_gamipress_discord_role_id, $is_schedule ), GAMIPRESS_DISCORD_AS_GROUP_NAME );
+		} else {
+			$this->ets_gamipress_discord_as_handler_delete_memberrole( $user_id, $ets_gamipress_discord_role_id, $is_schedule );
+		}
+	}
+
+	/**
+	 * Action Schedule handler to process delete role of a student.
+	 *
+	 * @param INT  $user_id
+	 * @param INT  $ets_gamipress_discord_role_id
+	 * @param BOOL $is_schedule
+	 * @return OBJECT API response
+	 */
+	public function ets_gamipress_discord_as_handler_delete_memberrole( $user_id, $ets_gamipress_discord_role_id, $is_schedule = true ) {
+
+		$guild_id                       = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_server_id' ) ) );
+		$_ets_gamipress_discord_user_id = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
+		$discord_bot_token              = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_bot_token' ) ) );
+		$discord_delete_role_api_url    = CONNECT_GAMIPRESS_API_URL . 'guilds/' . $guild_id . '/members/' . $_ets_gamipress_discord_user_id . '/roles/' . $ets_gamipress_discord_role_id;
+		if ( $_ets_gamipress_discord_user_id ) {
+			$param = array(
+				'method'  => 'DELETE',
+				'headers' => array(
+					'Content-Type'   => 'application/json',
+					'Authorization'  => 'Bot ' . $discord_bot_token,
+					'Content-Length' => 0,
+				),
+			);
+
+			$response = wp_remote_request( $discord_delete_role_api_url, $param );
+			ets_gamipress_discord_log_api_response( $user_id, $discord_delete_role_api_url, $param, $response );
+			if ( ets_gamipress_discord_check_api_errors( $response ) ) {
+				$response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
+				Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+				if ( $is_schedule ) {
+					// this exception should be catch by action scheduler.
+					throw new Exception( 'Failed in function ets_gamipress_discord_as_handler_delete_memberrole' );
+				}
+			}
+			return $response;
+		}
+	}
+
+	/**
+	 * Disconnect user from discord, and , if the case, kick students on disconnect
+	 *
+	 * @param NONE
+	 * @return OBJECT JSON response
+	 */
+	public function ets_gamipress_discord_disconnect_from_discord() {
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( 'Unauthorized user', 401 );
+			exit();
+		}
+
+		// Check for nonce security
+		if ( ! wp_verify_nonce( $_POST['ets_gamipress_discord_nonce'], 'ets-gamipress-ajax-nonce' ) ) {
+				wp_send_json_error( 'You do not have sufficient rights', 403 );
+				exit();
+		}
+		$user_id              = sanitize_text_field( trim( $_POST['user_id'] ) );
+		$kick_upon_disconnect = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_kick_upon_disconnect' ) ) );
+		if ( $user_id ) {
+			delete_user_meta( $user_id, '_ets_gamipress_discord_access_token' );
+			delete_user_meta( $user_id, '_ets_gamipress_discord_refresh_token' );
+			$user_roles = ets_gamipress_discord_get_user_roles( $user_id );
+			if ( $kick_upon_disconnect ) {
+
+				if ( is_array( $user_roles ) ) {
+					foreach ( $user_roles as $user_role ) {
+						$this->delete_discord_role( $user_id, $user_role );
+					}
+				}
+			} else {
+				$this->delete_member_from_guild( $user_id, false );
+			}
+		}
+		$event_res = array(
+			'status'  => 1,
+			'message' => 'Successfully disconnected',
+		);
+		wp_send_json( $event_res );
 	}
 
 }

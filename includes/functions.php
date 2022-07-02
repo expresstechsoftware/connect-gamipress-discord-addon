@@ -381,3 +381,34 @@ function ets_gamipress_discord_get_all_pending_actions() {
 		return false;
 	}
 }
+
+/**
+ * Get student's roles ids
+ *
+ * @param INT $user_id
+ * @return ARRAY|NULL $roles
+ */
+function ets_gamipress_discord_get_user_roles ( $user_id ){
+	global $wpdb;
+
+	$usermeta_table = $wpdb->prefix . "usermeta";
+	$user_roles_sql = "SELECT * FROM " . $usermeta_table . " WHERE `user_id` = %d AND ( `meta_key` like '_ets_gamipress_discord_role_id_for_%' OR `meta_key` = 'ets_gamipress_discord_default_role_id' OR `meta_key` = '_ets_gamipress_discord_last_default_role' ); ";
+	$user_roles_prepare = $wpdb->prepare( $user_roles_sql, $user_id );
+	
+	$user_roles = $wpdb->get_results( $user_roles_prepare , ARRAY_A );
+        
+	if ( is_array( $user_roles ) && count( $user_roles ) ){
+		$roles = array();
+		foreach ( $user_roles as  $role ) {
+                
+			array_push( $roles, $role['meta_value'] );
+		}
+		
+                return $roles;
+            
+	}else{
+            
+		return null;
+	}
+   
+}

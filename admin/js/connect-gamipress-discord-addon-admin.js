@@ -251,7 +251,7 @@
 			}
 			makeDrag($('.makeMeDraggable'));
 			newClone.css({ 'width': '100%', 'left': '0', 'top': '0', 'margin-bottom': '0px', 'position':'unset', 'order': '1' });
-		} 
+		}                 
 		}
 		$.skeletabs.setDefaults({
 			keyboard: false,
