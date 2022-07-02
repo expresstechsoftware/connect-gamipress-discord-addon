@@ -6,8 +6,6 @@
             
 		e.preventDefault();
 		var userId = $(this).data('user-id');
-                console.log(userId);
-                return;
 		$.ajax({
 			type: "POST",
 			dataType: "JSON",
