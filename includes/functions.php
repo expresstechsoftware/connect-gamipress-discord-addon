@@ -466,3 +466,19 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
 		return str_replace( $find, $replace, $message );
 
 }
+
+/*
+  Remove all usermeta created by this plugin.
+  @param INT $user_id
+*/
+function ets_gamipress_discord_remove_usermeta ( $user_id ){
+ 
+	global $wpdb;
+        
+        
+	$usermeta_table = $wpdb->prefix . "usermeta";
+	$usermeta_sql = "DELETE FROM " . $usermeta_table . " WHERE `user_id` = %d AND  `meta_key` LIKE '_ets_gamipress_discord%'; ";
+	$delete_usermeta_sql = $wpdb->prepare( $usermeta_sql, $user_id );
+	$wpdb->query( $delete_usermeta_sql );
+             
+}

@@ -745,4 +745,58 @@ class Connect_Gamipress_Discord_Addon_Public {
 		wp_send_json( $event_res );
 	}
 
+	/**
+	 * Schedule delete existing user from guild
+	 *
+	 * @param INT  $user_id
+	 * @param BOOL $is_schedule
+	 * @param NONE
+	 */
+	public function delete_member_from_guild( $user_id, $is_schedule = true ) {
+		if ( $is_schedule && isset( $user_id ) ) {
+
+			as_schedule_single_action( ets_gamipress_discord_get_random_timestamp( ets_gamipress_discord_get_highest_last_attempt_timestamp() ), 'ets_gamipress_discord_as_schedule_delete_member', array( $user_id, $is_schedule ), GAMIPRESS_DISCORD_AS_GROUP_NAME );
+		} else {
+			if ( isset( $user_id ) ) {
+				$this->ets_gamipress_discord_as_handler_delete_member_from_guild( $user_id, $is_schedule );
+			}
+		}
+	}
+
+	/**
+	 * AS Handling member delete from huild
+	 *
+	 * @param INT  $user_id
+	 * @param BOOL $is_schedule
+	 * @return OBJECT API response
+	 */
+	public function ets_gamipress_discord_as_handler_delete_member_from_guild( $user_id, $is_schedule ) {
+		$guild_id                       = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_server_id' ) ) );
+		$discord_bot_token              = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_bot_token' ) ) );
+		$_ets_gamipress_discord_user_id = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
+		$guilds_delete_memeber_api_url  = CONNECT_GAMIPRESS_API_URL . 'guilds/' . $guild_id . '/members/' . $_ets_gamipress_discord_user_id;
+		$guild_args                     = array(
+			'method'  => 'DELETE',
+			'headers' => array(
+				'Content-Type'  => 'application/json',
+				'Authorization' => 'Bot ' . $discord_bot_token,
+			),
+		);
+		$guild_response                 = wp_remote_post( $guilds_delete_memeber_api_url, $guild_args );
+
+		ets_gamipress_discord_log_api_response( $user_id, $guilds_delete_memeber_api_url, $guild_args, $guild_response );
+		if ( ets_gamipress_discord_check_api_errors( $guild_response ) ) {
+			$response_arr = json_decode( wp_remote_retrieve_body( $guild_response ), true );
+			Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+			if ( $is_schedule ) {
+				// this exception should be catch by action scheduler.
+				throw new Exception( 'Failed in function ets_gamipress_discord_as_handler_delete_member_from_guild' );
+			}
+		}
+
+		/*Delete all usermeta related to discord connection*/
+		ets_gamipress_discord_remove_usermeta( $user_id );
+
+	}
+
 }
