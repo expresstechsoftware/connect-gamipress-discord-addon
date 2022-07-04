@@ -412,3 +412,57 @@ function ets_gamipress_discord_get_user_roles ( $user_id ){
 	}
    
 }
+
+/**
+ * Get formatted message to send in DM
+ *
+ * @param INT $user_id
+ * @param ARRAY $ranks the user's ranks
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]
+ */
+function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $message ) {
+    
+	$user_obj    = get_user_by( 'id', $user_id );
+	$USERNAME = $user_obj->user_login;
+	$USER_EMAIL    = $user_obj->user_email;
+	$SITE_URL  = get_bloginfo( 'url' );
+	$BLOG_NAME = get_bloginfo( 'name' );
+
+	$RANKS = '';
+	if( is_array( $ranks_user ) ){
+		$args_ranks = array(
+        	'orderby'          => 'title',
+        	'order'            => 'ASC',
+		'numberposts' => count( $ranks_user ),
+		'post__in' => $ranks_user,
+		'post_type' => 'any'
+		);
+		$ranks = get_posts( $args_ranks );
+		$lastKey = array_key_last( $ranks );
+		$commas = ', ';        
+		foreach ( $ranks as $key => $rank) {
+			if ( $lastKey === $key )  
+				$commas = ' ' ;
+				$RANKS .= esc_html( $rank->post_title ). $commas;
+			}
+	}
+
+
+		$find    = array(
+			'[GP_RANKS]',
+			'[GP_USER_NAME]',
+			'[GP_USER_EMAIL]',
+			'[SITE_URL]',
+			'[BLOG_NAME]'
+		);
+		$replace = array(
+			$RANKS,                    
+			$USERNAME,
+			$USER_EMAIL,
+			$SITE_URL,
+			$BLOG_NAME
+		);
+
+		return str_replace( $find, $replace, $message );
+
+}

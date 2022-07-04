@@ -438,7 +438,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
 		$discord_role                       = '';
 		$discord_roles                      = array();
-		$ranks_user                            = map_deep( ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
+		$ranks_user                         = map_deep( ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
 
 		$ets_gamipress_discord_send_welcome_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_welcome_dm' ) ) );
 		if ( is_array( $ranks_user ) ) {
@@ -561,7 +561,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * @param
 	 * @param STRING $type (warning|expired)
 	 */
-	public function ets_gamipress_discord_handler_send_dm( $user_id, $courses, $type = 'warning' ) {
+	public function ets_gamipress_discord_handler_send_dm( $user_id, $ranks_user, $type = 'warning' ) {
 		$discord_user_id   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
 		$discord_bot_token = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_bot_token' ) ) );
 
@@ -580,7 +580,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 
 		if ( $type == 'welcome' ) {
 
-			$message = 'welcome';
+			$message = ets_gamipress_discord_get_formatted_welcome_dm($user_id, $ranks_user, $ets_gamipress_discord_welcome_message );
 		}
                 $creat_dm_url = CONNECT_GAMIPRESS_API_URL . '/channels/' . $dm_channel_id . '/messages';
 
