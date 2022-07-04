@@ -10,31 +10,7 @@ $set_job_cnrc                                  = sanitize_text_field( trim( get_
 $set_job_q_batch_size                          = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_job_queue_batch_size' ) ) );
 $log_api_res                                   = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_log_api_response' ) ) );
 
-		$guild_id                           = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_server_id' ) ) );
-		$discord_bot_token                  = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_bot_token' ) ) );
-		$default_role                       = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_default_role_id' ) ) );
-		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
-		$discord_role                       = '';
-		$discord_roles                      = array();
-		$ranks_user                            = map_deep( ets_gamipress_discord_get_user_ranks_ids( 11), 'sanitize_text_field' );
 
-		$ets_gamipress_discord_send_welcome_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_welcome_dm' ) ) );
-		if ( is_array( $ranks_user ) ) {
-			foreach ( $ranks_user as $rank_id ) {
-
-				if ( is_array( $ets_gamipress_discord_role_mapping ) && array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
-					$discord_role = sanitize_text_field( trim( $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $rank_id ] ) );
-					array_push( $discord_roles, $discord_role );
-					//update_user_meta( $user_id, '_ets_gamipress_discord_role_id_for_' . $rank_id, $discord_role );
-				}
-			}
-		}
-                
-                echo '<pre>';
-                
-                var_dump($ets_gamipress_discord_send_welcome_dm);
-                
-                echo '</pre>';
 ?>
 <form method="post" action="<?php echo esc_url( get_site_url().'/wp-admin/admin-post.php' ) ?>">
  <input type="hidden" name="action" value="gamipress_discord_save_advance_settings">
