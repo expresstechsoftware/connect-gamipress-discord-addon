@@ -42,7 +42,7 @@ $log_api_res                                   = sanitize_text_field( trim( get_
 		<td> <fieldset>
 		<textarea class="ets_gamipress_discord_dm_textarea" name="ets_gamipress_discord_welcome_message" id="ets_gamipress_discord_welcome_message" row="25" cols="50"><?php if ( $ets_gamipress_discord_welcome_message ) { echo esc_textarea( wp_unslash( $ets_gamipress_discord_welcome_message ) ); } ?></textarea> 
 	<br/>
-	<small>Merge fields: [GP_STUDENT_NAME], [GP_STUDENT_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]</small>
+	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>
 	  <tr>
@@ -57,7 +57,7 @@ $log_api_res                                   = sanitize_text_field( trim( get_
 		</fieldset></td>
 	  </tr>
 	  <tr>
-		<th scope="row"><?php esc_html_e( 'Don\'t kick students upon disconnect', 'connect-gamipress-discord-addon' ); ?></th>
+		<th scope="row"><?php esc_html_e( 'Don\'t kick users upon disconnect', 'connect-gamipress-discord-addon' ); ?></th>
 		<td> <fieldset>
 		<input name="kick_upon_disconnect" type="checkbox" id="kick_upon_disconnect" 
 		<?php
