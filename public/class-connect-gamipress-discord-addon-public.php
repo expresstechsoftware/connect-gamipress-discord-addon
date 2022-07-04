@@ -438,14 +438,14 @@ class Connect_Gamipress_Discord_Addon_Public {
 		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
 		$discord_role                       = '';
 		$discord_roles                      = array();
-		$ranks_user                            = map_deep(ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
+		$ranks_user                            = map_deep( ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
 
 		$ets_gamipress_discord_send_welcome_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_welcome_dm' ) ) );
 		if ( is_array( $ranks_user ) ) {
 			foreach ( $ranks_user as $rank_id ) {
 
-				if ( is_array( $ets_gamipress_discord_role_mapping ) && array_key_exists( 'gamipress_course_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
-					$discord_role = sanitize_text_field( trim( $ets_gamipress_discord_role_mapping[ 'gamipress_course_id_' . $rank_id ] ) );
+				if ( is_array( $ets_gamipress_discord_role_mapping ) && array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
+					$discord_role = sanitize_text_field( trim( $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $rank_id ] ) );
 					array_push( $discord_roles, $discord_role );
 					update_user_meta( $user_id, '_ets_gamipress_discord_role_id_for_' . $rank_id, $discord_role );
 				}
@@ -608,7 +608,49 @@ class Connect_Gamipress_Discord_Addon_Public {
 	}
 
 	/**
-	 * Schedule delete discord role for a student
+	 * Create DM channel for a give user_id
+	 *
+	 * @param INT $user_id
+	 * @return MIXED
+	 */
+	public function ets_gamipress_discord_create_member_dm_channel( $user_id ) {
+		$discord_user_id       = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
+		$discord_bot_token     = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_bot_token' ) ) );
+		$create_channel_dm_url = CONNECT_GAMIPRESS_API_URL . '/users/@me/channels';
+		$dm_channel_args       = array(
+			'method'  => 'POST',
+			'headers' => array(
+				'Content-Type'  => 'application/json',
+				'Authorization' => 'Bot ' . $discord_bot_token,
+			),
+			'body'    => json_encode(
+				array(
+					'recipient_id' => $discord_user_id,
+				)
+			),
+		);
+
+		$created_dm_response = wp_remote_post( $create_channel_dm_url, $dm_channel_args );
+		ets_gamipress_discord_log_api_response( $user_id, $create_channel_dm_url, $dm_channel_args, $created_dm_response );
+		$response_arr = json_decode( wp_remote_retrieve_body( $created_dm_response ), true );
+
+		if ( is_array( $response_arr ) && ! empty( $response_arr ) ) {
+			// check if there is error in create dm response
+			if ( array_key_exists( 'code', $response_arr ) || array_key_exists( 'error', $response_arr ) ) {
+                            Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+				if ( ets_gamipress_discord_check_api_errors( $created_dm_response ) ) {
+					// this should be catch by Action schedule failed action.
+					throw new Exception( 'Failed in function ets_gamipress_discord_create_member_dm_channel' );
+				}
+			} else {
+				update_user_meta( $user_id, '_ets_gamipress_discord_dm_channel', $response_arr );
+			}
+		}
+		return $response_arr;
+	}
+
+	/**
+	 * Schedule delete discord role for a User
 	 *
 	 * @param INT  $user_id
 	 * @param INT  $ets_gamipress_discord_role_id
@@ -624,7 +666,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	}
 
 	/**
-	 * Action Schedule handler to process delete role of a student.
+	 * Action Schedule handler to process delete role of a User.
 	 *
 	 * @param INT  $user_id
 	 * @param INT  $ets_gamipress_discord_role_id
@@ -662,7 +704,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	}
 
 	/**
-	 * Disconnect user from discord, and , if the case, kick students on disconnect
+	 * Disconnect user from discord, and , if the case, kick Users on disconnect
 	 *
 	 * @param NONE
 	 * @return OBJECT JSON response
