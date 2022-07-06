@@ -764,7 +764,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	}
 
 	/**
-	 * AS Handling member delete from huild
+	 * AS Handling member delete from guild
 	 *
 	 * @param INT  $user_id
 	 * @param BOOL $is_schedule
@@ -797,6 +797,42 @@ class Connect_Gamipress_Discord_Addon_Public {
 		/*Delete all usermeta related to discord connection*/
 		ets_gamipress_discord_remove_usermeta( $user_id );
 
+	}
+
+	/**
+	 * 
+	 * @param int $user_id
+	 * @param WP_Post $new_rank
+	 * @param WP_Post $old_rank
+	 * @param int $admin_id
+	 * @param int $achievement_id
+	 */
+	public function ets_gamipress_discord_update_user_rank( $user_id, $new_rank, $old_rank, $admin_id = 0, $achievement_id = null ) {
+            //update_option('gamipress_update_rank_user_' . time() , ' user_id : ' . $user_id .'  new_rank : '. $new_rank->ID  .  ' old_rank : '. $old_rank->ID. 'achievement_id : ' . $achievement_id);
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( 'Unauthorized user', 401 );
+			exit();
+		}
+		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
+		$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );                
+		$rank_id = $new_rank->ID;
+		$old_rank_id = $old_rank->ID;
+		if ( $rank_id  && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+
+			if ( array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
+
+				$role_id = $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $rank_id ];
+				$this->put_discord_role_api( $user_id, $role_id );
+			}
+		}
+		if ( $old_rank_id  && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+
+			if ( array_key_exists( 'gamipress_rank_type_id_' . $old_rank_id, $ets_gamipress_discord_role_mapping ) ) {
+
+				$old_role_id = $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $old_rank_id ];
+				$this->delete_discord_role($user_id, $old_role_id );
+			}
+		}                
 	}
 
 }

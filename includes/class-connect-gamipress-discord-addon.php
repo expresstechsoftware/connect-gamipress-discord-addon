@@ -200,6 +200,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'ets_gamipress_discord_as_send_dm', $plugin_public, 'ets_gamipress_discord_handler_send_dm', 10, 3 );                                
 		$this->loader->add_action( 'ets_gamipress_discord_as_schedule_delete_role',  $plugin_public, 'ets_gamipress_discord_as_handler_delete_memberrole' , 10, 3 );                
 		$this->loader->add_action( 'ets_gamipress_discord_as_schedule_delete_member', $plugin_public, 'ets_gamipress_discord_as_handler_delete_member_from_guild', 10, 3 );
+		$this->loader->add_action( 'gamipress_update_user_rank', $plugin_public, 'ets_gamipress_discord_update_user_rank', 20, 4 );                
 	}
 
 	/**
