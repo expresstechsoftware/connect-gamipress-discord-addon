@@ -2,6 +2,8 @@
 $ets_gamipress_discord_send_welcome_dm         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_welcome_dm' ) ) );
 $ets_gamipress_discord_welcome_message         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_welcome_message' ) ) );
 
+$ets_gamipress_discord_send_award_user_points_dm         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_award_user_points_dm' ) ) );
+$ets_gamipress_discord_award_user_points_message         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
 
 $retry_failed_api                              = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_retry_failed_api' ) ) );
 $kick_upon_disconnect                          = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_kick_upon_disconnect' ) ) );
@@ -45,6 +47,25 @@ $log_api_res                                   = sanitize_text_field( trim( get_
 	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Send Award user points message', 'connect-gamipress-discord-addon' ); ?></th>
+		<td> <fieldset>
+		<input name="ets_gamipress_discord_send_award_user_points_dm" type="checkbox" id="ets_gamipress_discord_award_user_points_welcome_dm" 
+		<?php
+		if ( $ets_gamipress_discord_send_award_user_points_dm == true ) {
+			echo esc_attr( 'checked="checked"' ); }
+		?>
+		 value="1">
+		</fieldset></td>
+	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Award user points message', 'connect-gamipress-discord-addon' ); ?></th>
+		<td> <fieldset>
+		<textarea class="ets_gamipress_discord_dm_textarea" name="ets_gamipress_discord_award_user_points_message" id="ets_gamipress_discord_award_user_points_message" row="25" cols="50"><?php if ( $ets_gamipress_discord_award_user_points_message ) { echo esc_textarea( wp_unslash( $ets_gamipress_discord_award_user_points_message ) ); } ?></textarea> 
+	<br/>
+	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_POINTS],[GP_ACHIEVEMENT_TYPE], [GP_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]</small>
+		</fieldset></td>
+	</tr>	
 	  <tr>
 		<th scope="row"><?php esc_html_e( 'Retry Failed API calls', 'connect-gamipress-discord-addon' ); ?></th>
 		<td> <fieldset>
