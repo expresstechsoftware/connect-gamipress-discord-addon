@@ -31,7 +31,9 @@ class Connect_Gamipress_Discord_Addon_Activator {
 	 */
 	public static function activate() {
 		update_option( 'ets_gamipress_discord_send_welcome_dm', true );
-		update_option( 'ets_gamipress_discord_welcome_message', 'Hi [GP_USER_NAME] ([GP_USER_EMAIL]), Welcome, Your ranks [GP_RANKS] at [SITE_URL] Thanks, Kind Regards, [BLOG_NAME]' );                
+		update_option( 'ets_gamipress_discord_welcome_message', 'Hi [GP_USER_NAME] ([GP_USER_EMAIL]), Welcome, Your ranks [GP_RANKS] at [SITE_URL] Thanks, Kind Regards, [BLOG_NAME]' );
+		update_option( 'ets_gamipress_discord_send_award_user_points_dm', true );
+		update_option( 'ets_gamipress_discord_award_user_points_message', 'Congratulations [GP_USER_NAME]( [GP_USER_EMAIL] ), You unlocked the [GP_ACHIEVEMENT_TYPE] [GP_ACHIEVEMENT] by completing the following steps: [GP_ACHIEVEMENT_STEPS], [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_gamipress_discord_retry_failed_api', true );
 		update_option( 'ets_gamipress_discord_connect_button_bg_color', '#7bbc36' );
 		update_option( 'ets_gamipress_discord_disconnect_button_bg_color', '#ff0000' );
