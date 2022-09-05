@@ -53,13 +53,13 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -67,8 +67,8 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * Singleton pattern
 	 *
 	 * @since    1.0.0
-	 * @param       string    $plugin_name       The name of the plugin.
-	 * @param       string    $version    The version of this plugin.
+	 * @param       string $plugin_name       The name of the plugin.
+	 * @param       string $version    The version of this plugin.
 	 * @return      object    $instance   The instance of the Connect_Gamipress_Discord_Addon_Public class
 	 */
 	public static function get_gamipress_discord_public_instance( $plugin_name, $version ) {
@@ -117,7 +117,6 @@ class Connect_Gamipress_Discord_Addon_Public {
 		);
 		wp_localize_script( $this->plugin_name, 'etsGamiPressParams', $script_params );
 
-
 	}
 
 	/**
@@ -129,18 +128,18 @@ class Connect_Gamipress_Discord_Addon_Public {
 	public function ets_gamipress_discord_add_connect_discord_button() {
 		$user_id = sanitize_text_field( trim( get_current_user_id() ) );
 
-		$access_token                    = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
-		$_ets_gamipress_discord_username = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_username', true ) ) );
+		$access_token                                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
+		$_ets_gamipress_discord_username                  = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_username', true ) ) );
 		$ets_gamipress_discord_connect_button_bg_color    = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_connect_button_bg_color' ) ) );
-		$ets_gamipress_discord_disconnect_button_bg_color = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_disconnect_button_bg_color' ) ) );                
-		$ets_gamipress_discord_disconnect_button_text = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_disconnect_button_text' ) ) );                
-		$ets_gamipress_discord_loggedin_button_text = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_loggedin_button_text' ) ) );
-		$default_role                       = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_default_role_id' ) ) );
-		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
-		$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );
-		$roles_color = unserialize( get_option( 'ets_gamipress_discord_roles_color' ) );
-		$user_ranks                   = ets_gamipress_discord_get_user_ranks_ids( $user_id );
-		$mapped_role_name                   = '';
+		$ets_gamipress_discord_disconnect_button_bg_color = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_disconnect_button_bg_color' ) ) );
+		$ets_gamipress_discord_disconnect_button_text     = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_disconnect_button_text' ) ) );
+		$ets_gamipress_discord_loggedin_button_text       = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_loggedin_button_text' ) ) );
+		$default_role                                     = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_default_role_id' ) ) );
+		$ets_gamipress_discord_role_mapping               = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
+		$all_roles                                        = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );
+		$roles_color                                      = unserialize( get_option( 'ets_gamipress_discord_roles_color' ) );
+		$user_ranks                                       = ets_gamipress_discord_get_user_ranks_ids( $user_id );
+		$mapped_role_name                                 = '';
 		if ( is_array( $user_ranks ) && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 			foreach ( $user_ranks as $key => $user_rank_id ) {
 				if ( array_key_exists( 'gamipress_rank_type_id_' . $user_rank_id, $ets_gamipress_discord_role_mapping ) ) {
@@ -165,7 +164,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		if ( gamipress_discord_check_saved_settings_status() ) {
 
 			if ( $access_token ) {
-				$disconnect_btn_bg_color = 'style="background-color:' . $ets_gamipress_discord_disconnect_button_bg_color . '"'; 
+				$disconnect_btn_bg_color  = 'style="background-color:' . $ets_gamipress_discord_disconnect_button_bg_color . '"';
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<label class="ets-connection-lbl">' . esc_html__( 'Discord connection', 'connect-gamipress-and-discord' ) . '</label>';
@@ -181,12 +180,12 @@ class Connect_Gamipress_Discord_Addon_Public {
 			} elseif ( ( ets_gamipress_discord_get_user_ranks_ids( $user_id ) && $mapped_role_name )
 								|| ( ets_gamipress_discord_get_user_ranks_ids( $user_id ) && ! $mapped_role_name && $default_role_name )
 								) {
-                            
-				$connect_btn_bg_color = 'style="background-color:' . $ets_gamipress_discord_connect_button_bg_color . '"';
+
+				$connect_btn_bg_color     = 'style="background-color:' . $ets_gamipress_discord_connect_button_bg_color . '"';
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<h3>' . esc_html__( 'Discord connection', 'connect-gamipress-and-discord' ) . '</h3>';
 				$restrictcontent_discord .= '<div>';
-				$restrictcontent_discord .= '<a href="?action=gamipress-discord-login" class="gamipress-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_gamipress_discord_loggedin_button_text ) .  '</a>';
+				$restrictcontent_discord .= '<a href="?action=gamipress-discord-login" class="gamipress-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_gamipress_discord_loggedin_button_text ) . '</a>';
 				$restrictcontent_discord .= '</div>';
 				$restrictcontent_discord  = ets_gamipress_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
 
@@ -197,7 +196,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		wp_enqueue_style( $this->plugin_name );
 		wp_enqueue_script( $this->plugin_name );
 
-		return wp_kses ( $restrictcontent_discord, ets_gamipress_discord_allowed_html() );
+		return wp_kses( $restrictcontent_discord, ets_gamipress_discord_allowed_html() );
 	}
 
 	/**
@@ -208,9 +207,9 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * @return void
 	 */
 	public function ets_gamipress_discord_display_connect_discord_button( $user = null ) {
-		
-		if ( is_user_logged_in()  ){
-			echo $this->ets_gamipress_discord_add_connect_discord_button();    
+
+		if ( is_user_logged_in() ) {
+			echo $this->ets_gamipress_discord_add_connect_discord_button();
 		}
 
 	}
@@ -272,12 +271,12 @@ class Connect_Gamipress_Discord_Addon_Public {
 							if ( is_array( $user_body ) && array_key_exists( 'id', $user_body ) ) {
 								$_ets_gamipress_discord_user_id = sanitize_text_field( trim( $user_body['id'] ) );
 								if ( $discord_exist_user_id === $_ets_gamipress_discord_user_id ) {
-									$user_ranks = map_deep(ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
+									$user_ranks = map_deep( ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
 									if ( is_array( $user_ranks ) ) {
 										foreach ( $user_ranks as $rank_id ) {
 											$_ets_gamipress_discord_role_id = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_role_id_for_' . $rank_id, true ) ) );
 											if ( ! empty( $_ets_gamipress_discord_role_id ) && $_ets_gamipress_discord_role_id != 'none' ) {
-												//$this->delete_discord_role( $user_id, $_ets_gamipress_discord_role_id );
+												// $this->delete_discord_role( $user_id, $_ets_gamipress_discord_role_id );
 											}
 										}
 									}
@@ -295,7 +294,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 			}
 		}
 	}
-       
+
 
 	/**
 	 * Create authentication token for discord API
@@ -306,12 +305,12 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 */
 	public function create_discord_auth_token( $code, $user_id ) {
 		if ( ! is_user_logged_in() ) {
-                   
+
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
-			
+
 		}
-		$user_ranks   = sanitize_text_field(ets_gamipress_discord_get_user_ranks_ids( $user_id ) );
+		$user_ranks = sanitize_text_field( ets_gamipress_discord_get_user_ranks_ids( $user_id ) );
 		if ( $user_ranks === null ) {
 			return;
 		}
@@ -338,11 +337,11 @@ class Connect_Gamipress_Discord_Addon_Public {
 					),
 				);
 				$response = wp_remote_post( $discord_token_api_url, $args );
-				//ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
-				//if ( ets_gamipress_discord_check_api_errors( $response ) ) {
-				//	$response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
-				//	Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
-				//}
+				// ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
+				// if ( ets_gamipress_discord_check_api_errors( $response ) ) {
+				// $response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
+				// Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+				// }
 			}
 		} else {
 			$args     = array(
@@ -360,11 +359,11 @@ class Connect_Gamipress_Discord_Addon_Public {
 				),
 			);
 			$response = wp_remote_post( $discord_token_api_url, $args );
-			//ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
-			//if ( ets_gamipress_discord_check_api_errors( $response ) ) {
-			//	$response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
-			//	Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
-			//}
+			// ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
+			// if ( ets_gamipress_discord_check_api_errors( $response ) ) {
+			// $response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
+			// Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+			// }
 		}
 		return $response;
 	}
@@ -390,10 +389,10 @@ class Connect_Gamipress_Discord_Addon_Public {
 			),
 		);
 		$user_response         = wp_remote_get( $discord_cuser_api_url, $param );
-		//ets_gamipress_discord_log_api_response( $user_id, $discord_cuser_api_url, $param, $user_response );
+		// ets_gamipress_discord_log_api_response( $user_id, $discord_cuser_api_url, $param, $user_response );
 
 		$response_arr = json_decode( wp_remote_retrieve_body( $user_response ), true );
-		//Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+		// Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
 		$user_body = json_decode( wp_remote_retrieve_body( $user_response ), true );
 		return $user_body;
 
@@ -412,7 +411,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
-		$user_ranks = map_deep(ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
+		$user_ranks = map_deep( ets_gamipress_discord_get_user_ranks_ids( $user_id ), 'sanitize_text_field' );
 		if ( $user_ranks !== null ) {
 			// It is possible that we may exhaust API rate limit while adding members to guild, so handling off the job to queue.
 			as_schedule_single_action( ets_gamipress_discord_get_random_timestamp( ets_gamipress_discord_get_highest_last_attempt_timestamp() ), 'ets_gamipress_discord_as_handle_add_member_to_guild', array( $_ets_gamipress_discord_user_id, $user_id, $access_token ), GAMIPRESS_DISCORD_AS_GROUP_NAME );
@@ -558,14 +557,15 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * Discord DM a member using bot.
 	 *
 	 * @param INT    $user_id
-	 * @param
-	 * @param STRING $type (warning|expired)
+	 * @param ARRAY|INT $rank_user (Array of ranks | achievement_id).
+	 * @param STRING $type (warning|expired).
+	 * @param INT $points Achievement points awarded.
 	 */
-	public function ets_gamipress_discord_handler_send_dm( $user_id, $ranks_user, $type = 'warning' ) {
+	public function ets_gamipress_discord_handler_send_dm( $user_id, $ranks_user, $type = 'warning', $points = '' ) {
 		$discord_user_id   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
 		$discord_bot_token = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_bot_token' ) ) );
 
-		$ets_gamipress_discord_welcome_message             = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_welcome_message' ) ) );
+		$ets_gamipress_discord_welcome_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_welcome_message' ) ) );
 
 		// Check if DM channel is already created for the user.
 		$user_dm = get_user_meta( $user_id, '_ets_gamipress_discord_dm_channel', true );
@@ -580,31 +580,36 @@ class Connect_Gamipress_Discord_Addon_Public {
 
 		if ( $type == 'welcome' ) {
 
-			$message = ets_gamipress_discord_get_formatted_welcome_dm($user_id, $ranks_user, $ets_gamipress_discord_welcome_message );
+			$message = ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $ets_gamipress_discord_welcome_message );
 		}
-                $creat_dm_url = CONNECT_GAMIPRESS_API_URL . '/channels/' . $dm_channel_id . '/messages';
 
-			$dm_args      = array(
-				'method'  => 'POST',
-				'headers' => array(
-					'Content-Type'  => 'application/json',
-					'Authorization' => 'Bot ' . $discord_bot_token,
-				),
-				'body'    => json_encode(
-					array(
-						'content' => sanitize_text_field( trim( wp_unslash( $message ) ) ),
-					)
-				),
-			);                    
-		
-		$dm_response  = wp_remote_post( $creat_dm_url, $dm_args );
-		ets_gamipress_discord_log_api_response( $user_id, $creat_dm_url, $dm_args, $dm_response );
-		$dm_response_body = json_decode( wp_remote_retrieve_body( $dm_response ), true );
-		if ( ets_gamipress_discord_check_api_errors( $dm_response ) ) {
-                    Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $dm_response_body, $user_id, debug_backtrace()[0] );
-			// this should be catch by Action schedule failed action.
-			throw new Exception( 'Failed in function ets_gamipress_discord_handler_send_dm' );
+		if ( $type == 'award_points' ) {
+			$ets_gamipress_discord_award_user_points_message         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
+			$message = ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $ranks_user,  $points , $ets_gamipress_discord_award_user_points_message );
 		}
+		$creat_dm_url = CONNECT_GAMIPRESS_API_URL . '/channels/' . $dm_channel_id . '/messages';
+
+		$dm_args = array(
+			'method'  => 'POST',
+			'headers' => array(
+				'Content-Type'  => 'application/json',
+				'Authorization' => 'Bot ' . $discord_bot_token,
+			),
+			'body'    => json_encode(
+				array(
+					'content' => sanitize_text_field( trim( wp_unslash( $message ) ) ),
+				)
+			),
+		);
+
+			$dm_response = wp_remote_post( $creat_dm_url, $dm_args );
+			ets_gamipress_discord_log_api_response( $user_id, $creat_dm_url, $dm_args, $dm_response );
+			$dm_response_body = json_decode( wp_remote_retrieve_body( $dm_response ), true );
+			if ( ets_gamipress_discord_check_api_errors( $dm_response ) ) {
+					Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $dm_response_body, $user_id, debug_backtrace()[0] );
+				// this should be catch by Action schedule failed action.
+				throw new Exception( 'Failed in function ets_gamipress_discord_handler_send_dm' );
+			}
 	}
 
 	/**
@@ -637,7 +642,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		if ( is_array( $response_arr ) && ! empty( $response_arr ) ) {
 			// check if there is error in create dm response
 			if ( array_key_exists( 'code', $response_arr ) || array_key_exists( 'error', $response_arr ) ) {
-                            Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+							Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
 				if ( ets_gamipress_discord_check_api_errors( $created_dm_response ) ) {
 					// this should be catch by Action schedule failed action.
 					throw new Exception( 'Failed in function ets_gamipress_discord_create_member_dm_channel' );
@@ -800,24 +805,24 @@ class Connect_Gamipress_Discord_Addon_Public {
 	}
 
 	/**
-	 * 
-	 * @param int $user_id
+	 *
+	 * @param int     $user_id
 	 * @param WP_Post $new_rank
 	 * @param WP_Post $old_rank
-	 * @param int $admin_id
-	 * @param int $achievement_id
+	 * @param int     $admin_id
+	 * @param int     $achievement_id
 	 */
 	public function ets_gamipress_discord_update_user_rank( $user_id, $new_rank, $old_rank, $admin_id = 0, $achievement_id = null ) {
-            //update_option('gamipress_update_rank_user_' . time() , ' user_id : ' . $user_id .'  new_rank : '. $new_rank->ID  .  ' old_rank : '. $old_rank->ID. 'achievement_id : ' . $achievement_id);
+			// update_option('gamipress_update_rank_user_' . time() , ' user_id : ' . $user_id .'  new_rank : '. $new_rank->ID  .  ' old_rank : '. $old_rank->ID. 'achievement_id : ' . $achievement_id);
 		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
 		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
-		$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );                
-		$rank_id = $new_rank->ID;
-		$old_rank_id = $old_rank->ID;
-		if ( $rank_id  && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+		$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );
+		$rank_id                            = $new_rank->ID;
+		$old_rank_id                        = $old_rank->ID;
+		if ( $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 
 			if ( array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
 
@@ -825,14 +830,37 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$this->put_discord_role_api( $user_id, $role_id );
 			}
 		}
-		if ( $old_rank_id  && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+		if ( $old_rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 
 			if ( array_key_exists( 'gamipress_rank_type_id_' . $old_rank_id, $ets_gamipress_discord_role_mapping ) ) {
 
 				$old_role_id = $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $old_rank_id ];
-				$this->delete_discord_role($user_id, $old_role_id );
+				$this->delete_discord_role( $user_id, $old_role_id );
 			}
-		}                
+		}
+	}
+
+	/**
+	 * Send DM about award points to a user.
+	 *
+	 * @param integer 			$user_id 		The given user's ID
+	 * @param integer 			$points 		The points the user is being awarded
+	 * @param string|WP_Post 	$points_type 	The points type
+	 * @param array 			$args			Array of extra arguments
+	 *
+	 */
+	public function ets_gamipress_award_points_to_user( $user_id, $points, $points_type, $args ) {
+		//update_option( 'gamipress_award_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type .' raison : ' . $args['reason']  . ' achievement_id :' . $args['achievement_id'] );
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( 'Unauthorized user', 401 );
+			exit();
+		}
+		$ets_gamipress_discord_send_award_user_points_dm         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_award_user_points_dm' ) ) );
+		if ( isset( $user_id ) && isset( $args['achievement_id'] ) && $ets_gamipress_discord_send_award_user_points_dm == true ) {
+			as_schedule_single_action( ets_gamipress_discord_get_random_timestamp( ets_gamipress_discord_get_highest_last_attempt_timestamp() ), 'ets_gamipress_discord_as_send_dm', array( $user_id, $args['achievement_id'], 'award_points', $points ), GAMIPRESS_DISCORD_AS_GROUP_NAME );
+		}
+
 	}
 
 }

@@ -388,29 +388,27 @@ function ets_gamipress_discord_get_all_pending_actions() {
  * @param INT $user_id
  * @return ARRAY|NULL $roles
  */
-function ets_gamipress_discord_get_user_roles ( $user_id ){
+function ets_gamipress_discord_get_user_roles( $user_id ) {
 	global $wpdb;
 
 	$usermeta_table = $wpdb->prefix . "usermeta";
 	$user_roles_sql = "SELECT * FROM " . $usermeta_table . " WHERE `user_id` = %d AND ( `meta_key` like '_ets_gamipress_discord_role_id_for_%' OR `meta_key` = 'ets_gamipress_discord_default_role_id' OR `meta_key` = '_ets_gamipress_discord_last_default_role' ); ";
 	$user_roles_prepare = $wpdb->prepare( $user_roles_sql, $user_id );
-	
+
 	$user_roles = $wpdb->get_results( $user_roles_prepare , ARRAY_A );
-        
+
 	if ( is_array( $user_roles ) && count( $user_roles ) ){
 		$roles = array();
 		foreach ( $user_roles as  $role ) {
-                
+
 			array_push( $roles, $role['meta_value'] );
 		}
-		
-                return $roles;
-            
-	}else{
-            
+
+		return $roles;
+
+	} else {
 		return null;
 	}
-   
 }
 
 /**
@@ -421,7 +419,7 @@ function ets_gamipress_discord_get_user_roles ( $user_id ){
  * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]
  */
 function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $message ) {
-    
+
 	$user_obj    = get_user_by( 'id', $user_id );
 	$USERNAME = $user_obj->user_login;
 	$USER_EMAIL    = $user_obj->user_email;
@@ -431,17 +429,17 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
 	$RANKS = '';
 	if( is_array( $ranks_user ) ){
 		$args_ranks = array(
-        	'orderby'          => 'title',
-        	'order'            => 'ASC',
-		'numberposts' => count( $ranks_user ),
-		'post__in' => $ranks_user,
-		'post_type' => 'any'
+			'orderby'          => 'title',
+			'order'            => 'ASC',
+			'numberposts' => count( $ranks_user ),
+			'post__in' => $ranks_user,
+			'post_type' => 'any'
 		);
 		$ranks = get_posts( $args_ranks );
 		$lastKey = array_key_last( $ranks );
-		$commas = ', ';        
+		$commas = ', ';
 		foreach ( $ranks as $key => $rank) {
-			if ( $lastKey === $key )  
+			if ( $lastKey === $key ) 
 				$commas = ' ' ;
 				$RANKS .= esc_html( $rank->post_title ). $commas;
 			}
@@ -456,7 +454,7 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
 			'[BLOG_NAME]'
 		);
 		$replace = array(
-			$RANKS,                    
+			$RANKS,
 			$USERNAME,
 			$USER_EMAIL,
 			$SITE_URL,
@@ -467,18 +465,71 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
 
 }
 
+/**
+ * Get formatted award user points message to send in DM.
+ *
+ * @param INT $user_id The user ID.
+ * @param INT $achievement_id The achievement ID.
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_POINTS],[GP_ACHIEVEMENT_TYPE], [GP_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]
+ */
+function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achievement_id, $points, $message ) {
+	$user_obj    = get_user_by( 'id', $user_id );
+	$USERNAME = $user_obj->user_login;
+	$USER_EMAIL    = $user_obj->user_email;
+	$SITE_URL  = get_bloginfo( 'url' );
+	$BLOG_NAME = get_bloginfo( 'name' );
+
+	$achievement = get_post( $achievement_id );
+	$ACHIEVEMENT_TITLE = $achievement->post_title;
+
+	$achievement_steps = gamipress_get_achievement_steps( $achievement_id );
+
+	if ( is_array( $achievement_steps ) && count( $achievement_steps ) > 0 ) {
+		$ACHIEVEMENT_STEP_TITLES = '';
+		foreach ( $achievement_steps as $achievement_step ) {
+			$ACHIEVEMENT_STEP_TITLES .= ' ' . $achievement_step->post_title;
+		}
+	}
+
+	$POINTS =  $points;
+
+	$ACHIEVEMENT_TYPE = '';
+
+	$find    = array(
+		'[GP_USER_NAME]',
+		'[GP_USER_EMAIL]',
+		'[GP_POINTS]',
+		'[GP_ACHIEVEMENT_TYPE]',
+		'[GP_ACHIEVEMENT]',
+		'[GP_ACHIEVEMENT_STEPS]',
+		'[SITE_URL]',
+		'[BLOG_NAME]'
+	);
+	$replace = array(
+		$USERNAME,
+		$USER_EMAIL,
+		$POINTS,
+		$ACHIEVEMENT_TYPE,
+		$ACHIEVEMENT_TITLE,
+		$ACHIEVEMENT_STEP_TITLES,
+		$SITE_URL,
+		$BLOG_NAME
+	);
+
+	return str_replace( $find, $replace, $message );
+
+}
+
 /*
   Remove all usermeta created by this plugin.
   @param INT $user_id
 */
-function ets_gamipress_discord_remove_usermeta ( $user_id ){
+function ets_gamipress_discord_remove_usermeta( $user_id ) {
  
 	global $wpdb;
-        
-        
+
 	$usermeta_table = $wpdb->prefix . "usermeta";
 	$usermeta_sql = "DELETE FROM " . $usermeta_table . " WHERE `user_id` = %d AND  `meta_key` LIKE '_ets_gamipress_discord%'; ";
 	$delete_usermeta_sql = $wpdb->prepare( $usermeta_sql, $user_id );
 	$wpdb->query( $delete_usermeta_sql );
-             
 }
