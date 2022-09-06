@@ -205,8 +205,8 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'gamipress_award_points_to_user', $plugin_public, 'ets_gamipress_award_points_to_user', 20, 4 );
 		// $this->loader->add_action( 'gamipress_deduct_points_to_user', $plugin_public, 'ets_gamipress_deduct_points_to_user', 20, 4 );
 		$this->loader->add_action( 'gamipress_insert_user_earning', $plugin_public, 'ets_gamipress_insert_user_earning', 99, 4 );
-		$this->loader->add_action( 'gamipress_award_rank_to_user', $plugin_public, 'ets_gamipress_award_rank_to_user', 99, 3 );
-		$this->loader->add_action( 'gamipress_revoke_rank_to_user', $plugin_public, 'ets_gamipress_revoke_rank_to_user', 99, 4 );
+		//$this->loader->add_action( 'gamipress_award_rank_to_user', $plugin_public, 'ets_gamipress_award_rank_to_user', 99, 3 );
+		//$this->loader->add_action( 'gamipress_revoke_rank_to_user', $plugin_public, 'ets_gamipress_revoke_rank_to_user', 99, 4 );
 	}
 
 	/**
