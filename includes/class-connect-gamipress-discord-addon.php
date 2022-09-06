@@ -106,6 +106,12 @@ class Connect_Gamipress_Discord_Addon {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/libraries/action-scheduler/action-scheduler.php';
 
 		/**
+		 * The class responsible for Logs
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-gamipress-discord-addon-logs.php'; 		
+
+		/**
 		 * Common functions file.
 		 * core plugin.
 		 */
