@@ -203,6 +203,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'gamipress_update_user_rank', $plugin_public, 'ets_gamipress_discord_update_user_rank', 20, 4 );
 		// $this->loader->add_action( 'gamipress_update_user_points', $plugin_public, 'ets_gamipress_update_user_points', 20, 8 );
 		$this->loader->add_action( 'gamipress_award_points_to_user', $plugin_public, 'ets_gamipress_award_points_to_user', 20, 4 );
+		// $this->loader->add_action( 'gamipress_deduct_points_to_user', $plugin_public, 'ets_gamipress_deduct_points_to_user', 20, 4 );
 	}
 
 	/**
