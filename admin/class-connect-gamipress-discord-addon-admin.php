@@ -410,6 +410,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 
 			$ets_gamipress_discord_send_welcome_dm = isset( $_POST['ets_gamipress_discord_send_welcome_dm'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_send_welcome_dm'] ) ) : '';
 			$ets_gamipress_discord_welcome_message = isset( $_POST['ets_gamipress_discord_welcome_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_welcome_message'] ) ) : '';
+			$ets_gamipress_discord_award_rank_message         = isset( $_POST['ets_gamipress_discord_award_rank_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_award_rank_message'] ) ) : '';
 			$ets_gamipress_discord_award_user_points_message         = isset( $_POST['ets_gamipress_discord_award_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_award_user_points_message'] ) ) : '';
 
 			$retry_failed_api     = isset( $_POST['retry_failed_api'] ) ? sanitize_textarea_field( trim( $_POST['retry_failed_api'] ) ) : '';
@@ -434,6 +435,17 @@ class Connect_Gamipress_Discord_Addon_Admin {
 					update_option( 'ets_gamipress_discord_welcome_message', '' );
 				}
 
+				if ( isset( $_POST['ets_gamipress_discord_send_award_rank_dm'] ) ) {
+					update_option( 'ets_gamipress_discord_send_award_rank_dm', true );
+				} else {
+					update_option( 'ets_gamipress_discord_send_award_rank_dm', false );
+				}
+				if ( isset( $_POST['ets_gamipress_discord_award_rank_message'] ) && $_POST['ets_gamipress_discord_award_rank_message'] != '' ) {
+					update_option( 'ets_gamipress_discord_award_rank_message', $ets_gamipress_discord_award_rank_message );
+				} else {
+					update_option( 'ets_gamipress_discord_award_rank_message', '' );
+				}
+
 				if ( isset( $_POST['ets_gamipress_discord_send_award_user_points_dm'] ) ) {
 					update_option( 'ets_gamipress_discord_send_award_user_points_dm', true );
 				} else {
@@ -443,7 +455,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 					update_option( 'ets_gamipress_discord_award_user_points_message', $ets_gamipress_discord_award_user_points_message );
 				} else {
 					update_option( 'ets_gamipress_discord_award_user_points_message', '' );
-				}				
+				}
 
 				if ( isset( $_POST['retry_failed_api'] ) ) {
 					update_option( 'ets_gamipress_discord_retry_failed_api', true );

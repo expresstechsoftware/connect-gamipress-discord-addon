@@ -2,6 +2,9 @@
 $ets_gamipress_discord_send_welcome_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_welcome_dm' ) ) );
 $ets_gamipress_discord_welcome_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_welcome_message' ) ) );
 
+$ets_gamipress_discord_send_award_rank_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_award_rank_dm' ) ) );
+$ets_gamipress_discord_award_rank_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_rank_message' ) ) );
+
 $ets_gamipress_discord_send_award_user_points_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_award_user_points_dm' ) ) );
 $ets_gamipress_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
 
@@ -49,6 +52,26 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_gamipress_di
 	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Send Award Rank message', 'connect-gamipress-discord-addon' ); ?></th>
+		<td> <fieldset>
+		<input name="ets_gamipress_discord_send_award_rank_dm" type="checkbox" id="ets_gamipress_discord_award_rank_dm" 
+		<?php
+		if ( $ets_gamipress_discord_send_award_rank_dm == true ) {
+			echo esc_attr( 'checked="checked"' ); }
+		?>
+		 value="1">
+		</fieldset></td>
+	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Award Rank message', 'connect-gamipress-discord-addon' ); ?></th>
+		<td> <fieldset>
+		<?php $ets_gamipress_discord_award_rank_message_value = ( isset( $ets_gamipress_discord_award_rank_message ) ) ? $ets_gamipress_discord_award_rank_message : ''; ?>
+		<textarea class="ets_gamipress_discord_dm_textarea" name="ets_gamipress_discord_award_rank_message" id="ets_gamipress_discord_award_rank_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_gamipress_discord_award_rank_message_value ) ); ?></textarea> 
+	<br/>
+	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANK_TYPE], [GP_RANK], [GP_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME]</small>
+		</fieldset></td>
+	</tr>	
 	<tr>
 		<th scope="row"><?php esc_html_e( 'Send Award user points message', 'connect-gamipress-discord-addon' ); ?></th>
 		<td> <fieldset>

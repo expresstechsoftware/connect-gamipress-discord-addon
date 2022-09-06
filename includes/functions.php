@@ -529,9 +529,64 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 
 }
 
-/*
-  Remove all usermeta created by this plugin.
-  @param INT $user_id
+/**
+ * 
+ * 
+ */
+function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, $message ) {
+	$user_obj   = get_user_by( 'id', $user_id );
+	$USERNAME   = $user_obj->user_login;
+	$USER_EMAIL = $user_obj->user_email;
+	$SITE_URL   = get_bloginfo( 'url' );
+	$BLOG_NAME  = get_bloginfo( 'name' );
+
+	$rank       = get_post( $rank_id );
+	$RANK_TITLE = $rank->post_title;
+
+	$RANK_TYPE = '';
+	$args             = array(
+		'name'        => $rank->post_type,
+		'post_type'   => 'rank-type',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+	);
+	$rank_type = get_posts( $args );
+	if ( is_array( $rank_type ) && count( $rank_type ) > 0 ) {
+		$RANK_TYPE = $rank_type[0]->post_title;
+	}
+
+	$RANK_REQUIREMENTS = '';
+	$rank_requirements = gamipress_get_rank_requirements( $rank_id );
+	if ( is_array( $rank_requirements ) && count( $rank_requirements ) > 0 ) {
+		foreach( $rank_requirements as $rank_requirement ) {
+			$RANK_REQUIREMENTS .= ' ' . $rank_requirement->post_title;
+		}
+	}
+	$find    = array(
+		'[GP_USER_NAME]',
+		'[GP_USER_EMAIL]',
+		'[GP_RANK_TYPE]',
+		'[GP_RANK]',
+		'[GP_RANK_REQUIREMENTS]',
+		'[SITE_URL]',
+		'[BLOG_NAME]',
+	);
+	$replace = array(
+		$USERNAME,
+		$USER_EMAIL,
+		$RANK_TYPE,
+		$RANK_TITLE,
+		$RANK_REQUIREMENTS,
+		$SITE_URL,
+		$BLOG_NAME,
+	);
+
+	return str_replace( $find, $replace, $message );
+}
+
+/** 
+ * Remove all usermeta created by this plugin.
+ * @param INT $user_id
 */
 function ets_gamipress_discord_remove_usermeta( $user_id ) {
 
@@ -541,4 +596,29 @@ function ets_gamipress_discord_remove_usermeta( $user_id ) {
 	$usermeta_sql        = 'DELETE FROM ' . $usermeta_table . " WHERE `user_id` = %d AND  `meta_key` LIKE '_ets_gamipress_discord%'; ";
 	$delete_usermeta_sql = $wpdb->prepare( $usermeta_sql, $user_id );
 	$wpdb->query( $delete_usermeta_sql );
+}
+
+/**
+ * Check if it's a Rank post type earned.
+ * 
+ * @param INT $post_id The Post ID.
+ * @return BOOL.
+ */
+function ets_gamipress_discord_is_rank_earning( $post_id ) {
+
+	$earn = get_post( $post_id );
+	$args             = array(
+		'name'        => $earn->post_type,
+		'post_type'   => 'rank-type',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+	);
+	$earn_post_type = get_posts( $args );
+	if ( is_array( $earn_post_type ) && count( $earn_post_type ) > 0 ) {
+
+		return true;
+	} else {
+		return false;
+	}
+
 }
