@@ -493,6 +493,16 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 	$POINTS = $points;
 
 	$ACHIEVEMENT_TYPE = '';
+	$args             = array(
+		'name'        => $achievement->post_type,
+		'post_type'   => 'achievement-type',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+	);
+	$achievement_type = get_posts( $args );
+	if ( is_array( $achievement_type ) && count( $achievement_type ) > 0 ) {
+		$ACHIEVEMENT_TYPE = $achievement_type[0]->post_title;
+	}
 
 	$find    = array(
 		'[GP_USER_NAME]',
