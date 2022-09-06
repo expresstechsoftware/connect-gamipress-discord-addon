@@ -556,10 +556,10 @@ class Connect_Gamipress_Discord_Addon_Public {
 	/**
 	 * Discord DM a member using bot.
 	 *
-	 * @param INT    $user_id
+	 * @param INT       $user_id
 	 * @param ARRAY|INT $rank_user (Array of ranks | achievement_id).
-	 * @param STRING $type (warning|expired).
-	 * @param INT $points Achievement points awarded.
+	 * @param STRING    $type (warning|expired).
+	 * @param INT       $points Achievement points awarded.
 	 */
 	public function ets_gamipress_discord_handler_send_dm( $user_id, $ranks_user, $type = 'warning', $points = '' ) {
 		$discord_user_id   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
@@ -584,8 +584,8 @@ class Connect_Gamipress_Discord_Addon_Public {
 		}
 
 		if ( $type == 'award_points' ) {
-			$ets_gamipress_discord_award_user_points_message         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
-			$message = ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $ranks_user,  $points , $ets_gamipress_discord_award_user_points_message );
+			$ets_gamipress_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
+			$message = ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $ranks_user, $points, $ets_gamipress_discord_award_user_points_message );
 		}
 		$creat_dm_url = CONNECT_GAMIPRESS_API_URL . '/channels/' . $dm_channel_id . '/messages';
 
@@ -605,11 +605,11 @@ class Connect_Gamipress_Discord_Addon_Public {
 			$dm_response = wp_remote_post( $creat_dm_url, $dm_args );
 			ets_gamipress_discord_log_api_response( $user_id, $creat_dm_url, $dm_args, $dm_response );
 			$dm_response_body = json_decode( wp_remote_retrieve_body( $dm_response ), true );
-			if ( ets_gamipress_discord_check_api_errors( $dm_response ) ) {
-					Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $dm_response_body, $user_id, debug_backtrace()[0] );
-				// this should be catch by Action schedule failed action.
-				throw new Exception( 'Failed in function ets_gamipress_discord_handler_send_dm' );
-			}
+		if ( ets_gamipress_discord_check_api_errors( $dm_response ) ) {
+				Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $dm_response_body, $user_id, debug_backtrace()[0] );
+			// this should be catch by Action schedule failed action.
+			throw new Exception( 'Failed in function ets_gamipress_discord_handler_send_dm' );
+		}
 	}
 
 	/**
@@ -843,20 +843,19 @@ class Connect_Gamipress_Discord_Addon_Public {
 	/**
 	 * Send DM about award points to a user.
 	 *
-	 * @param integer 			$user_id 		The given user's ID
-	 * @param integer 			$points 		The points the user is being awarded
-	 * @param string|WP_Post 	$points_type 	The points type
-	 * @param array 			$args			Array of extra arguments
-	 *
+	 * @param integer        $user_id        The given user's ID
+	 * @param integer        $points         The points the user is being awarded
+	 * @param string|WP_Post $points_type    The points type
+	 * @param array          $args           Array of extra arguments
 	 */
 	public function ets_gamipress_award_points_to_user( $user_id, $points, $points_type, $args ) {
-		//update_option( 'gamipress_award_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type .' raison : ' . $args['reason']  . ' achievement_id :' . $args['achievement_id'] );
+		// update_option( 'gamipress_award_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type .' raison : ' . $args['reason']  . ' achievement_id :' . $args['achievement_id'] );
 
 		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
-		$ets_gamipress_discord_send_award_user_points_dm         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_award_user_points_dm' ) ) );
+		$ets_gamipress_discord_send_award_user_points_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_award_user_points_dm' ) ) );
 		if ( isset( $user_id ) && isset( $args['achievement_id'] ) && $ets_gamipress_discord_send_award_user_points_dm == true ) {
 			as_schedule_single_action( ets_gamipress_discord_get_random_timestamp( ets_gamipress_discord_get_highest_last_attempt_timestamp() ), 'ets_gamipress_discord_as_send_dm', array( $user_id, $args['achievement_id'], 'award_points', $points ), GAMIPRESS_DISCORD_AS_GROUP_NAME );
 		}

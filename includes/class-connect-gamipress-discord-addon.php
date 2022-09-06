@@ -197,11 +197,11 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'wp_ajax_gamipress_disconnect_from_discord', $plugin_public, 'ets_gamipress_discord_disconnect_from_discord' );
 		$this->loader->add_action( 'ets_gamipress_discord_as_handle_add_member_to_guild', $plugin_public, 'ets_gamipress_discord_as_handler_add_member_to_guild', 10, 3 );
 		$this->loader->add_action( 'ets_gamipress_discord_as_schedule_member_put_role', $plugin_public, 'ets_gamipress_discord_as_handler_put_member_role', 10, 3 );
-		$this->loader->add_action( 'ets_gamipress_discord_as_send_dm', $plugin_public, 'ets_gamipress_discord_handler_send_dm', 10, 3 );
+		$this->loader->add_action( 'ets_gamipress_discord_as_send_dm', $plugin_public, 'ets_gamipress_discord_handler_send_dm', 10, 4 );
 		$this->loader->add_action( 'ets_gamipress_discord_as_schedule_delete_role', $plugin_public, 'ets_gamipress_discord_as_handler_delete_memberrole', 10, 3 );
 		$this->loader->add_action( 'ets_gamipress_discord_as_schedule_delete_member', $plugin_public, 'ets_gamipress_discord_as_handler_delete_member_from_guild', 10, 3 );
 		$this->loader->add_action( 'gamipress_update_user_rank', $plugin_public, 'ets_gamipress_discord_update_user_rank', 20, 4 );
-		//$this->loader->add_action( 'gamipress_update_user_points', $plugin_public, 'ets_gamipress_update_user_points', 20, 8 );
+		// $this->loader->add_action( 'gamipress_update_user_points', $plugin_public, 'ets_gamipress_update_user_points', 20, 8 );
 		$this->loader->add_action( 'gamipress_award_points_to_user', $plugin_public, 'ets_gamipress_award_points_to_user', 20, 4 );
 	}
 
