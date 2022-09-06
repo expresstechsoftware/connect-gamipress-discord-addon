@@ -873,6 +873,14 @@ class Connect_Gamipress_Discord_Addon_Public {
 
 	} */
 
+	/**
+	 * Put The mapped role when user reached a Rank.
+	 * 
+	 * @param INT $user_earning_id The earning ID.
+	 * @param ARRAY $data The earning data.
+	 * @param ARRAY $meta The earning meta data.
+	 * @param INT $user_id The user ID.
+	 */
 	public function ets_gamipress_insert_user_earning( $user_earning_id, $data, $meta, $user_id ) {
 
 		if ( ! is_user_logged_in() ) {
@@ -889,7 +897,6 @@ class Connect_Gamipress_Discord_Addon_Public {
 				if ( $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 
 					if ( array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
-		
 						$role_id = $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $rank_id ];
 						$this->put_discord_role_api( $user_id, $role_id );
 					}

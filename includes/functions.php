@@ -530,8 +530,11 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 }
 
 /**
- * 
- * 
+ * Get formatted award user Rank message to send in DM.
+ *
+ * @param INT $user_id The user ID.
+ * @param INT $rank_id The rank ID.
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANK_TYPE], [GP_RANK], [GP_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME]
  */
 function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, $message ) {
 	$user_obj   = get_user_by( 'id', $user_id );
