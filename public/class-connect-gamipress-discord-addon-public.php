@@ -821,11 +821,12 @@ class Connect_Gamipress_Discord_Addon_Public {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
+		$access_token                                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
 		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
 		$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );
 		$rank_id                            = $new_rank->ID;
 		$old_rank_id                        = $old_rank->ID;
-		if ( $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+		if ( $access_token && $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 
 			if ( array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
 
@@ -833,7 +834,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$this->put_discord_role_api( $user_id, $role_id );
 			}
 		}
-		if ( $old_rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+		if ( $access_token && $old_rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 
 			if ( array_key_exists( 'gamipress_rank_type_id_' . $old_rank_id, $ets_gamipress_discord_role_mapping ) ) {
 
@@ -891,10 +892,11 @@ class Connect_Gamipress_Discord_Addon_Public {
 		if ( is_array( $data ) && count( $data ) > 0 ) {
 			$is_rank_earning = ets_gamipress_discord_is_rank_earning( $data['post_id'] );
 			if ( $is_rank_earning ) {
+				$access_token                                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
 				$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
 				$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );
 				$rank_id                            = $data['post_id'];
-				if ( $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+				if ( $access_token &&  $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 
 					if ( array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
 						$role_id = $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $rank_id ];
