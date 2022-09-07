@@ -525,7 +525,20 @@ class Connect_Gamipress_Discord_Addon_Admin {
 	 */
 	public function ets_gamipress_deduct_points_to_user( $user_id, $points, $points_type, $args ) {
 
-		update_option( 'gamipress_revoke_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type . ' raison : ' . $args['reason'] . ' achievement_id :' . $args['achievement_id'] );
+		// update_option( 'gamipress_revoke_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type . ' raison : ' . $args['reason'] . ' achievement_id :' . $args['achievement_id'] );
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+
+		if ( isset( $user_id ) ) {
+			$access_token                                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
+			$ets_gamipress_discord_send_deduct_user_points_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_deduct_user_points_dm' ) ) );
+			if ( $access_token && $ets_gamipress_discord_send_deduct_user_points_dm == true ) {
+				as_schedule_single_action( ets_gamipress_discord_get_random_timestamp( ets_gamipress_discord_get_highest_last_attempt_timestamp() ), 'ets_gamipress_discord_as_send_dm', array( $user_id, $points_type, 'deduct_points', $points ), GAMIPRESS_DISCORD_AS_GROUP_NAME );
+			}
+
+		}
 	}
 
 }

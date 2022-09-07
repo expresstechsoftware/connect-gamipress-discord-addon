@@ -590,6 +590,11 @@ class Connect_Gamipress_Discord_Addon_Public {
 			$ets_gamipress_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
 			$message = ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $ranks_user, $points, $ets_gamipress_discord_award_user_points_message );
 		}
+		if ( $type == 'deduct_points' ) {
+			$ets_gamipress_discord_deduct_user_points_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_deduct_user_points_message' ) ) );
+			$message = ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $ranks_user, $points, $ets_gamipress_discord_deduct_user_points_message );
+
+		}
 		$creat_dm_url = CONNECT_GAMIPRESS_API_URL . '/channels/' . $dm_channel_id . '/messages';
 
 		$dm_args = array(

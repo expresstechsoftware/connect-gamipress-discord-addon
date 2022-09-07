@@ -530,6 +530,52 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 }
 
 /**
+ * Get formatted deduct user points message to send in DM.
+ *
+ * @param INT $user_id The user ID.
+ * @param STRING 	$points_type 	The points type
+ * @param INT			$points 		The points the user is being revoked
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_DEDUCT_POINTS], [GP_POINTS_TYPE], [GP_POINTS_LABEL], [GP_POINTS_BALANCE], [SITE_URL], [BLOG_NAME]
+ */
+function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points_type, $points, $message ) {
+	$user_obj   = get_user_by( 'id', $user_id );
+	$USERNAME   = $user_obj->user_login;
+	$USER_EMAIL = $user_obj->user_email;
+	$SITE_URL   = get_bloginfo( 'url' );
+	$BLOG_NAME  = get_bloginfo( 'name' );
+
+	$DEDUCT_POINTS = $points;
+	$POINTS_TYPE = $points_type;
+	$POINTS_LABEL = '';
+
+	$POINTS_BALANCE = absint( gamipress_get_user_points( $user_id, $points_type ) );
+
+	$find    = array(
+		'[GP_USER_NAME]',
+		'[GP_USER_EMAIL]',
+		'[GP_DEDUCT_POINTS]',
+		'[GP_POINTS_TYPE]',
+		'[GP_POINTS_LABEL]',
+		'[GP_POINTS_BALANCE]',
+		'[SITE_URL]',
+		'[BLOG_NAME]',
+	);
+	$replace = array(
+		$USERNAME,
+		$USER_EMAIL,
+		$DEDUCT_POINTS,
+		$POINTS_TYPE,
+		$POINTS_LABEL,
+		$POINTS_BALANCE,
+		$SITE_URL,
+		$BLOG_NAME,
+	);
+
+	return str_replace( $find, $replace, $message );
+
+}
+
+/**
  * Get formatted award user Rank message to send in DM.
  *
  * @param INT $user_id The user ID.

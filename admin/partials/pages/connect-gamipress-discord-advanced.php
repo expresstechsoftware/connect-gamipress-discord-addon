@@ -18,7 +18,10 @@ $set_job_cnrc         = sanitize_text_field( trim( get_option( 'ets_gamipress_di
 $set_job_q_batch_size = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_job_queue_batch_size' ) ) );
 $log_api_res          = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_log_api_response' ) ) );
 
+echo '<pre>';
 
+var_dump( absint( gamipress_get_user_points( 2, 'point-type-1' ) ));
+echo '</pre>';
 
 ?>
 <form method="post" action="<?php echo esc_url( get_site_url() . '/wp-admin/admin-post.php' ); ?>">
@@ -96,7 +99,7 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_gamipress_di
 		</fieldset></td>
 	</tr>
 	<tr>
-		<th scope="row"><?php esc_html_e( 'Send deduct user points message', 'connect-gamipress-discord-addon' ); ?></th>
+		<th scope="row"><?php esc_html_e( 'Send Deduct user points message', 'connect-gamipress-discord-addon' ); ?></th>
 		<td> <fieldset>
 		<input name="ets_gamipress_discord_send_deduct_user_points_dm" type="checkbox" id="ets_gamipress_discord_deduct_user_points_welcome_dm" 
 		<?php
