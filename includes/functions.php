@@ -481,10 +481,10 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 	$achievement       = get_post( $achievement_id );
 	$ACHIEVEMENT_TITLE = $achievement->post_title;
 
-	$achievement_steps = gamipress_get_achievement_steps( $achievement_id );
-
+	$achievement_steps       = gamipress_get_achievement_steps( $achievement_id );
+	$ACHIEVEMENT_STEP_TITLES = '';
 	if ( is_array( $achievement_steps ) && count( $achievement_steps ) > 0 ) {
-		$ACHIEVEMENT_STEP_TITLES = '';
+
 		foreach ( $achievement_steps as $achievement_step ) {
 			$ACHIEVEMENT_STEP_TITLES .= ' ' . $achievement_step->post_title;
 		}
@@ -547,7 +547,7 @@ function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, 
 	$RANK_TITLE = $rank->post_title;
 
 	$RANK_TYPE = '';
-	$args             = array(
+	$args      = array(
 		'name'        => $rank->post_type,
 		'post_type'   => 'rank-type',
 		'post_status' => 'publish',
@@ -561,7 +561,7 @@ function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, 
 	$RANK_REQUIREMENTS = '';
 	$rank_requirements = gamipress_get_rank_requirements( $rank_id );
 	if ( is_array( $rank_requirements ) && count( $rank_requirements ) > 0 ) {
-		foreach( $rank_requirements as $rank_requirement ) {
+		foreach ( $rank_requirements as $rank_requirement ) {
 			$RANK_REQUIREMENTS .= ' ' . $rank_requirement->post_title;
 		}
 	}
@@ -587,10 +587,11 @@ function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, 
 	return str_replace( $find, $replace, $message );
 }
 
-/** 
+/**
  * Remove all usermeta created by this plugin.
+ *
  * @param INT $user_id
-*/
+ */
 function ets_gamipress_discord_remove_usermeta( $user_id ) {
 
 	global $wpdb;
@@ -603,14 +604,14 @@ function ets_gamipress_discord_remove_usermeta( $user_id ) {
 
 /**
  * Check if it's a Rank post type earned.
- * 
+ *
  * @param INT $post_id The Post ID.
  * @return BOOL.
  */
 function ets_gamipress_discord_is_rank_earning( $post_id ) {
 
-	$earn = get_post( $post_id );
-	$args             = array(
+	$earn           = get_post( $post_id );
+	$args           = array(
 		'name'        => $earn->post_type,
 		'post_type'   => 'rank-type',
 		'post_status' => 'publish',
