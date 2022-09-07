@@ -109,7 +109,7 @@ class Connect_Gamipress_Discord_Addon {
 		 * The class responsible for Logs
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-gamipress-discord-addon-logs.php'; 		
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-gamipress-discord-addon-logs.php';
 
 		/**
 		 * Common functions file.
@@ -181,6 +181,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'ets_gamipress_discord_connect_bot' );
 		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_update_redirect_url', $plugin_admin, 'ets_gamipress_discord_update_redirect_url' );
 		$this->loader->add_action( 'admin_post_gamipress_discord_save_advance_settings', $plugin_admin, 'ets_gamipress_discord_save_advance_settings' );
+		$this->loader->add_action( 'gamipress_deduct_points_to_user', $plugin_admin, 'ets_gamipress_deduct_points_to_user', 99, 4 );
 	}
 
 	/**
@@ -209,10 +210,9 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'gamipress_update_user_rank', $plugin_public, 'ets_gamipress_discord_update_user_rank', 20, 4 );
 		// $this->loader->add_action( 'gamipress_update_user_points', $plugin_public, 'ets_gamipress_update_user_points', 20, 8 );
 		$this->loader->add_action( 'gamipress_award_points_to_user', $plugin_public, 'ets_gamipress_award_points_to_user', 20, 4 );
-		// $this->loader->add_action( 'gamipress_deduct_points_to_user', $plugin_public, 'ets_gamipress_deduct_points_to_user', 20, 4 );
 		$this->loader->add_action( 'gamipress_insert_user_earning', $plugin_public, 'ets_gamipress_insert_user_earning', 99, 4 );
-		//$this->loader->add_action( 'gamipress_award_rank_to_user', $plugin_public, 'ets_gamipress_award_rank_to_user', 99, 3 );
-		//$this->loader->add_action( 'gamipress_revoke_rank_to_user', $plugin_public, 'ets_gamipress_revoke_rank_to_user', 99, 4 );
+		// $this->loader->add_action( 'gamipress_award_rank_to_user', $plugin_public, 'ets_gamipress_award_rank_to_user', 99, 3 );
+		// $this->loader->add_action( 'gamipress_revoke_rank_to_user', $plugin_public, 'ets_gamipress_revoke_rank_to_user', 99, 4 );
 	}
 
 	/**
