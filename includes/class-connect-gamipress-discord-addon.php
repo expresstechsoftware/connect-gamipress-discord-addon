@@ -181,6 +181,9 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'ets_gamipress_discord_connect_bot' );
 		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_update_redirect_url', $plugin_admin, 'ets_gamipress_discord_update_redirect_url' );
 		$this->loader->add_action( 'admin_post_gamipress_discord_save_advance_settings', $plugin_admin, 'ets_gamipress_discord_save_advance_settings' );
+		$this->loader->add_filter( 'manage_users_columns', $plugin_admin, 'ets_gamipress_discord_add_disconnect_discord_column' );
+		$this->loader->add_filter( 'manage_users_custom_column', $plugin_admin, 'ets_gamipress_discord_disconnect_discord_button', 99, 3 );
+		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_disconnect_user', $plugin_admin, 'ets_gamipress_discord_disconnect_user' );
 		$this->loader->add_action( 'gamipress_deduct_points_to_user', $plugin_admin, 'ets_gamipress_deduct_points_to_user', 99, 4 );
 	}
 
