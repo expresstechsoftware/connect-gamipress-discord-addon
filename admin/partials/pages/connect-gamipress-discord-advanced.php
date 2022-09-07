@@ -18,11 +18,6 @@ $set_job_cnrc         = sanitize_text_field( trim( get_option( 'ets_gamipress_di
 $set_job_q_batch_size = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_job_queue_batch_size' ) ) );
 $log_api_res          = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_log_api_response' ) ) );
 
-echo '<pre>';
-
-var_dump( absint( gamipress_get_user_points( 2, 'point-type-1' ) ));
-echo '</pre>';
-
 ?>
 <form method="post" action="<?php echo esc_url( get_site_url() . '/wp-admin/admin-post.php' ); ?>">
  <input type="hidden" name="action" value="gamipress_discord_save_advance_settings">
