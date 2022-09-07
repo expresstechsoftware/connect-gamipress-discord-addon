@@ -546,7 +546,18 @@ function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points
 
 	$DEDUCT_POINTS = $points;
 	$POINTS_TYPE = $points_type;
+
 	$POINTS_LABEL = '';
+	$args             = array(
+		'name'        => $points_type,
+		'post_type'   => 'points-type',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+	);
+	$points_label = get_posts( $args );
+	if ( is_array( $points_label ) && count( $points_label ) > 0 ) {
+		$POINTS_LABEL = $points_label[0]->post_title;
+	}
 
 	$POINTS_BALANCE = absint( gamipress_get_user_points( $user_id, $points_type ) );
 
