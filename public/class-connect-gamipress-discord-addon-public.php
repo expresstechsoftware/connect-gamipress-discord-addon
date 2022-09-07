@@ -584,7 +584,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		}
 		if ( $type == 'award_rank' ) {
 			$ets_gamipress_discord_award_rank_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_rank_message' ) ) );
-			$message = ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $ranks_user, $ets_gamipress_discord_award_rank_message );
+			$message                                  = ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $ranks_user, $ets_gamipress_discord_award_rank_message );
 		}
 		if ( $type == 'award_points' ) {
 			$ets_gamipress_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
@@ -821,7 +821,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
-		$access_token                                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
+		$access_token                       = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
 		$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
 		$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );
 		$rank_id                            = $new_rank->ID;
@@ -853,7 +853,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * @param array          $args           Array of extra arguments
 	 */
 	public function ets_gamipress_award_points_to_user( $user_id, $points, $points_type, $args ) {
-		// update_option( 'gamipress_award_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type .' raison : ' . $args['reason']  . ' achievement_id :' . $args['achievement_id'] );
+		// update_option( 'gamipress_award_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type . ' raison : ' . $args['reason'] . ' achievement_id :' . $args['achievement_id'] );
 
 		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'Unauthorized user', 401 );
@@ -867,36 +867,28 @@ class Connect_Gamipress_Discord_Addon_Public {
 	}
 
 	/**
-	 *
-	 */
-	/*
-	  public function ets_gamipress_deduct_points_to_user( $user_id, $points, $points_type, $args ) {
-
-	} */
-
-	/**
 	 * Put The mapped role when user reached a Rank.
-	 * 
-	 * @param INT $user_earning_id The earning ID.
+	 *
+	 * @param INT   $user_earning_id The earning ID.
 	 * @param ARRAY $data The earning data.
 	 * @param ARRAY $meta The earning meta data.
-	 * @param INT $user_id The user ID.
+	 * @param INT   $user_id The user ID.
 	 */
 	public function ets_gamipress_insert_user_earning( $user_earning_id, $data, $meta, $user_id ) {
 
 		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
-		}		
+		}
 
 		if ( is_array( $data ) && count( $data ) > 0 ) {
 			$is_rank_earning = ets_gamipress_discord_is_rank_earning( $data['post_id'] );
 			if ( $is_rank_earning ) {
-				$access_token                                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
+				$access_token                       = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_access_token', true ) ) );
 				$ets_gamipress_discord_role_mapping = json_decode( get_option( 'ets_gamipress_discord_role_mapping' ), true );
 				$all_roles                          = unserialize( get_option( 'ets_gamipress_discord_all_roles' ) );
 				$rank_id                            = $data['post_id'];
-				if ( $access_token &&  $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
+				if ( $access_token && $rank_id && is_array( $all_roles ) && is_array( $ets_gamipress_discord_role_mapping ) ) {
 
 					if ( array_key_exists( 'gamipress_rank_type_id_' . $rank_id, $ets_gamipress_discord_role_mapping ) ) {
 						$role_id = $ets_gamipress_discord_role_mapping[ 'gamipress_rank_type_id_' . $rank_id ];
@@ -912,11 +904,13 @@ class Connect_Gamipress_Discord_Addon_Public {
 		}
 	}
 
-/* 	public function ets_gamipress_award_rank_to_user( $user_id, $rank_id, $args ) {
+	/*
+	  public function ets_gamipress_award_rank_to_user( $user_id, $rank_id, $args ) {
 
 	} */
 
-/* 	public function ets_gamipress_revoke_rank_to_user( $user_id, $rank_id, $new_rank_id, $args ) {
+	/*
+	  public function ets_gamipress_revoke_rank_to_user( $user_id, $rank_id, $new_rank_id, $args ) {
 
 	} */
 
