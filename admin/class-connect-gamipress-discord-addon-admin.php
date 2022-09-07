@@ -408,10 +408,11 @@ class Connect_Gamipress_Discord_Addon_Admin {
 			exit();
 		}
 
-			$ets_gamipress_discord_send_welcome_dm = isset( $_POST['ets_gamipress_discord_send_welcome_dm'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_send_welcome_dm'] ) ) : '';
-			$ets_gamipress_discord_welcome_message = isset( $_POST['ets_gamipress_discord_welcome_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_welcome_message'] ) ) : '';
+			$ets_gamipress_discord_send_welcome_dm            = isset( $_POST['ets_gamipress_discord_send_welcome_dm'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_send_welcome_dm'] ) ) : '';
+			$ets_gamipress_discord_welcome_message            = isset( $_POST['ets_gamipress_discord_welcome_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_welcome_message'] ) ) : '';
 			$ets_gamipress_discord_award_rank_message         = isset( $_POST['ets_gamipress_discord_award_rank_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_award_rank_message'] ) ) : '';
-			$ets_gamipress_discord_award_user_points_message         = isset( $_POST['ets_gamipress_discord_award_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_award_user_points_message'] ) ) : '';
+			$ets_gamipress_discord_award_user_points_message  = isset( $_POST['ets_gamipress_discord_award_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_award_user_points_message'] ) ) : '';
+			$ets_gamipress_discord_deduct_user_points_message = isset( $_POST['ets_gamipress_discord_deduct_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_gamipress_discord_deduct_user_points_message'] ) ) : '';
 
 			$retry_failed_api     = isset( $_POST['retry_failed_api'] ) ? sanitize_textarea_field( trim( $_POST['retry_failed_api'] ) ) : '';
 			$kick_upon_disconnect = isset( $_POST['kick_upon_disconnect'] ) ? sanitize_textarea_field( trim( $_POST['kick_upon_disconnect'] ) ) : '';
@@ -455,6 +456,17 @@ class Connect_Gamipress_Discord_Addon_Admin {
 					update_option( 'ets_gamipress_discord_award_user_points_message', $ets_gamipress_discord_award_user_points_message );
 				} else {
 					update_option( 'ets_gamipress_discord_award_user_points_message', '' );
+				}
+
+				if ( isset( $_POST['ets_gamipress_discord_send_deduct_user_points_dm'] ) ) {
+					update_option( 'ets_gamipress_discord_send_deduct_user_points_dm', true );
+				} else {
+					update_option( 'ets_gamipress_discord_send_deduct_user_points_dm', false );
+				}
+				if ( isset( $_POST['ets_gamipress_discord_deduct_user_points_message'] ) && $_POST['ets_gamipress_discord_deduct_user_points_message'] != '' ) {
+					update_option( 'ets_gamipress_discord_deduct_user_points_message', $ets_gamipress_discord_deduct_user_points_message );
+				} else {
+					update_option( 'ets_gamipress_discord_deduct_user_points_message', '' );
 				}
 
 				if ( isset( $_POST['retry_failed_api'] ) ) {
@@ -501,6 +513,19 @@ class Connect_Gamipress_Discord_Addon_Admin {
 			}
 		}
 
+	}
+
+	/**
+	 * Send DM message when Admin deduct points to a user.
+	 *
+	 * @param integer        $user_id        The given user's ID
+	 * @param integer        $points         The points the user is being awarded
+	 * @param string|WP_Post $points_type    The points type
+	 * @param array          $args           Array of extra arguments
+	 */
+	public function ets_gamipress_deduct_points_to_user( $user_id, $points, $points_type, $args ) {
+
+		update_option( 'gamipress_revoke_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type . ' raison : ' . $args['reason'] . ' achievement_id :' . $args['achievement_id'] );
 	}
 
 }

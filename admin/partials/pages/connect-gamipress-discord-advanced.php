@@ -8,6 +8,9 @@ $ets_gamipress_discord_award_rank_message = sanitize_text_field( trim( get_optio
 $ets_gamipress_discord_send_award_user_points_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_award_user_points_dm' ) ) );
 $ets_gamipress_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_award_user_points_message' ) ) );
 
+$ets_gamipress_discord_send_deduct_user_points_dm = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_send_deduct_user_points_dm' ) ) );
+$ets_gamipress_discord_deduct_user_points_message = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_deduct_user_points_message' ) ) );
+
 $retry_failed_api     = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_retry_failed_api' ) ) );
 $kick_upon_disconnect = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_kick_upon_disconnect' ) ) );
 $retry_api_count      = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_retry_api_count' ) ) );
@@ -91,7 +94,27 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_gamipress_di
 	<br/>
 	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_POINTS],[GP_ACHIEVEMENT_TYPE], [GP_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
-	</tr>	
+	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Send deduct user points message', 'connect-gamipress-discord-addon' ); ?></th>
+		<td> <fieldset>
+		<input name="ets_gamipress_discord_send_deduct_user_points_dm" type="checkbox" id="ets_gamipress_discord_deduct_user_points_welcome_dm" 
+		<?php
+		if ( $ets_gamipress_discord_send_deduct_user_points_dm == true ) {
+			echo esc_attr( 'checked="checked"' ); }
+		?>
+		 value="1">
+		</fieldset></td>
+	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Deduct user points message', 'connect-gamipress-discord-addon' ); ?></th>
+		<td> <fieldset>
+		<?php $ets_gamipress_discord_deduct_user_points_message_value = ( isset( $ets_gamipress_discord_deduct_user_points_message ) ) ? $ets_gamipress_discord_deduct_user_points_message : ''; ?>
+		<textarea class="ets_gamipress_discord_dm_textarea" name="ets_gamipress_discord_deduct_user_points_message" id="ets_gamipress_discord_deduct_user_points_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_gamipress_discord_deduct_user_points_message_value ) ); ?></textarea> 
+	<br/>
+	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_DEDUCT_POINTS], [GP_POINTS_TYPE], [GP_POINTS_LABEL], [GP_POINTS_BALANCE], [SITE_URL], [BLOG_NAME]</small>
+		</fieldset></td>
+	</tr>		
 	  <tr>
 		<th scope="row"><?php esc_html_e( 'Retry Failed API calls', 'connect-gamipress-discord-addon' ); ?></th>
 		<td> <fieldset>
@@ -125,7 +148,7 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_gamipress_di
 		<th scope="row"><?php esc_html_e( 'Set job queue concurrency', 'connect-gamipress-discord-addon' ); ?></th>
 		<td> <fieldset>
 		<?php $set_job_cnrc_value = ( isset( $set_job_cnrc ) ) ? $set_job_cnrc : 1; ?>			
-		<input name="set_job_cnrc" type="number" min="1" id="set_job_cnrc" value="<?php echo esc_attr( intval( $set_job_cnrc ) );?>">
+		<input name="set_job_cnrc" type="number" min="1" id="set_job_cnrc" value="<?php echo esc_attr( intval( $set_job_cnrc ) ); ?>">
 		</fieldset></td>
 	  </tr>
 	  <tr>
