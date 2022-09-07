@@ -36,6 +36,8 @@ class Connect_Gamipress_Discord_Addon_Activator {
 		update_option( 'ets_gamipress_discord_award_rank_message', 'Congratulations [GP_USER_NAME]! You reached the [GP_RANK_TYPE] [GP_RANK] by completing the following requirements: [GP_RANK_REQUIREMENTS] , Regards, [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_gamipress_discord_send_award_user_points_dm', true );
 		update_option( 'ets_gamipress_discord_award_user_points_message', 'Congratulations [GP_USER_NAME]( [GP_USER_EMAIL] ), You unlocked the [GP_ACHIEVEMENT_TYPE] [GP_ACHIEVEMENT] by completing the following steps: [GP_ACHIEVEMENT_STEPS], Points Awarded : [GP_POINTS], [SITE_URL], [BLOG_NAME]' );
+		update_option( 'ets_gamipress_discord_send_deduct_user_points_dm', true );
+		update_option( 'ets_gamipress_discord_deduct_user_points_message', 'Ops [GP_USER_NAME]([GP_USER_EMAIL])! You lost [GP_DEDUCT_POINTS] [GP_POINTS_TYPE] for [GP_POINTS_LABEL] Your new [GP_POINTS_TYPE] balance is: [GP_POINTS_BALANCE], [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_gamipress_discord_retry_failed_api', true );
 		update_option( 'ets_gamipress_discord_connect_button_bg_color', '#7bbc36' );
 		update_option( 'ets_gamipress_discord_disconnect_button_bg_color', '#ff0000' );
