@@ -217,6 +217,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'gamipress_insert_user_earning', $plugin_public, 'ets_gamipress_insert_user_earning', 99, 4 );
 		// $this->loader->add_action( 'gamipress_award_rank_to_user', $plugin_public, 'ets_gamipress_award_rank_to_user', 99, 3 );
 		// $this->loader->add_action( 'gamipress_revoke_rank_to_user', $plugin_public, 'ets_gamipress_revoke_rank_to_user', 99, 4 );
+		$this->loader->add_filter( 'kses_allowed_protocols', $plugin_public, 'ets_gamipress_discord_allow_data_protocol' );
 	}
 
 	/**
@@ -294,7 +295,7 @@ class Connect_Gamipress_Discord_Addon {
 		$img  = file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'public/images/discord-logo-white.svg' );
 		$data = base64_encode( $img );
 
-		return '<img class="ets-discord" src="data:image/svg+xml;base64,' . $data . '" />';
+		return '<img class="ets-discord-logo-white" src="data:image/svg+xml;base64,' . $data . '" />';
 	}
 
 	/**
