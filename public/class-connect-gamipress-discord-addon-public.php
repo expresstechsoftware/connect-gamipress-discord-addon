@@ -164,8 +164,8 @@ class Connect_Gamipress_Discord_Addon_Public {
 		if ( gamipress_discord_check_saved_settings_status() ) {
 
 			if ( $access_token ) {
-				$discord_user_id          = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
-				$discord_user_avatar      = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_avatar', true ) ) );
+				$discord_user_id     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
+				$discord_user_avatar = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_avatar', true ) ) );
 
 				$disconnect_btn_bg_color  = 'style="background-color:' . $ets_gamipress_discord_disconnect_button_bg_color . '"';
 				$restrictcontent_discord .= '<div>';
@@ -173,7 +173,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$restrictcontent_discord .= '<label class="ets-connection-lbl">' . esc_html__( 'Discord connection', 'connect-gamipress-and-discord' ) . '</label>';
 				$restrictcontent_discord .= '</div>';
 				$restrictcontent_discord .= '<div>';
-				$restrictcontent_discord .= '<a href="#" class="ets-btn gamipress-discord-btn-disconnect" ' . $disconnect_btn_bg_color . ' id="gamipress-discord-disconnect-discord" data-user-id="' . esc_attr( $user_id ) . '">' . esc_html( $ets_gamipress_discord_disconnect_button_text ) . '</a>';
+				$restrictcontent_discord .= '<a href="#" class="ets-btn gamipress-discord-btn-disconnect" ' . $disconnect_btn_bg_color . ' id="gamipress-discord-disconnect-discord" data-user-id="' . esc_attr( $user_id ) . '">' . esc_html( $ets_gamipress_discord_disconnect_button_text ) . Connect_Gamipress_Discord_Addon::get_discord_logo_white() . '</a>';
 				$restrictcontent_discord .= '<span class="ets-spinner"></span>';
 				$restrictcontent_discord .= '<p>' . esc_html__( sprintf( 'Connected account: %s', $_ets_gamipress_discord_username ), 'connect-gamipress-and-discord' ) . '</p>';
 				$restrictcontent_discord  = ets_gamipress_discord_get_user_avatar( $discord_user_id, $discord_user_avatar, $restrictcontent_discord );
@@ -189,7 +189,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<h3>' . esc_html__( 'Discord connection', 'connect-gamipress-and-discord' ) . '</h3>';
 				$restrictcontent_discord .= '<div>';
-				$restrictcontent_discord .= '<a href="?action=gamipress-discord-login" class="gamipress-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_gamipress_discord_loggedin_button_text ) . '</a>';
+				$restrictcontent_discord .= '<a href="?action=gamipress-discord-login" class="gamipress-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_gamipress_discord_loggedin_button_text ) . Connect_Gamipress_Discord_Addon::get_discord_logo_white() . '</a>';
 				$restrictcontent_discord .= '</div>';
 				$restrictcontent_discord  = ets_gamipress_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
 
@@ -924,5 +924,17 @@ class Connect_Gamipress_Discord_Addon_Public {
 	  public function ets_gamipress_revoke_rank_to_user( $user_id, $rank_id, $new_rank_id, $args ) {
 
 	} */
+
+	/**
+	 * Allow data protocol.
+	 *
+	 * @since    1.0.0
+	 * @return array
+	 */
+	public function ets_gamipress_discord_allow_data_protocol( $protocols ) {
+
+		$protocols[] = 'data';
+		return $protocols;
+	}	
 
 }
