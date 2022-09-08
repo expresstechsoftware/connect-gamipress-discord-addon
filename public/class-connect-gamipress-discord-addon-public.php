@@ -164,6 +164,9 @@ class Connect_Gamipress_Discord_Addon_Public {
 		if ( gamipress_discord_check_saved_settings_status() ) {
 
 			if ( $access_token ) {
+				$discord_user_id          = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_user_id', true ) ) );
+				$discord_user_avatar      = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_gamipress_discord_avatar', true ) ) );
+
 				$disconnect_btn_bg_color  = 'style="background-color:' . $ets_gamipress_discord_disconnect_button_bg_color . '"';
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<div>';
@@ -173,6 +176,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$restrictcontent_discord .= '<a href="#" class="ets-btn gamipress-discord-btn-disconnect" ' . $disconnect_btn_bg_color . ' id="gamipress-discord-disconnect-discord" data-user-id="' . esc_attr( $user_id ) . '">' . esc_html( $ets_gamipress_discord_disconnect_button_text ) . '</a>';
 				$restrictcontent_discord .= '<span class="ets-spinner"></span>';
 				$restrictcontent_discord .= '<p>' . esc_html__( sprintf( 'Connected account: %s', $_ets_gamipress_discord_username ), 'connect-gamipress-and-discord' ) . '</p>';
+				$restrictcontent_discord  = ets_gamipress_discord_get_user_avatar( $discord_user_id, $discord_user_avatar, $restrictcontent_discord );
 				$restrictcontent_discord  = ets_gamipress_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
 				$restrictcontent_discord .= '</div>';
 				$restrictcontent_discord .= '</div>';
@@ -266,7 +270,9 @@ class Connect_Gamipress_Discord_Addon_Public {
 								$discord_user_number           = $user_body['discriminator'];
 								$discord_user_name             = $user_body['username'];
 								$discord_user_name_with_number = $discord_user_name . '#' . $discord_user_number;
+								$discord_user_avatar           = $user_body['avatar'];
 								update_user_meta( $user_id, '_ets_gamipress_discord_username', $discord_user_name_with_number );
+								update_user_meta( $user_id, '_ets_gamipress_discord_avatar', $discord_user_avatar );
 							}
 							if ( is_array( $user_body ) && array_key_exists( 'id', $user_body ) ) {
 								$_ets_gamipress_discord_user_id = sanitize_text_field( trim( $user_body['id'] ) );

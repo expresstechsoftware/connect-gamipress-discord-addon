@@ -41,7 +41,7 @@
   visibility: visible;
 }
  .ets_assigned_role{
-  font-size: 12px;
+  font-size: 1rem;
  }
  .ets_assigned_role > span{
     padding: 0px 7px;
@@ -65,4 +65,11 @@ img.ets-discord {
     display: inline-block;
     margin-left: 5px;
     
+}
+img.ets-gamipress-user-avatar {
+  border-radius: 50% !important;
+  width: 45px;
+  height: auto;
+  display: inline-block;
+  margin-left: 10px;  
 }

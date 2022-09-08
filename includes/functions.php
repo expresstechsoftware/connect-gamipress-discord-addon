@@ -302,6 +302,10 @@ function ets_gamipress_discord_allowed_html() {
 			'data-user-id' => array(),
 			'id'           => array(),
 		),
+		'img'    => array(
+			'src'   => array(),
+			'class' => array(),
+		),
 	);
 
 	return $allowed_html;
@@ -532,9 +536,9 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 /**
  * Get formatted deduct user points message to send in DM.
  *
- * @param INT $user_id The user ID.
- * @param STRING 	$points_type 	The points type
- * @param INT			$points 		The points the user is being revoked
+ * @param INT    $user_id The user ID.
+ * @param STRING $points_type    The points type
+ * @param INT    $points         The points the user is being revoked
  * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_DEDUCT_POINTS], [GP_POINTS_TYPE], [GP_POINTS_LABEL], [GP_POINTS_BALANCE], [SITE_URL], [BLOG_NAME]
  */
 function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points_type, $points, $message ) {
@@ -545,10 +549,10 @@ function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points
 	$BLOG_NAME  = get_bloginfo( 'name' );
 
 	$DEDUCT_POINTS = $points;
-	$POINTS_TYPE = $points_type;
+	$POINTS_TYPE   = $points_type;
 
 	$POINTS_LABEL = '';
-	$args             = array(
+	$args         = array(
 		'name'        => $points_type,
 		'post_type'   => 'points-type',
 		'post_status' => 'publish',
@@ -682,4 +686,21 @@ function ets_gamipress_discord_is_rank_earning( $post_id ) {
 		return false;
 	}
 
+}
+
+/**
+ * Return the discord user avatar.
+ *
+ * @param INT    $discord_user_id The discord usr ID.
+ * @param STRING $user_avatar Discord avatar hash value.
+ * @param STRING $restrictcontent_discord The html.
+ *
+ * @return STRING
+ */
+function ets_gamipress_discord_get_user_avatar( $discord_user_id, $user_avatar, $restrictcontent_discord ) {
+	if ( $user_avatar ) {
+		$avatar_url               = '<img class="ets-gamipress-user-avatar" src="https://cdn.discordapp.com/avatars/' . $discord_user_id . '/' . $user_avatar . '.png" />';
+		$restrictcontent_discord .= $avatar_url;
+	}
+	return $restrictcontent_discord;
 }
