@@ -60,7 +60,7 @@
     border-radius: 50%;
     margin-right: 6px;     
  }
-img.ets-discord {
+img.ets-discord, img.ets-discord-logo-white {
     width: 20px;
     display: inline-block;
     margin-left: 5px;
