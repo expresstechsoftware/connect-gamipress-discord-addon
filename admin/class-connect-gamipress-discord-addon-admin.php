@@ -548,10 +548,10 @@ class Connect_Gamipress_Discord_Addon_Admin {
 					update_option( 'ets_gamipress_discord_loggedout_btn_text', $ets_gamipress_loggedout_btn_text );
 				}
 				if ( $ets_gamipress_loggedin_btn_text ) {
-					update_option( 'ets_gamipress_discord_loggedin_btn_text', $ets_gamipress_loggedin_btn_text );
+					update_option( 'ets_gamipress_discord_loggedin_button_text', $ets_gamipress_loggedin_btn_text );
 				}
 				if ( $ets_gamipress_discord_disconnect_btn_text ) {
-					update_option( 'ets_gamipress_discord_disconnect_btn_text', $ets_gamipress_discord_disconnect_btn_text );
+					update_option( 'ets_gamipress_discord_disconnect_button_text', $ets_gamipress_discord_disconnect_btn_text );
 				}
 				$message = 'Your settings are saved successfully.';
 				if ( isset( $_POST['current_url'] ) ) {

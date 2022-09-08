@@ -2,8 +2,8 @@
 $ets_gamipress_discord_connect_button_bg_color    = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_connect_button_bg_color' ) ) );
 $ets_gamipress_discord_disconnect_button_bg_color = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_disconnect_button_bg_color' ) ) );
 $btn_text                                  = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_loggedout_btn_text' ) ) );
-$loggedin_btn_text                         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_loggedin_btn_text' ) ) );
-$ets_gamipress_discord_disconnect_btn_text = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_disconnect_btn_text' ) ) );
+$loggedin_btn_text                         = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_loggedin_button_text' ) ) );
+$ets_gamipress_discord_disconnect_btn_text = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_disconnect_button_text' ) ) );
 $ets_current_screen                        = ets_gamipress_discord_get_current_screen_url();
 ?>
 <form method="post" action="<?php echo esc_url( get_site_url() . '/wp-admin/admin-post.php' ); ?>">
