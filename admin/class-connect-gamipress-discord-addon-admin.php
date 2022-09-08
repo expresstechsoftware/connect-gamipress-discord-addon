@@ -518,6 +518,53 @@ class Connect_Gamipress_Discord_Addon_Admin {
 	}
 
 	/**
+	 * Save apearance settings
+	 *
+	 * @param NONE
+	 * @return NONE
+	 */
+	public function ets_gamipress_discord_save_appearance_settings() {
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+
+		$ets_gamipress_discord_connect_button_bg_color    = isset( $_POST['ets_gamipress_discord_connect_button_bg_color'] ) && $_POST['ets_gamipress_discord_connect_button_bg_color'] !== '' ? sanitize_text_field( trim( $_POST['ets_gamipress_discord_connect_button_bg_color'] ) ) : '#77a02e';
+		$ets_gamipress_discord_disconnect_button_bg_color = isset( $_POST['ets_gamipress_discord_disconnect_button_bg_color'] ) && $_POST['ets_gamipress_discord_disconnect_button_bg_color'] != '' ? sanitize_text_field( trim( $_POST['ets_gamipress_discord_disconnect_button_bg_color'] ) ) : '#ff0000';
+		$ets_gamipress_loggedin_btn_text                  = isset( $_POST['ets_gamipress_loggedin_btn_text'] ) && $_POST['ets_gamipress_loggedin_btn_text'] != '' ? sanitize_text_field( trim( $_POST['ets_gamipress_loggedin_btn_text'] ) ) : 'Connect To Discord';
+		$ets_gamipress_loggedout_btn_text                 = isset( $_POST['ets_gamipress_loggedout_btn_text'] ) && $_POST['ets_gamipress_loggedout_btn_text'] != '' ? sanitize_text_field( trim( $_POST['ets_gamipress_loggedout_btn_text'] ) ) : 'Login With Discord';
+		$ets_gamipress_discord_disconnect_btn_text        = $_POST['ets_gamipress_discord_disconnect_btn_text'] ? sanitize_text_field( trim( $_POST['ets_gamipress_discord_disconnect_btn_text'] ) ) : 'Disconnect From Discord';
+
+		if ( isset( $_POST['appearance_submit'] ) ) {
+
+			if ( isset( $_POST['ets_gamipress_discord_save_appearance_settings'] ) && wp_verify_nonce( $_POST['ets_gamipress_discord_save_appearance_settings'], 'save_ets_gamipress_discord_appearance_settings' ) ) {
+				if ( $ets_gamipress_discord_connect_button_bg_color ) {
+					update_option( 'ets_gamipress_discord_connect_button_bg_color', $ets_gamipress_discord_connect_button_bg_color );
+				}
+				if ( $ets_gamipress_discord_disconnect_button_bg_color ) {
+					update_option( 'ets_gamipress_discord_disconnect_button_bg_color', $ets_gamipress_discord_disconnect_button_bg_color );
+				}
+				if ( $ets_gamipress_loggedout_btn_text ) {
+					update_option( 'ets_gamipress_discord_loggedout_btn_text', $ets_gamipress_loggedout_btn_text );
+				}
+				if ( $ets_gamipress_loggedin_btn_text ) {
+					update_option( 'ets_gamipress_discord_loggedin_btn_text', $ets_gamipress_loggedin_btn_text );
+				}
+				if ( $ets_gamipress_discord_disconnect_btn_text ) {
+					update_option( 'ets_gamipress_discord_disconnect_btn_text', $ets_gamipress_discord_disconnect_btn_text );
+				}
+				$message = 'Your settings are saved successfully.';
+				if ( isset( $_POST['current_url'] ) ) {
+					$pre_location = sanitize_text_field( $_POST['current_url'] ) . '&save_settings_msg=' . $message . '#ets_gamipress_discord_appearance';
+					wp_safe_redirect( $pre_location );
+				}
+			}
+		}
+
+	}
+
+
+	/**
 	 * Add GamiPress Discord Connection column to WP Users listing
 	 *
 	 * @param array $columns
