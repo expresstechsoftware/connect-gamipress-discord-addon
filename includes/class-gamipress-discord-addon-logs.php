@@ -76,24 +76,23 @@ class Connect_Gamipress_Discord_Add_On_Logs {
 		$log_api_response = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_log_api_response' ) ) );
 		$uuid             = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_uuid_file_name' ) ) );
 		$log_file_name    = $uuid . self::$log_file_name;
-		if( is_array( $response_arr ) ){
-                        if (  array_key_exists( 'code', $response_arr ) ) {
-                                $error .= '==>File:' . $backtrace_arr['file'] . $user_details . '::Line:' . $backtrace_arr['line'] . '::Function:' . $backtrace_arr['function'] . '::' . $response_arr['code'] . ':' . $response_arr['message'];
-                                if ( $response_arr['code'] == '50001' ) {
-                                        $error .= '<br><b> Solution: The BOT role need to the TOP priority among the other roles. discord.com > Server Settings > Roles > Drag the BOT role to the TOP priority</b>';
-                                }
-                                file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
-                        } elseif (  array_key_exists( 'error', $response_arr ) ) {
-                                $error .= '==>File:' . $backtrace_arr['file'] . $user_details . '::Line:' . $backtrace_arr['line'] . '::Function:' . $backtrace_arr['function'] . '::' . $response_arr['error'];
-                                file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
-                        } elseif ( $log_api_response == true ) {
-                                $error .= json_encode( $response_arr ) . '::' . $user_id;
-                                file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
-                        }                    
+		if ( is_array( $response_arr ) ) {
+			if ( array_key_exists( 'code', $response_arr ) ) {
+				$error .= '==>File:' . $backtrace_arr['file'] . $user_details . '::Line:' . $backtrace_arr['line'] . '::Function:' . $backtrace_arr['function'] . '::' . $response_arr['code'] . ':' . $response_arr['message'];
+				if ( $response_arr['code'] == '50001' ) {
+					$error .= '<br><b> Solution: The BOT role need to the TOP priority among the other roles. discord.com > Server Settings > Roles > Drag the BOT role to the TOP priority</b>';
+				}
+				file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
+			} elseif (  array_key_exists( 'error', $response_arr ) ) {
+				$error .= '==>File:' . $backtrace_arr['file'] . $user_details . '::Line:' . $backtrace_arr['line'] . '::Function:' . $backtrace_arr['function'] . '::' . $response_arr['error'];
+				file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
+			} elseif ( $log_api_response == true ) {
+				$error .= json_encode( $response_arr ) . '::' . $user_id;
+				file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
+			}
 		}
-
 
 	}
 }
-// instantiating the class needed for the Ajax call
+// instantiating the class needed for the Ajax call.
 new Connect_Gamipress_Discord_Add_On_Logs();

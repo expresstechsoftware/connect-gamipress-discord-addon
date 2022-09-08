@@ -252,7 +252,7 @@
 			makeDrag($('.makeMeDraggable'));
 			newClone.css({ 'width': '100%', 'left': '0', 'top': '0', 'margin-bottom': '0px', 'position':'unset', 'order': '1' });
 		} 
-		
+		/** Disconnect user button if the user is connected to single Profile page */
 		$('.ets-gamipress-disconnect-discord-user').click(function (e) {
 			e.preventDefault();
 			$.ajax({
@@ -281,6 +281,35 @@
 				}
 			});
 		});
+		/*Clear log log call-back*/
+		$('#ets-gamipress-clrbtn').click(function (e) {
+			e.preventDefault();
+			$.ajax({
+				url: etsGamiPressParams.admin_ajax,
+				type: "POST",
+				data: { 'action': 'ets_gamipress_discord_clear_logs', 'ets_gamipress_discord_nonce': etsGamiPressParams.ets_gamipress_discord_nonce },
+				beforeSend: function () {
+					$(".clr-log.spinner").addClass("is-active").show();
+				},
+				success: function (data) {
+         
+					if (data.error) {
+						// handle the error
+						alert(data.error.msg);
+					} else {
+                                            
+						$('.error-log').html("Clear logs Sucesssfully !");
+					}
+				},
+				error: function (response, textStatus, errorThrown ) {
+					console.log( textStatus + " :  " + response.status + " : " + errorThrown );
+				},
+				complete: function () {
+					$(".clr-log.spinner").removeClass("is-active").hide();
+				}
+			});
+		}); 
+
 		$(document).ready(function(){
 			$('#ets_gamipress_discord_connect_button_bg_color').wpColorPicker();
 			$('#ets_gamipress_discord_disconnect_button_bg_color').wpColorPicker();

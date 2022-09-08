@@ -343,11 +343,11 @@ class Connect_Gamipress_Discord_Addon_Public {
 					),
 				);
 				$response = wp_remote_post( $discord_token_api_url, $args );
-				// ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
-				// if ( ets_gamipress_discord_check_api_errors( $response ) ) {
-				// $response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
-				// Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
-				// }
+				ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
+				if ( ets_gamipress_discord_check_api_errors( $response ) ) {
+					$response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
+					Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+				}
 			}
 		} else {
 			$args     = array(
@@ -365,11 +365,11 @@ class Connect_Gamipress_Discord_Addon_Public {
 				),
 			);
 			$response = wp_remote_post( $discord_token_api_url, $args );
-			// ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
-			// if ( ets_gamipress_discord_check_api_errors( $response ) ) {
-			// $response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
-			// Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
-			// }
+			ets_gamipress_discord_log_api_response( $user_id, $discord_token_api_url, $args, $response );
+			if ( ets_gamipress_discord_check_api_errors( $response ) ) {
+				$response_arr = json_decode( wp_remote_retrieve_body( $response ), true );
+				Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+			}
 		}
 		return $response;
 	}
@@ -398,7 +398,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		// ets_gamipress_discord_log_api_response( $user_id, $discord_cuser_api_url, $param, $user_response );
 
 		$response_arr = json_decode( wp_remote_retrieve_body( $user_response ), true );
-		// Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+		Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
 		$user_body = json_decode( wp_remote_retrieve_body( $user_response ), true );
 		return $user_body;
 
@@ -656,7 +656,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		if ( is_array( $response_arr ) && ! empty( $response_arr ) ) {
 			// check if there is error in create dm response
 			if ( array_key_exists( 'code', $response_arr ) || array_key_exists( 'error', $response_arr ) ) {
-							Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+				Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
 				if ( ets_gamipress_discord_check_api_errors( $created_dm_response ) ) {
 					// this should be catch by Action schedule failed action.
 					throw new Exception( 'Failed in function ets_gamipress_discord_create_member_dm_channel' );
