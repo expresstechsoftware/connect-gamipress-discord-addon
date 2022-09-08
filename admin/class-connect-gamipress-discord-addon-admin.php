@@ -158,6 +158,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 		wp_enqueue_script( $this->plugin_name );
 		wp_enqueue_script( 'jquery-ui-draggable' );
 		wp_enqueue_script( 'jquery-ui-droppable' );
+		wp_enqueue_script( 'wp-color-picker' );
 		require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/connect-gamipress-discord-addon-admin-display.php';
 	}
 

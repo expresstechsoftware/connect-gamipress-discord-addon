@@ -281,6 +281,10 @@
 				}
 			});
 		});
+		$(document).ready(function(){
+			$('#ets_gamipress_btn_color').wpColorPicker();
+			$('#ets_gamipress_discord_btn_disconnect_color').wpColorPicker();
+		});
 
 	} // Is Admin close
 
