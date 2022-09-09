@@ -170,7 +170,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 				$disconnect_btn_bg_color  = 'style="background-color:' . $ets_gamipress_discord_disconnect_button_bg_color . '"';
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<div>';
-				$restrictcontent_discord .= '<label class="ets-connection-lbl">' . esc_html__( 'Discord connection', 'connect-gamipress-and-discord' ) . '</label>';
+				$restrictcontent_discord .= '<h2>' . esc_html__( 'Discord connection', 'connect-gamipress-and-discord' ) . '</h2>';
 				$restrictcontent_discord .= '</div>';
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<a href="#" class="ets-btn gamipress-discord-btn-disconnect" ' . $disconnect_btn_bg_color . ' id="gamipress-discord-disconnect-discord" data-user-id="' . esc_attr( $user_id ) . '">' . esc_html( $ets_gamipress_discord_disconnect_button_text ) . Connect_Gamipress_Discord_Addon::get_discord_logo_white() . '</a>';
@@ -935,6 +935,6 @@ class Connect_Gamipress_Discord_Addon_Public {
 
 		$protocols[] = 'data';
 		return $protocols;
-	}	
+	}
 
 }

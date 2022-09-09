@@ -306,6 +306,7 @@ function ets_gamipress_discord_allowed_html() {
 			'src'   => array(),
 			'class' => array(),
 		),
+		'h2'     => array(),
 	);
 
 	return $allowed_html;
