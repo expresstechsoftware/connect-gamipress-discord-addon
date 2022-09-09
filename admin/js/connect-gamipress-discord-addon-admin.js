@@ -1,6 +1,7 @@
 (function( $ ) {
 	'use strict';
 	if (etsGamiPressParams.is_admin) {
+		$(document).ready(function(){
 		if(jQuery().select2) {
 			$('#ets_gamipress_discord_redirect_url').select2({ width: 'resolve' });
                         $('#ets_gamipress_discord_redirect_url').on('change', function(){
@@ -310,10 +311,11 @@
 			});
 		}); 
 
-		$(document).ready(function(){
+		
 			$('#ets_gamipress_discord_connect_button_bg_color').wpColorPicker();
 			$('#ets_gamipress_discord_disconnect_button_bg_color').wpColorPicker();
-		});
+		
+		}); // document reday
 
 	} // Is Admin close
 
