@@ -98,8 +98,8 @@ class Connect_Gamipress_Discord_Addon_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_register_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/connect-gamipress-discord-addon-public.css', array(), $this->version, 'all' );
+		$min_css = ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) ? '' : '.min';
+		wp_register_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/connect-gamipress-discord-addon-public' . $min_css . '.css', array(), $this->version, 'all' );
 
 	}
 
@@ -109,7 +109,8 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * @since    1.0.0
 	 */
 	public function enqueue_scripts() {
-		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-gamipress-discord-addon-public.js', array( 'jquery' ), $this->version, false );
+		$min_js = ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) ? '' : '.min';
+		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-gamipress-discord-addon-public' . $min_js . '.js', array( 'jquery' ), $this->version, false );
 		$script_params = array(
 			'admin_ajax'                  => admin_url( 'admin-ajax.php' ),
 			'permissions_const'           => CONNECT_GAMIPRESS_DISCORD_BOT_PERMISSIONS,
