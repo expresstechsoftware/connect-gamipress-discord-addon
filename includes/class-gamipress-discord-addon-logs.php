@@ -24,7 +24,6 @@ class Connect_Gamipress_Discord_Add_On_Logs {
 	 */
 	public function ets_gamipress_discord_clear_logs() {
 
-
 		if ( ! current_user_can( 'administrator' ) ) {
 			wp_send_json_error( 'You do not have sufficient rights', 403 );
 			exit();
@@ -83,7 +82,7 @@ class Connect_Gamipress_Discord_Add_On_Logs {
 					$error .= '<br><b> Solution: The BOT role need to the TOP priority among the other roles. discord.com > Server Settings > Roles > Drag the BOT role to the TOP priority</b>';
 				}
 				file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
-			} elseif (  array_key_exists( 'error', $response_arr ) ) {
+			} elseif ( array_key_exists( 'error', $response_arr ) ) {
 				$error .= '==>File:' . $backtrace_arr['file'] . $user_details . '::Line:' . $backtrace_arr['line'] . '::Function:' . $backtrace_arr['function'] . '::' . $response_arr['error'];
 				file_put_contents( WP_CONTENT_DIR . '/' . $log_file_name, $error . PHP_EOL, FILE_APPEND | LOCK_EX );
 			} elseif ( $log_api_response == true ) {
