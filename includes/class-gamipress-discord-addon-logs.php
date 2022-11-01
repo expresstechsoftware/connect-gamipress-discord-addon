@@ -12,7 +12,7 @@ class Connect_Gamipress_Discord_Add_On_Logs {
 	 * Static property to define log file name
 	 *
 	 * @param None
-	 * @return string $log_file_name
+	 * @return STRING $log_file_name
 	 */
 	public static $log_file_name = 'gamipress_discord_api_logs.txt';
 
@@ -58,11 +58,12 @@ class Connect_Gamipress_Discord_Add_On_Logs {
 	}
 
 	/**
-	 * Add API error logs into log file
+	 * Add API error logs into log file.
 	 *
-	 * @param array  $response_arr
-	 * @param array  $backtrace_arr
-	 * @param string $error_type
+	 * @param ARRAY $response_arr
+	 * @param INT   $user_id
+	 * @param ARRAY $backtrace_arr
+	 * @param ARRAY $error_type
 	 * @return None
 	 */
 	static function write_api_response_logs( $response_arr, $user_id, $backtrace_arr = array() ) {

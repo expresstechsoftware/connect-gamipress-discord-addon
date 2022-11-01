@@ -563,7 +563,8 @@ class Connect_Gamipress_Discord_Addon_Public {
 	/**
 	 * Discord DM a member using bot.
 	 *
-	 * @param INT       $user_id
+	 * @param INT       $user_id The User's ID.
+	 * @param ARRAY     $ranks_user The User's ranks.
 	 * @param ARRAY|INT $rank_user (Array of ranks | achievement_id).
 	 * @param STRING    $type (warning|expired).
 	 * @param INT       $points Achievement points awarded.
@@ -820,6 +821,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	}
 
 	/**
+	 * Update The user ranks.
 	 *
 	 * @param int     $user_id
 	 * @param WP_Post $new_rank
@@ -828,7 +830,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	 * @param int     $achievement_id
 	 */
 	public function ets_gamipress_discord_update_user_rank( $user_id, $new_rank, $old_rank, $admin_id = 0, $achievement_id = null ) {
-			// update_option('gamipress_update_rank_user_' . time() , ' user_id : ' . $user_id .'  new_rank : '. $new_rank->ID  .  ' old_rank : '. $old_rank->ID. 'achievement_id : ' . $achievement_id);
+
 		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
@@ -929,8 +931,9 @@ class Connect_Gamipress_Discord_Addon_Public {
 	/**
 	 * Allow data protocol.
 	 *
+	 * @param ARRAY $protocols Array of allowed protocols.
 	 * @since    1.0.0
-	 * @return array
+	 * @return ARRAY
 	 */
 	public function ets_gamipress_discord_allow_data_protocol( $protocols ) {
 

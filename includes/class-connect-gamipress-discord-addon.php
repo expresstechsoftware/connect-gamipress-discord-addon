@@ -289,7 +289,7 @@ class Connect_Gamipress_Discord_Addon {
 	 *
 	 * @since    1.0.0
 	 * @access   public
-	 * @return string
+	 * @return STRING
 	 */
 	public static function get_discord_logo_white() {
 		$img  = file_get_contents( plugin_dir_path( dirname( __FILE__ ) ) . 'public/images/discord-logo-white.svg' );
