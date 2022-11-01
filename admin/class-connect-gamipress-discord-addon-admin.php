@@ -641,10 +641,10 @@ class Connect_Gamipress_Discord_Addon_Admin {
 	/**
 	 * Send DM message when Admin deduct points to a user.
 	 *
-	 * @param integer        $user_id        The given user's ID
-	 * @param integer        $points         The points the user is being awarded
-	 * @param string|WP_Post $points_type    The points type
-	 * @param array          $args           Array of extra arguments
+	 * @param integer        $user_id        The given user's ID.
+	 * @param integer        $points         The points the user is being awarded.
+	 * @param string|WP_Post $points_type    The points type.
+	 * @param array          $args           Array of extra arguments.
 	 */
 	public function ets_gamipress_deduct_points_to_user( $user_id, $points, $points_type, $args ) {
 

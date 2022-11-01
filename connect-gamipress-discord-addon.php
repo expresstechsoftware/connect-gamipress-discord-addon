@@ -48,7 +48,7 @@ define( 'CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ )
 define( 'CONNECT_GAMIPRESS_DISCORD_OAUTH_SCOPES', 'identify email guilds guilds.join' );
 
 /**
- * Discord API url. 
+ * Discord API url.
  */
 define( 'CONNECT_GAMIPRESS_API_URL', 'https://discord.com/api/v10/' );
 
