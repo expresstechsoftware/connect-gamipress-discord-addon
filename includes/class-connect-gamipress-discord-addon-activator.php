@@ -23,9 +23,7 @@
 class Connect_Gamipress_Discord_Addon_Activator {
 
 	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
+	 * Set option values when activating the plugin.
 	 *
 	 * @since    1.0.0
 	 */
