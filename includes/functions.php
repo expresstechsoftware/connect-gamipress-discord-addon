@@ -19,10 +19,10 @@ function gamipress_discord_check_saved_settings_status() {
 	if ( $ets_gamipress_discord_client_id && $ets_gamipress_discord_client_secret && $ets_gamipress_discord_bot_token && $ets_gamipress_discord_redirect_url && $ets_gamipress_discord_server_id ) {
 			$status = true;
 	} else {
-			 $status = false;
+			$status = false;
 	}
 
-		 return $status;
+		return $status;
 }
 
 /**
@@ -38,11 +38,8 @@ function ets_gamipress_discord_get_current_screen_url() {
 		return $current_uri;
 }
 
- /*
- * Get BOT name
- *
- * @param NONE
- * @return NONE
+/**
+ * Save the BOT name in options table.
  */
 function ets_gamipress_discord_update_bot_name_option() {
 
@@ -50,7 +47,7 @@ function ets_gamipress_discord_update_bot_name_option() {
 	$discord_bot_token = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_bot_token' ) ) );
 	if ( $guild_id && $discord_bot_token ) {
 
-				$discod_current_user_api = CONNECT_GAMIPRESS_API_URL . 'users/@me';
+		$discod_current_user_api = CONNECT_GAMIPRESS_API_URL . 'users/@me';
 
 		$app_args = array(
 			'method'  => 'GET',
@@ -74,12 +71,13 @@ function ets_gamipress_discord_update_bot_name_option() {
 
 }
 
- /**
-  * Get WP Pages list
-  *
-  * @param INT $ets_gamipress_discord_redirect_page_id
-  * @return STRING $options
-  */
+/**
+ * Get WP pages list.
+ *
+ * @param INT $ets_gamipress_discord_redirect_page_id The Page ID.
+ *
+ * @return STRING $options Html select options.
+ */
 function ets_gamipress_discord_pages_list( $ets_gamipress_discord_redirect_page_id ) {
 	$args    = array(
 		'sort_order'   => 'asc',
@@ -105,9 +103,11 @@ function ets_gamipress_discord_pages_list( $ets_gamipress_discord_redirect_page_
 	return $options;
 }
 
-/*
- * function to get formated redirect url
+/**
+ * Get formated redirect url.
+ *
  * @param INT $page_id
+ *
  * @return STRING $url
  */
 function ets_get_gamipress_discord_formated_discord_redirect_url( $page_id ) {
@@ -125,14 +125,14 @@ function ets_get_gamipress_discord_formated_discord_redirect_url( $page_id ) {
 	}
 }
 
-  /**
-   * Log API call response
-   *
-   * @param INT          $user_id
-   * @param STRING       $api_url
-   * @param ARRAY        $api_args
-   * @param ARRAY|OBJECT $api_response
-   */
+/**
+ * Log API call response.
+ *
+ * @param INT          $user_id
+ * @param STRING       $api_url
+ * @param ARRAY        $api_args
+ * @param ARRAY|OBJECT $api_response
+ */
 function ets_gamipress_discord_log_api_response( $user_id, $api_url = '', $api_args = array(), $api_response = '' ) {
 	$log_api_response = get_option( 'ets_gamipress_discord_log_api_response' );
 	if ( $log_api_response == true ) {
@@ -148,7 +148,7 @@ function ets_gamipress_discord_log_api_response( $user_id, $api_url = '', $api_a
 /**
  * Check API call response and detect conditions which can cause of action failure and retry should be attemped.
  *
- * @param ARRAY|OBJECT $api_response
+ * @param ARRAY|OBJECT $api_response The API resposne.
  * @param BOOLEAN
  */
 function ets_gamipress_discord_check_api_errors( $api_response ) {
@@ -174,11 +174,11 @@ function ets_gamipress_discord_check_api_errors( $api_response ) {
 	}
 }
 
-  /**
-   * Get GamiPress published ranks
-   *
-   * @return ARRAY|NULL
-   */
+/**
+ * Get GamiPress published ranks.
+ *
+ * @return ARRAY|NULL
+ */
 function ets_gamipress_discord_get_ranks() {
 	$ets_gamipress_ranks = array();
 	$rank_types          = gamipress_get_rank_types();
@@ -209,11 +209,12 @@ function ets_gamipress_discord_get_ranks() {
 	}
 }
 
-  /**
-   * Get User's ranks
-   *
-   * @return ARRAY|NULL
-   */
+/**
+ * Get User's ranks.
+ *
+ * @param INT $user_id The user id.
+ * @return ARRAY|NULL
+ */
 function ets_gamipress_discord_get_user_ranks_ids( $user_id ) {
 	$ets_gamipress_user_ranks_ids = array();
 	$rank_types                   = gamipress_get_rank_types();
@@ -232,13 +233,15 @@ function ets_gamipress_discord_get_user_ranks_ids( $user_id ) {
 	}
 }
 
-/*
-  Get message for what role is assigned to the member.
-  @param STRING $mapped_role_name
-  @param STRING $default_role_name
-  @param STRING $restrictcontent_discord
-*/
-
+/**
+ * Get roles assigned messages.
+ *
+ * @param STRING $mapped_role_name
+ * @param STRING $default_role_name
+ * @param STRING $restrictcontent_discord
+ *
+ * @return STRING html.
+ */
 function ets_gamipress_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord ) {
 
 	if ( $mapped_role_name ) {
@@ -265,12 +268,10 @@ function ets_gamipress_discord_roles_assigned_message( $mapped_role_name, $defau
 }
 
 /**
- * Get allowed html using WordPress API function wp_kses
+ * Get allowed html using WordPress API function wp_kses.
  *
- * @param STRING $html_message
- * @return STRING $html_message
+ * @return ARRAY Allowed html.
  */
-
 function ets_gamipress_discord_allowed_html() {
 	$allowed_html = array(
 		'div'    => array(
@@ -313,9 +314,11 @@ function ets_gamipress_discord_allowed_html() {
 }
 
 /**
- * Get Action data from table `actionscheduler_actions`
+ * Get Action data from table `actionscheduler_actions`.
  *
- * @param INT $action_id
+ * @param INT $action_id Action id.
+ *
+ * @return ARRAY|BOOL
  */
 function ets_gamipress_discord_as_get_action_data( $action_id ) {
 	global $wpdb;
@@ -332,6 +335,8 @@ function ets_gamipress_discord_as_get_action_data( $action_id ) {
  * Get how many times a hook is failed in a particular day.
  *
  * @param STRING $hook
+ *
+ * @return INT|BOOL
  */
 function ets_gamipress_discord_count_of_hooks_failures( $hook ) {
 	global $wpdb;
@@ -348,6 +353,8 @@ function ets_gamipress_discord_count_of_hooks_failures( $hook ) {
  * Get randon integer between a predefined range.
  *
  * @param INT $add_upon
+ *
+ * @return INT
  */
 function ets_gamipress_discord_get_random_timestamp( $add_upon = '' ) {
 	if ( $add_upon != '' && $add_upon !== false ) {
@@ -358,9 +365,10 @@ function ets_gamipress_discord_get_random_timestamp( $add_upon = '' ) {
 }
 
 /**
- * Get the highest available last attempt schedule time
+ * Get the highest available last attempt schedule time.
+ *
+ * @return INT|FALSE
  */
-
 function ets_gamipress_discord_get_highest_last_attempt_timestamp() {
 	global $wpdb;
 	$result = $wpdb->get_results( $wpdb->prepare( 'SELECT aa.last_attempt_gmt FROM ' . $wpdb->prefix . 'actionscheduler_actions as aa INNER JOIN ' . $wpdb->prefix . 'actionscheduler_groups as ag ON aa.group_id = ag.group_id WHERE ag.slug = %s ORDER BY aa.last_attempt_gmt DESC limit 1', GAMIPRESS_DISCORD_AS_GROUP_NAME ), ARRAY_A );
@@ -373,7 +381,9 @@ function ets_gamipress_discord_get_highest_last_attempt_timestamp() {
 }
 
 /**
- * Get pending jobs
+ * Get pending jobs.
+ *
+ * @return ARRAY|FALSE
  */
 function ets_gamipress_discord_get_all_pending_actions() {
 	global $wpdb;
@@ -416,11 +426,12 @@ function ets_gamipress_discord_get_user_roles( $user_id ) {
 }
 
 /**
- * Get formatted message to send in DM
+ * Get formatted message to send in DM.
  *
- * @param INT   $user_id
- * @param ARRAY $ranks the user's ranks
- * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]
+ * @param INT    $user_id The user ID.
+ * @param ARRAY  $ranks_user the user's ranks.
+ * @param STRING $message The formatted message to send to discord.
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME].
  */
 function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $message ) {
 
@@ -472,9 +483,11 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
 /**
  * Get formatted award user points message to send in DM.
  *
- * @param INT $user_id The user ID.
- * @param INT $achievement_id The achievement ID.
- * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_POINTS],[GP_ACHIEVEMENT_TYPE], [GP_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]
+ * @param INT    $user_id The user ID.
+ * @param INT    $achievement_id The achievement ID.
+ * @param INT    $points User's points.
+ * @param STRING $message The formatted message to send to discord.
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_POINTS],[GP_ACHIEVEMENT_TYPE], [GP_ACHIEVEMENT], [SITE_URL], [BLOG_NAME].
  */
 function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achievement_id, $points, $message ) {
 	$user_obj   = get_user_by( 'id', $user_id );
@@ -538,9 +551,10 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
  * Get formatted deduct user points message to send in DM.
  *
  * @param INT    $user_id The user ID.
- * @param STRING $points_type    The points type
- * @param INT    $points         The points the user is being revoked
- * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_DEDUCT_POINTS], [GP_POINTS_TYPE], [GP_POINTS_LABEL], [GP_POINTS_BALANCE], [SITE_URL], [BLOG_NAME]
+ * @param STRING $points_type    The points type.
+ * @param INT    $points         The points the user is being revoked.
+ * @param STRING $message The formatted message to send to discord.
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_DEDUCT_POINTS], [GP_POINTS_TYPE], [GP_POINTS_LABEL], [GP_POINTS_BALANCE], [SITE_URL], [BLOG_NAME].
  */
 function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points_type, $points, $message ) {
 	$user_obj   = get_user_by( 'id', $user_id );
@@ -594,9 +608,10 @@ function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points
 /**
  * Get formatted award user Rank message to send in DM.
  *
- * @param INT $user_id The user ID.
- * @param INT $rank_id The rank ID.
- * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANK_TYPE], [GP_RANK], [GP_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME]
+ * @param INT    $user_id The user ID.
+ * @param INT    $rank_id The rank ID.
+ * @param STRING $message The formatted message to send to discord.
+ * Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANK_TYPE], [GP_RANK], [GP_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME].
  */
 function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, $message ) {
 	$user_obj   = get_user_by( 'id', $user_id );
@@ -652,7 +667,7 @@ function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, 
 /**
  * Remove all usermeta created by this plugin.
  *
- * @param INT $user_id
+ * @param INT $user_id The User's id.
  */
 function ets_gamipress_discord_remove_usermeta( $user_id ) {
 
