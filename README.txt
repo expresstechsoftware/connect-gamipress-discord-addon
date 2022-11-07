@@ -1,6 +1,6 @@
 === Connect GamiPress to Discord ===
 Contributors: expresstechsoftware, webbdeveloper, sunnysoni 
-Tags: Discord, Talk, Video Chat, Hang Out, Friends, discord role management, gamification, gamipress, rank.
+Tags: Discord, Talk, Video Chat, Hang Out, Friends, discord, gamification, points, achievements, ranks, badges, awards, rewards.
 Donate link: https://paypal.me/supportets
 Author URI: https://www.expresstechsoftwares.com
 Author: ExpressTech Software Solutions Pvt. Ltd.
@@ -14,7 +14,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Create a community of your students by connecting your GamiPress Website to your Discord server.
 
 == Description ==
-This add-on enables connecting your GamiPress
+This add-on allows you to connect your GamiPress website to your discord server.This allows you to build a great community by linking Rank to a discord role, so you can encourage, and create an atmosphere of challenge between your users.
 
 Connect GamiPress to Discord Plugin Features:
 1) Allow any user to connect their discord account with their GamiPress website account.
