@@ -28,7 +28,7 @@ if ( isset( $_GET['save_settings_msg'] ) ) {
 				<button class="skltbs-tab" data-identity="settings" ><?php esc_html_e( 'Application Details', 'connect-gamipress-discord-addon' ); ?><span class="initialtab spinner"></span></button>
 				</li>
 				<li class="skltbs-tab-item">
-				<?php if ( gamipress_discord_check_saved_settings_status() ): ?>
+				<?php if ( gamipress_discord_check_saved_settings_status() ) : ?>
 				<button class="skltbs-tab" data-identity="level-mapping" ><?php esc_html_e( 'Role Mappings', 'connect-gamipress-discord-addon' ); ?></button>
 				<?php endif; ?>
 				</li>
@@ -44,13 +44,12 @@ if ( isset( $_GET['save_settings_msg'] ) ) {
 				<button class="skltbs-tab" data-identity="logs" ><?php esc_html_e( 'Logs', 'connect-gamipress-discord-addon' ); ?>	
 				</button>
 				</li>                                
-			
-                        </ul>
+			</ul>
 			<div class="skltbs-panel-group">
 				<div id="ets_gamipress_application_details" class="gamipress-discord-tab-conetent skltbs-panel">
 				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-application-details.php'; ?>
 				</div>
-				<?php if ( gamipress_discord_check_saved_settings_status() ): ?>      
+				<?php if ( gamipress_discord_check_saved_settings_status() ) : ?>      
 				<div id="ets_gamipress_discord_role_mapping" class="gamipress-discord-tab-conetent skltbs-panel">
 					<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-role-mapping.php'; ?>
 				</div>
