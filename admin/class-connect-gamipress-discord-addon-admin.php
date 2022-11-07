@@ -357,7 +357,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 				delete_option( 'ets_gamipress_discord_role_mapping' );
 				delete_option( 'ets_gamipress_discord_default_role_id' );
 
-				$message = 'Your settings flushed successfully.';
+				$message = esc_html__( 'Your settings flushed successfully.', 'connect-gamipress-discord-addon' );
 			}
 			$pre_location = $ets_current_url . '&save_settings_msg=' . $message . '#ets_gamipress_discord_role_mapping';
 			wp_safe_redirect( $pre_location );
@@ -508,7 +508,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 					update_option( 'ets_gamipress_discord_log_api_response', false );
 				}
 
-				$message      = 'Your settings are saved successfully.';
+				$message      = esc_html__( 'Your settings are saved successfully.', 'connect-gamipress-discord-addon' );
 				$pre_location = $ets_current_url . '&save_settings_msg=' . esc_html( $message ) . '#ets_gamipress_discord_advanced';
 				wp_safe_redirect( $pre_location );
 
@@ -553,7 +553,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 				if ( $ets_gamipress_discord_disconnect_btn_text ) {
 					update_option( 'ets_gamipress_discord_disconnect_button_text', $ets_gamipress_discord_disconnect_btn_text );
 				}
-				$message = 'Your settings are saved successfully.';
+				$message = esc_html__( 'Your settings are saved successfully.', 'connect-gamipress-discord-addon' );
 				if ( isset( $_POST['current_url'] ) ) {
 					$pre_location = sanitize_text_field( $_POST['current_url'] ) . '&save_settings_msg=' . $message . '#ets_gamipress_discord_appearance';
 					wp_safe_redirect( $pre_location );
