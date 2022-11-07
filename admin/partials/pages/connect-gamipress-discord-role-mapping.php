@@ -2,13 +2,13 @@
 
 $ets_gamipress_ranks = ets_gamipress_discord_get_ranks();
 
-$connect_gamipress_default_role        = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_default_role_id' ) ) );
+$connect_gamipress_default_role = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_default_role_id' ) ) );
 ?>
 <div class="notice notice-warning ets-notice">
-    <p><i class='fas fa-info'></i> <?php esc_html_e ( 'Drag and Drop the Discord Roles over to the GamiPress Ranks', 'connect-gamipress-discord-addon' ); ?></p>
+	<p><i class='fas fa-info'></i> <?php esc_html_e( 'Drag and Drop the Discord Roles over to the GamiPress Ranks', 'connect-gamipress-discord-addon' ); ?></p>
 </div>
 <div class="notice notice-warning ets-notice">
-  <p><i class='fas fa-info'></i> <?php echo __( 'Note: only published Ranks are displayed', 'connect-gamipress-discord-addon' ); ?></p>
+  <p><i class='fas fa-info'></i> <?php esc_html_e( 'Note: only published Ranks are displayed', 'connect-gamipress-discord-addon' ); ?></p>
 </div>
 
 <div class="row-container">
@@ -24,22 +24,22 @@ $connect_gamipress_default_role        = sanitize_text_field( trim( get_option( 
 	<hr>
 	<div class="gamipress-discord-rank-type">
 	<?php
-	if( $ets_gamipress_ranks ){ 
+	if ( $ets_gamipress_ranks ) {
 		foreach ( $ets_gamipress_ranks as $ets_gamipress_rank_id => $ets_gamipress_rank_title ) {
-		
+
 			?>
 		  <div class="makeMeDroppable" data-gamipress_rank_type_id="<?php echo esc_attr( $ets_gamipress_rank_id ); ?>" ><span><?php echo esc_html( $ets_gamipress_rank_title ); ?></span></div>
 			<?php
-		
+
 		}
 	}
 	?>
 	</div>
   </div>
 </div>
-<form method="post" action="<?php echo esc_url( get_site_url().'/wp-admin/admin-post.php' ) ?>">
+<form method="post" action="<?php echo esc_url( get_site_url() . '/wp-admin/admin-post.php' ); ?>">
  <input type="hidden" name="action" value="gamipress_discord_save_role_mapping">
- <input type="hidden" name="current_url" value="<?php echo esc_url( ets_gamipress_discord_get_current_screen_url() );?>">   
+ <input type="hidden" name="current_url" value="<?php echo esc_url( ets_gamipress_discord_get_current_screen_url() ); ?>">   
   <table class="form-table" role="presentation">
 	<tbody>
 	  <tr>
@@ -61,7 +61,7 @@ $connect_gamipress_default_role        = sanitize_text_field( trim( get_option( 
 	<textarea id="ets_gamipress_mapping_json_val" name="ets_gamipress_discord_role_mapping">
 	<?php
 	if ( isset( $ets_discord_roles ) ) {
-		echo stripslashes( esc_html( $ets_discord_roles ));}
+		echo stripslashes( esc_html( $ets_discord_roles ) );}
 	?>
 	</textarea>
   </div>
