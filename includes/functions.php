@@ -134,7 +134,7 @@ function ets_get_gamipress_discord_formated_discord_redirect_url( $page_id ) {
  * @param ARRAY|OBJECT $api_response
  */
 function ets_gamipress_discord_log_api_response( $user_id, $api_url = '', $api_args = array(), $api_response = '' ) {
-	$log_api_response = get_option( 'ets_gamipress_discord_log_api_response' );
+	$log_api_response = sanitize_text_field( trim( get_option( 'ets_gamipress_discord_log_api_response' ) ) );
 	if ( $log_api_response == true ) {
 		$log_string  = '==>' . $api_url;
 		$log_string .= '-::-' . serialize( $api_args );
@@ -197,7 +197,7 @@ function ets_gamipress_discord_get_ranks() {
 		$ranks_result = $wpdb->get_results( $ranks, ARRAY_A );
 		if ( is_array( $ranks_result ) && count( $ranks_result ) ) {
 			foreach ( $ranks_result as $rank_result ) {
-				$ets_gamipress_ranks[ $rank_result['ID'] ] = $rank_result['post_title'];
+				$ets_gamipress_ranks[ $rank_result['ID'] ] = sanitize_title( $rank_result['post_title'] );
 
 			}
 		}
@@ -436,10 +436,10 @@ function ets_gamipress_discord_get_user_roles( $user_id ) {
 function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $message ) {
 
 	$user_obj   = get_user_by( 'id', $user_id );
-	$USERNAME   = $user_obj->user_login;
-	$USER_EMAIL = $user_obj->user_email;
-	$SITE_URL   = get_bloginfo( 'url' );
-	$BLOG_NAME  = get_bloginfo( 'name' );
+	$USERNAME   = sanitize_text_field( $user_obj->user_login );
+	$USER_EMAIL = sanitize_email( $user_obj->user_email );
+	$SITE_URL   = esc_url( get_bloginfo( 'url' ) );
+	$BLOG_NAME  = sanitize_text_field( get_bloginfo( 'name' ) );
 
 	$RANKS = '';
 	if ( is_array( $ranks_user ) ) {
@@ -457,7 +457,7 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
 			if ( $lastKey === $key ) {
 				$commas = ' ';
 			}
-				$RANKS .= esc_html( $rank->post_title ) . $commas;
+				$RANKS .= sanitize_title( $rank->post_title ) . $commas;
 		}
 	}
 
@@ -491,10 +491,10 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
  */
 function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achievement_id, $points, $message ) {
 	$user_obj   = get_user_by( 'id', $user_id );
-	$USERNAME   = $user_obj->user_login;
-	$USER_EMAIL = $user_obj->user_email;
-	$SITE_URL   = get_bloginfo( 'url' );
-	$BLOG_NAME  = get_bloginfo( 'name' );
+	$USERNAME   = sanitize_text_field( $user_obj->user_login );
+	$USER_EMAIL = sanitize_email( $user_obj->user_email );
+	$SITE_URL   = esc_url( get_bloginfo( 'url' ) );
+	$BLOG_NAME  = sanitize_title( get_bloginfo( 'name' ) );
 
 	$achievement       = get_post( $achievement_id );
 	$ACHIEVEMENT_TITLE = $achievement->post_title;
@@ -504,7 +504,7 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 	if ( is_array( $achievement_steps ) && count( $achievement_steps ) > 0 ) {
 
 		foreach ( $achievement_steps as $achievement_step ) {
-			$ACHIEVEMENT_STEP_TITLES .= ' ' . $achievement_step->post_title;
+			$ACHIEVEMENT_STEP_TITLES .= ' ' . sanitize_title( $achievement_step->post_title );
 		}
 	}
 
@@ -519,7 +519,7 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
 	);
 	$achievement_type = get_posts( $args );
 	if ( is_array( $achievement_type ) && count( $achievement_type ) > 0 ) {
-		$ACHIEVEMENT_TYPE = $achievement_type[0]->post_title;
+		$ACHIEVEMENT_TYPE = sanitize_title( $achievement_type[0]->post_title );
 	}
 
 	$find    = array(
@@ -558,10 +558,10 @@ function ets_gamipress_discord_get_formatted_award_points_dm( $user_id, $achieve
  */
 function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points_type, $points, $message ) {
 	$user_obj   = get_user_by( 'id', $user_id );
-	$USERNAME   = $user_obj->user_login;
-	$USER_EMAIL = $user_obj->user_email;
-	$SITE_URL   = get_bloginfo( 'url' );
-	$BLOG_NAME  = get_bloginfo( 'name' );
+	$USERNAME   = sanitize_text_field( $user_obj->user_login );
+	$USER_EMAIL = sanitize_email( $user_obj->user_email );
+	$SITE_URL   = esc_url( get_bloginfo( 'url' ) );
+	$BLOG_NAME  = sanitize_text_field( get_bloginfo( 'name' ) );
 
 	$DEDUCT_POINTS = $points;
 	$POINTS_TYPE   = $points_type;
@@ -575,7 +575,7 @@ function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points
 	);
 	$points_label = get_posts( $args );
 	if ( is_array( $points_label ) && count( $points_label ) > 0 ) {
-		$POINTS_LABEL = $points_label[0]->post_title;
+		$POINTS_LABEL = sanitize_title( $points_label[0]->post_title );
 	}
 
 	$POINTS_BALANCE = absint( gamipress_get_user_points( $user_id, $points_type ) );
@@ -615,13 +615,13 @@ function ets_gamipress_discord_get_formatted_deduct_points_dm( $user_id, $points
  */
 function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, $message ) {
 	$user_obj   = get_user_by( 'id', $user_id );
-	$USERNAME   = $user_obj->user_login;
-	$USER_EMAIL = $user_obj->user_email;
-	$SITE_URL   = get_bloginfo( 'url' );
-	$BLOG_NAME  = get_bloginfo( 'name' );
+	$USERNAME   = sanitize_text_field( $user_obj->user_login );
+	$USER_EMAIL = sanitize_email( $user_obj->user_email );
+	$SITE_URL   = esc_url( get_bloginfo( 'url' ) );
+	$BLOG_NAME  = sanitize_text_field( get_bloginfo( 'name' ) );
 
 	$rank       = get_post( $rank_id );
-	$RANK_TITLE = $rank->post_title;
+	$RANK_TITLE = sanitize_title( $rank->post_title );
 
 	$RANK_TYPE = '';
 	$args      = array(
@@ -632,14 +632,14 @@ function ets_gamipress_discord_get_formatted_award_rank_dm( $user_id, $rank_id, 
 	);
 	$rank_type = get_posts( $args );
 	if ( is_array( $rank_type ) && count( $rank_type ) > 0 ) {
-		$RANK_TYPE = $rank_type[0]->post_title;
+		$RANK_TYPE = sanitize_title( $rank_type[0]->post_title );
 	}
 
 	$RANK_REQUIREMENTS = '';
 	$rank_requirements = gamipress_get_rank_requirements( $rank_id );
 	if ( is_array( $rank_requirements ) && count( $rank_requirements ) > 0 ) {
 		foreach ( $rank_requirements as $rank_requirement ) {
-			$RANK_REQUIREMENTS .= ' ' . $rank_requirement->post_title;
+			$RANK_REQUIREMENTS .= ' ' . sanitize_title( $rank_requirement->post_title );
 		}
 	}
 	$find    = array(
