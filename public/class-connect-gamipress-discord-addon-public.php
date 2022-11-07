@@ -201,7 +201,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 		wp_enqueue_style( $this->plugin_name );
 		wp_enqueue_script( $this->plugin_name );
 
-		return wp_kses( $restrictcontent_discord, ets_gamipress_discord_allowed_html() );
+		return $restrictcontent_discord;
 	}
 
 	/**
@@ -214,7 +214,7 @@ class Connect_Gamipress_Discord_Addon_Public {
 	public function ets_gamipress_discord_display_connect_discord_button( $user = null ) {
 
 		if ( is_user_logged_in() ) {
-			echo $this->ets_gamipress_discord_add_connect_discord_button();
+			echo wp_kses( $this->ets_gamipress_discord_add_connect_discord_button(), ets_gamipress_discord_allowed_html() );
 		}
 
 	}
