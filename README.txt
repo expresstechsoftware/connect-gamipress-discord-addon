@@ -14,7 +14,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Create a community of your students by connecting your GamiPress Website to your Discord server.
 
 == Description ==
-This add-on allows you to connect your GamiPress website to your discord server.This allows you to build a great community by linking Rank to a discord role, so you can encourage, and create an atmosphere of challenge between your users.
+You can link your GamiPress website to your Discord server using this add-on. By connecting Rank to a Discord role, you can use this to establish a wonderful community where you can challenge and support your members.
 
 Connect GamiPress to Discord Plugin Features:
 1) Allow any user to connect their discord account with their GamiPress website account.
