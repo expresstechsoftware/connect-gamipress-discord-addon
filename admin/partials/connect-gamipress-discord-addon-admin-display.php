@@ -43,7 +43,15 @@ if ( isset( $_GET['save_settings_msg'] ) ) {
 				<li class="skltbs-tab-item">
 				<button class="skltbs-tab" data-identity="logs" ><?php esc_html_e( 'Logs', 'connect-gamipress-discord-addon' ); ?>	
 				</button>
-				</li>                                
+				</li>    
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="documentation" ><?php esc_html_e( 'Documentation', 'connect-gamipress-discord-addon' ); ?>	
+				</button>
+				</li> 
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="support" ><?php esc_html_e( 'Support', 'connect-gamipress-discord-addon' ); ?>	
+				</button>
+				</li>				                            
 			</ul>
 			<div class="skltbs-panel-group">
 				<div id="ets_gamipress_application_details" class="gamipress-discord-tab-conetent skltbs-panel">
@@ -62,6 +70,12 @@ if ( isset( $_GET['save_settings_msg'] ) ) {
 				</div>                            
 				<div id='ets_gamipress_discord_logs' class="gamipress-discord-tab-conetent skltbs-panel">
 				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-error-log.php'; ?>
-				</div>                            
+				</div> 
+				<div id='ets_gamipress_discord_documentation' class="gamipress-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-documentation.php'; ?>
+				</div>
+				<div id='ets_gamipress_discord_support' class="gamipress-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-gamipress-discord-support.php'; ?>
+				</div>				                           
 			</div>  
 		</div>

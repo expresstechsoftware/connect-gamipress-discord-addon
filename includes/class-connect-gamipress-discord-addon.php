@@ -179,6 +179,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_load_discord_roles', $plugin_admin, 'ets_gamipress_discord_load_discord_roles' );
 		$this->loader->add_action( 'admin_post_gamipress_discord_save_role_mapping', $plugin_admin, 'ets_gamipress_discord_save_role_mapping' );
 		$this->loader->add_action( 'admin_post_gamipress_discord_save_appearance_settings', $plugin_admin, 'ets_gamipress_discord_save_appearance_settings' );
+		$this->loader->add_action( 'admin_post_gamipress_discord_send_support_mail', $plugin_admin, 'ets_gamipress_discord_send_support_mail' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'ets_gamipress_discord_connect_bot' );
 		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_update_redirect_url', $plugin_admin, 'ets_gamipress_discord_update_redirect_url' );
 		$this->loader->add_action( 'admin_post_gamipress_discord_save_advance_settings', $plugin_admin, 'ets_gamipress_discord_save_advance_settings' );

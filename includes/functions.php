@@ -457,7 +457,7 @@ function ets_gamipress_discord_get_formatted_welcome_dm( $user_id, $ranks_user, 
 			if ( $lastKey === $key ) {
 				$commas = ' ';
 			}
-				$RANKS .= sanitize_text_field($rank->post_title ) . $commas;
+				$RANKS .= sanitize_text_field( $rank->post_title ) . $commas;
 		}
 	}
 
