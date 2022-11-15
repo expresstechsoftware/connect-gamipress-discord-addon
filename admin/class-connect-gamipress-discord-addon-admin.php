@@ -640,7 +640,6 @@ class Connect_Gamipress_Discord_Addon_Admin {
 
 	/**
 	 * Send support message.
-	 *
 	 */
 	public function ets_gamipress_discord_send_support_mail() {
 

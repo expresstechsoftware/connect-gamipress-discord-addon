@@ -11,7 +11,7 @@ Stable tag: 1.0.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create a community of your students by connecting your GamiPress Website to your Discord server.
+Create a community of your Members by connecting your GamiPress Website to your Discord server.
 
 == Description ==
 You can link your GamiPress website to your Discord server using this add-on. By connecting Rank to a Discord role, you can use this to establish a wonderful community where you can challenge and support your members.
@@ -43,6 +43,9 @@ Connect GamiPress to Discord Plugin Features:
 2. [Connect PaidmembershipPro and Discord](https://wordpress.org/plugins/pmpro-discord-add-on/)
 3. [Connect LearnPress and Discord](https://wordpress.org/plugins/connect-learnpress-discord-add-on/)
 4. [Connect LearnDash and Discord](https://wordpress.org/plugins/connect-learndash-and-discord/)
+5. [Connect LifterLMS and Discord](https://wordpress.org/plugins/connect-lifterlms-to-discord/)
+7. [Inspect HTTP Requests](https://wordpress.org/plugins/inspect-http-requests/)
+8. [Product Questions & Answers for WooCommerce](https://wordpress.org/plugins/product-questions-answers-for-woocommerce/)
 
 == Frequently Asked Questions ==
 = I'm getting an error in error Log 'Missing Access'
