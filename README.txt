@@ -1,6 +1,6 @@
 === Connect GamiPress to Discord ===
 Contributors: expresstechsoftware, webbdeveloper, sunnysoni 
-Tags: Discord, Talk, Video Chat, Hang Out, Friends, discord, gamification, points, achievements, ranks, badges, awards, rewards.
+Tags: Discord, gamipress, gamification, points, achievements, ranks, badges, Talk, Video Chat, Hang Out, Friends, discord, awards, rewards.
 Donate link: https://paypal.me/supportets
 Author URI: https://www.expresstechsoftwares.com
 Author: ExpressTech Software Solutions Pvt. Ltd.
