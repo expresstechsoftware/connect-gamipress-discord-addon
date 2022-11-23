@@ -44,6 +44,7 @@ Connect GamiPress to Discord Plugin Features:
 3. [Connect LearnPress and Discord](https://wordpress.org/plugins/connect-learnpress-discord-add-on/)
 4. [Connect LearnDash and Discord](https://wordpress.org/plugins/connect-learndash-and-discord/)
 5. [Connect LifterLMS and Discord](https://wordpress.org/plugins/connect-lifterlms-to-discord/)
+6. [Webhook For WCFM Vendors](https://wordpress.org/plugins/webhook-for-wcfm-vendors/)
 7. [Inspect HTTP Requests](https://wordpress.org/plugins/inspect-http-requests/)
 8. [Product Questions & Answers for WooCommerce](https://wordpress.org/plugins/product-questions-answers-for-woocommerce/)
 9. [Connect Ultimate Member and Discord](https://wordpress.org/plugins/ultimate-member-discord-add-on/)
