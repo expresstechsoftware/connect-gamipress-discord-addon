@@ -11,7 +11,7 @@ if ( $currentUser ) {
 		<input type="hidden" name="current_url" value="<?php echo esc_url( ets_gamipress_discord_get_current_screen_url() ); ?>">
 	  <div class="ets-container">
 		<div class="top-logo-title">
-		  <img src="<?php echo esc_attr( CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/images/ets-logo.png' ); ?>" class="img-fluid company-logo" alt="">
+		  <img src="<?php echo esc_url( CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_URL . 'admin/images/ets-logo.png' ); ?>" class="img-fluid company-logo" alt="">
 		  <h1><?php esc_html_e( 'ExpressTech Softwares Solutions Pvt. Ltd.', 'connect-gamipress-discord-addon' ); ?></h1>
 		  <p><?php esc_html_e( 'ExpressTech Software Solution Pvt. Ltd. is the leading Enterprise WordPress development company.', 'connect-gamipress-discord-addon' ); ?><br>
 		  <?php esc_html_e( 'Contact us for any WordPress Related development projects.', 'connect-gamipress-discord-addon' ); ?></p>

@@ -289,13 +289,13 @@ class Connect_Gamipress_Discord_Addon_Admin {
 			);
 			$guild_response          = wp_remote_post( $discod_server_roles_api, $guild_args );
 
-			// ets_gamipress_discord_log_api_response( $user_id, $discod_server_roles_api, $guild_args, $guild_response );
+			ets_gamipress_discord_log_api_response( $user_id, $discod_server_roles_api, $guild_args, $guild_response );
 
 			$response_arr = json_decode( wp_remote_retrieve_body( $guild_response ), true );
 
 			if ( is_array( $response_arr ) && ! empty( $response_arr ) ) {
 				if ( array_key_exists( 'code', $response_arr ) || array_key_exists( 'error', $response_arr ) ) {
-					// Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+					Connect_Gamipress_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
 				} else {
 					$response_arr['previous_mapping'] = get_option( 'ets_gamipress_discord_role_mapping' );
 
