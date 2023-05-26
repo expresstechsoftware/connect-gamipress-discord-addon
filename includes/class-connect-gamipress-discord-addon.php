@@ -70,7 +70,7 @@ class Connect_Gamipress_Discord_Addon {
 		if ( defined( 'CONNECT_GAMIPRESS_DISCORD_ADDON_VERSION' ) ) {
 			$this->version = CONNECT_GAMIPRESS_DISCORD_ADDON_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.2';
 		}
 		$this->plugin_name = 'connect-gamipress-discord-addon';
 

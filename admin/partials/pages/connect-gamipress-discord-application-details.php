@@ -26,7 +26,7 @@ $ets_gamipress_discord_redirect_page_id   = sanitize_text_field( trim( get_optio
 	<label><?php esc_html_e( 'Redirect URL', 'connect-gamipress-discord-addon' ); ?> :</label>
 
 	<p class="redirect-url"><b><?php echo esc_url( $ets_gamipress_discord_redirect_url ); ?></b></p>
-		<select class= "ets-input ets_gamipress_discord_redirect_url" id="ets_gamipress_discord_redirect_url" name="ets_gamipress_discord_redirect_url" style="max-width: 100%" required>
+		<select class= "ets-input ets_gamipress_discord_redirect_url" id="ets_gamipress_discord_redirect_url" name="ets_gamipress_discord_redirect_url" style="width: 100%" required>
 		<?php _e( ets_gamipress_discord_pages_list( wp_kses( $ets_gamipress_discord_redirect_page_id, array( 'option' => array( 'data-page-url' => array() ) ) ) ) ); ?>
 		</select>                
 				
@@ -36,6 +36,7 @@ $ets_gamipress_discord_redirect_page_id   = sanitize_text_field( trim( get_optio
 	<div class="ets-input-group">
 			<label><?php esc_html_e( 'Admin Redirect URL Connect to bot', 'connect-gamipress-discord-addon' ); ?> :</label>
 			<input type="text" class="ets-input" name="ets_gamipress_discord_admin_redirect_url" value="<?php echo esc_url( get_admin_url( '', 'admin.php' ) ) . '?page=connect-gamipress-discord-addon&via=gamipress-discord-bot'; ?>" readonly required />
+			<p class="description msg-green"><b><?php esc_html_e( 'Copy this URL and paste inside your https://discord.com/developers/applications -> 0Auth2 -> Redirects', 'connect-gamipress-discord-addon' ); ?></b></p>
 		</div>   
 	<div class="ets-input-group">
 			<?php
