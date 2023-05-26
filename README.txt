@@ -5,9 +5,9 @@ Donate link: https://paypal.me/supportets
 Author URI: https://www.expresstechsoftwares.com
 Author: ExpressTech Software Solutions Pvt. Ltd.
 Requires at least: 4.7
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,6 +57,7 @@ Connect GamiPress to Discord Plugin Features:
 11. [Connect Eduma Theme and  Discord](https://wordpress.org/plugins/connect-eduma-theme-to-discord/)
 12. [Connect Restrict Content Pro and Discord Addon](https://wordpress.org/plugins/connect-restrictcontentpro-to-discord-addon/)
 13. [Connect LearnDash and Discord](https://wordpress.org/plugins/connect-learndash-and-discord/)
+14. [Connect Tutor LMS to Discord](https://wordpress.org/plugins/connect-tutorlms-to-discord/)
 
 == Frequently Asked Questions ==
 = I'm getting an error in error Log 'Missing Access'
