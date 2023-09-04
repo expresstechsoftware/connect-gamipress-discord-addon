@@ -140,6 +140,8 @@ class Connect_Gamipress_Discord_Addon {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-connect-gamipress-discord-addon-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-connect-gamipress-discord-addon-admin-notices.php';
+
 		$this->loader = new Connect_Gamipress_Discord_Addon_Loader();
 
 	}
@@ -187,6 +189,7 @@ class Connect_Gamipress_Discord_Addon {
 		$this->loader->add_filter( 'manage_users_custom_column', $plugin_admin, 'ets_gamipress_discord_disconnect_discord_button', 99, 3 );
 		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_disconnect_user', $plugin_admin, 'ets_gamipress_discord_disconnect_user' );
 		$this->loader->add_action( 'gamipress_deduct_points_to_user', $plugin_admin, 'ets_gamipress_deduct_points_to_user', 99, 4 );
+		$this->loader->add_action( 'wp_ajax_ets_gamipress_discord_notice_dismiss', $plugin_admin, 'ets_gamipress_discord_notice_dismiss' );
 	}
 
 	/**
