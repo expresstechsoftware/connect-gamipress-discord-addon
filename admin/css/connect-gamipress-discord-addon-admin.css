@@ -610,3 +610,13 @@ div.ets-gamipress-discord-review-notice div.ets-gamipress-discord-notice-icon{
 div.ets-gamipress-discord-review-notice div.ets-gamipress-discord-notice-content{
   padding: 20px;
 }
+div.ets-gamipress-discord-review-notice div.ets-gamipress-discord-notice-content p.ets-gamipress-discord-signature {
+  display: flex; 
+  align-items: center;
+}
+div.ets-gamipress-discord-review-notice div.ets-gamipress-discord-notice-content img{
+  width: 45px;
+  height: auto;
+  border-radius: 50%;
+  margin-left: 15px;
+}
