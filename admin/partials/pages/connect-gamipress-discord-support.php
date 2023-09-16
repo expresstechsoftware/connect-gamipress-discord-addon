@@ -16,7 +16,25 @@ if ( $currentUser ) {
 		  <p><?php esc_html_e( 'ExpressTech Software Solution Pvt. Ltd. is the leading Enterprise WordPress development company.', 'connect-gamipress-discord-addon' ); ?><br>
 		  <?php esc_html_e( 'Contact us for any WordPress Related development projects.', 'connect-gamipress-discord-addon' ); ?></p>
 		</div>
-		<div class="form-fields-box ">
+
+		<ul style="text-align: left;">
+			<li class="mp-icon mp-icon-right-big"><?php esc_html_e( 'If you encounter any issues or errors, please report them on our support forum for Connect GamiPress to Discord plugin. Our community will be happy to help you troubleshoot and resolve the issue.', 'connect-gamipress-discord-addon' ); ?></li>
+			<li class="mp-icon mp-icon-right-big">
+			<?php
+			echo wp_kses(
+				'<a target="_blank" href="https://wordpress.org/support/plugin/connect-gamipress-and-discord/">Support » Plugin: Connect GamiPress to Discord</a>',
+				array(
+					'a' => array(
+						'href'   => array(),
+						'target' => array(),
+					),
+				)
+			);
+			?>
+ </li>
+		</ul>
+
+		<!-- <div class="form-fields-box ">
 		  <div class="ets-row ets-mt-5 ets-align-items-center">
 			<div class="ets-col-7 ets-offset-md-1">
 			  <div class="contact-fields pr-100">
@@ -76,7 +94,8 @@ if ( $currentUser ) {
 			  </div>
 			</div>
 		  </div>
-		</div>
+		</div> -->
+		
 	  </div>
   </form>
 </div>
