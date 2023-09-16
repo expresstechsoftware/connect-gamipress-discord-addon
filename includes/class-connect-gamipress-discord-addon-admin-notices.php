@@ -35,7 +35,7 @@ class Connect_Gamipress_Discord_Addon_Admin_Notices {
 			$dismissed = get_user_meta( get_current_user_id(), '_ets_gamipress_discord_dismissed_notification', true );
 			if ( ! $dismissed ) {
 				ob_start();
-				require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'includes/template/notification/review/review.php';
+				require_once CONNECT_GAMIPRESS_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/template/notification/review/review.php';
 				$notification_content = ob_get_clean();
 				echo wp_kses( $notification_content, self::ets_gamipress_discord_allowed_html() );
 			}
