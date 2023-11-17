@@ -699,7 +699,7 @@ class Connect_Gamipress_Discord_Addon_Admin {
 	public function ets_gamipress_deduct_points_to_user( $user_id, $points, $points_type, $args ) {
 
 		// update_option( 'gamipress_revoke_user_points_' . time(), ' user_id : ' . $user_id . '  points : ' . $points . ' points_type : ' . $points_type . ' raison : ' . $args['reason'] . ' achievement_id :' . $args['achievement_id'] );
-		if ( ! current_user_can( 'administrator' ) ) {
+		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'You do not have sufficient rights', 403 );
 			exit();
 		}
