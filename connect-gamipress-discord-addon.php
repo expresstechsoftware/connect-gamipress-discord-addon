@@ -16,7 +16,7 @@
  * Plugin Name:       Connect GamiPress and Discord
  * Plugin URI:        https://www.expresstechsoftwares.com/connect-gamipress-and-discord/
  * Description:       Create a community of your users by connecting your GamiPress Website to your Discord server.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Author:            ExpressTech Softwares Solutions Pvt Ltd
  * Author URI:        https://www.expresstechsoftwares.com
  * License:           GPL-2.0+
