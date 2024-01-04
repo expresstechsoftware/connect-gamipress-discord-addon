@@ -13,7 +13,7 @@
 		<li>
 			<label><?php esc_html_e( 'Features and other documentation', 'connect-gamipress-discord-addon' ); ?>
 			</label>
-			<a href="https://www.expresstechsoftwares.com/discord-add-ons-documentation/s://www.expresstechsoftwares.com/" target="_blank" ><?php esc_html_e( 'Click Here', 'connect-gamipress-discord-addon' ); ?> <i class="fa fa-mouse-pointer" aria-hidden="true"></i></a>  
+			<a href="https://www.expresstechsoftwares.com/discord-add-ons-documentation/" target="_blank" ><?php esc_html_e( 'Click Here', 'connect-gamipress-discord-addon' ); ?> <i class="fa fa-mouse-pointer" aria-hidden="true"></i></a>  
 		</li>
 	</ul>
 </div>
